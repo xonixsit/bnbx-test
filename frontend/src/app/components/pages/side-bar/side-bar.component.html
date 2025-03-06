@@ -1,0 +1,89 @@
+<app-header (toggleSidebar)="toggleSidebar()" (toggleDarkMode)="toggleDarkMode($event)"></app-header>
+
+<div class="wrapper">
+  <!-- Sidebar -->
+  <nav #sidebar id="sidebar" [class.collapsed]="isSidebarCollapsed">
+    <ul class="list-unstyled components cursor-pointer">
+      <!-- Dashboard -->
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active-link" (click)="toggleSidebar()">
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+      </li>
+      <!-- <li>
+        <a routerLink="/trade-room" routerLinkActive="active-link" (click)="toggleSidebar()">
+          <i class="fas fa-chart-line"></i> Trade Room
+        </a>
+      </li> -->
+
+      <!-- Network -->
+       <li>
+        <span class="w-100 text-start" data-bs-toggle="collapse" data-bs-target="#networkSubmenu" aria-expanded="false" aria-controls="networkSubmenu">
+          <i class="fas fa-sitemap"></i> Referral <i class="fas fa-chevron-down float-end"></i>
+        </span>
+        <div class="collapse" id="networkSubmenu" data-bs-parent="#sidebar">
+          <ul class="list-unstyled ps-4">
+            <li><a routerLink="/reffral-list" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-network-wired"></i> Referral List</a></li>
+            <li><a routerLink="/network-tree" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-sitemap"></i> Reffral Tree</a></li>
+          </ul>
+        </div>
+      </li> 
+
+      <!-- Bond -->
+      <!-- <li>
+        <a routerLink="/bonding" (click)="toggleSidebar()"> <i class="fas fa-handshake"></i> Bond</a>
+      </li> -->
+
+      <!-- Wallet -->
+      <li>
+        <span class="w-100 text-start" data-bs-toggle="collapse" data-bs-target="#walletSubmenu" aria-expanded="false" aria-controls="walletSubmenu">
+          <i class="fas fa-wallet"></i> Wallet <i class="fas fa-chevron-down float-end"></i>
+        </span>
+        <div class="collapse" id="walletSubmenu" data-bs-parent="#sidebar">
+          <ul class="list-unstyled ps-4">
+            <li><a routerLink="/deposit" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-arrow-down"></i> Deposit</a></li>
+            <li><a routerLink="/withdraw" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-arrow-up"></i> Withdraw</a></li>
+            <li><a routerLink="/fund-transfer" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-exchange-alt"></i> Fund Transfer</a></li>
+            <!-- <li><a routerLink="/wallet" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-wallet"></i> Convert Wallet</a></li>
+            <li><a routerLink="/swap-page" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-wallet"></i> swap</a></li> -->
+          </ul>
+        </div>
+      </li>
+
+      <!-- Transaction -->
+      <li>
+        <a routerLink="/transaction" (click)="toggleSidebar()"> <i class="fas fa-exchange-alt"></i> Transaction</a>
+      </li>
+
+      <!-- Settings -->
+      <li>
+        <span class="w-100 text-start" data-bs-toggle="collapse" data-bs-target="#settingsSubmenu" aria-expanded="false" aria-controls="settingsSubmenu">
+          <i class="fas fa-cogs"></i> Settings <i class="fas fa-chevron-down float-end"></i>
+        </span>
+        <div class="collapse" id="settingsSubmenu" data-bs-parent="#sidebar">
+          <ul class="list-unstyled ps-4">
+            <li><a routerLink="/profile" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-user"></i> Profile</a></li>
+            <li><a routerLink="/setting" routerLinkActive="active-link" (click)="toggleSidebar()"><i class="fas fa-shield-alt"></i> Security</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Support -->
+      <li>
+        <a routerLink="/support" (click)="toggleSidebar()"> <i class="fas fa-life-ring"></i> Support</a>
+      </li>
+
+      <!-- Logout -->
+      <li>
+        <a (click)="logout(); toggleSidebar()">
+          <i class="fas fa-sign-out-alt" routerLinkActive="active-link"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Page Content -->
+  <div id="content" class="active-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

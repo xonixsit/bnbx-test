@@ -1,0 +1,143 @@
+<div class="wrapper">
+    <div id="content" class="active-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Create Transaction Password -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Create Transaction Password</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="createTransactionPasswordForm" (ngSubmit)="createTransactionPassword()">
+                            <div class="form-group mb-3">
+                                <label for="password">Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showPassword ? 'text' : 'password'"
+                                        id="password"
+                                        class="form-control"
+                                        formControlName="password"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showPassword = !showPassword">
+                                            <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="cnfPassword">Confirm Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showConfirmPassword ? 'text' : 'password'"
+                                        id="cnfPassword"
+                                        class="form-control"
+                                        formControlName="cnfPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showConfirmPassword = !showConfirmPassword">
+                                            <i [class]="showConfirmPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" [disabled]="createTransactionPasswordForm.invalid">
+                                Create Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <!-- Change Transaction Password -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Change Login Password</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="changeTransactionPasswordForm" (ngSubmit)="changeTransactionPassword()">
+                            <div class="form-group mb-3">
+                                <label for="prevPassword">Previous Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showPrevPassword ? 'text' : 'password'"
+                                        id="prevPassword"
+                                        class="form-control"
+                                        formControlName="oldPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showPrevPassword = !showPrevPassword">
+                                            <i [class]="showPrevPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="newPassword">New Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showNewPassword ? 'text' : 'password'"
+                                        id="newPassword"
+                                        class="form-control"
+                                        formControlName="newPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showNewPassword = !showNewPassword">
+                                            <i [class]="showNewPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="cnfPassword">Confirm New Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showConfirmNewPassword ? 'text' : 'password'"
+                                        id="cnfPassword"
+                                        class="form-control"
+                                        formControlName="cnfPassword"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary" (click)="showConfirmNewPassword = !showConfirmNewPassword">
+                                            <i [class]="showConfirmNewPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning btn-block" [disabled]="changeTransactionPasswordForm.invalid">
+                                Change Password
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <!-- Update Wallet Address -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Update Wallet Address</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="updateWalletAddressForm" (ngSubmit)="updateWalletAddress()">
+                            <div class="form-group mb-3">
+                                <label for="address">New Address:</label>
+                                <input placeholder="Enter USDT BEP20 Address" type="text" id="address" class="form-control" formControlName="address" required />
+                            </div>
+                            <button type="submit" class="btn btn-info btn-block" [disabled]="updateWalletAddressForm.invalid">
+                                Update Address
+                            </button>
+                            <h2 class="mt-2">Add USDT BEP20 Address Properly For withdraw your funds.</h2>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

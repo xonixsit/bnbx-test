@@ -1,0 +1,57 @@
+<div class="wrapper">
+    <div id="content" class="active-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Staking Card -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Swap Wallet Transfer</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="fundTransferForm" (ngSubmit)="fundTransfer()">
+                            <span style="float: right;">Current Balance: {{ userBlance }}</span>
+                            <div class="form-group mb-3">
+                                <label for="stakeAmount">Amount Transfer<span class="mandatory">*</span></label>
+                                <input type="number" id="stakeAmount" class="form-control" formControlName="amount"
+                                    required />
+                                <div *ngIf="fundTransferForm.get('amount')?.invalid && (fundTransferForm.get('amount')?.touched || fundTransferForm.get('amount')?.dirty)"
+                                    class="text-danger">
+                                    Amount is required and must be greater than 0.
+                                </div>
+                            </div>
+
+                            <span style="float: right;">Trade wallet Balance: {{ totalInternalTransferBalance }}</span>
+                            <div class="form-group mb-3">
+                                <label for="receivedAmount">Amount Received</label>
+                                <input type="number" id="receivedAmount" class="form-control"
+                                    [value]="fundTransferForm.get('amount')?.value || 0" [disabled]="true" />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="password">Password <span class="mandatory">*</span></label>
+                                <div class="input-group">
+                                    <input [type]="showPassword ? 'text' : 'password'" id="password"
+                                        class="form-control" formControlName="password" required />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            (click)="showPassword = !showPassword">
+                                            <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="fundTransferForm.get('password')?.invalid && (fundTransferForm.get('password')?.touched || fundTransferForm.get('password')?.dirty)"
+                                    class="text-danger">
+                                    Password is required.
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block"
+                                [disabled]="fundTransferForm.invalid">
+                                Transfer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

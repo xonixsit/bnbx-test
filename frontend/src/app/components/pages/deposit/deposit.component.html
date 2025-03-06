@@ -1,0 +1,70 @@
+<div class="wrapper">
+  <div id="content" class="active-content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <!-- Staking Card -->
+        <div class="card shadow-sm mt-5 col-12 col-md-6">
+          <div class="card-header text-white">
+            <h2 class="card-title text-center mb-0">Deposit Balance</h2>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="depositForm" (ngSubmit)="deposit()">
+              <div class="form-group mb-3">
+                <label for="stakeAmount">Amount to Deposit</label>
+                <input type="number" id="stakeAmount" class="form-control" formControlName="amount" required />
+                <div
+                  *ngIf="depositForm.get('amount')?.invalid && (depositForm.get('amount')?.touched || depositForm.get('amount')?.dirty)"
+                  class="text-danger">
+                  Amount is required and must be greater than 100.
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block" [disabled]="depositForm.invalid">
+                Deposit
+              </button>
+              <h3>Deposit USDT BEP20 Funds Only.</h3>
+            </form>
+          </div>
+        </div>
+       <div class="row justify-content-center" *ngIf="imageShow">
+        <div class="card shadow-sm mt-5 col-12 col-md-6">'
+          <!-- Display the QR Code, Expiration Message, and Deposit Address -->
+          <div *ngIf="qrCodeUrl" class="mt-4 text-center">
+            <h3>Scan QR Code to Complete Deposit</h3>
+            <img [src]="qrCodeUrl" alt="QR Code" class="img-fluid" />
+
+            <p class="text-muted">{{ expirationMessage }}</p>
+            <p><strong>Deposit Address:</strong> {{ depositAddress }} <i class="fas mx-2 fa-copy  text-success cursor-pointer" (click)="copyLoginIdLink()"
+              title="Copy to clipboard"></i></p>
+            <h3>Deposit USDT BEP20 Funds Only.</h3>
+          </div>
+        </div>
+       </div>
+        <div class="row justify-content-center"*ngIf="imageShow">
+          <div class="card shadow-sm mt-5 col-12 col-md-6">
+            <!-- Timer and Verify Transaction button -->
+            <div *ngIf="buttonEnabled; else timeUpTemplate">
+              <p><strong>Time remaining: {{ minutes }}:{{ seconds | number: '2.0' }}</strong></p>
+              <input type="text" [(ngModel)]="transactionHash" class="form-control"
+                placeholder="Enter transaction hash" />
+              <button type="button" class="btn btn-secondary btn-block mt-2"
+                (click)="verifyTransactionHash(transactionHash)">
+                Verify Transaction
+              </button>
+             
+            </div>
+  
+            <!-- Time up message -->
+            <ng-template #timeUpTemplate>
+              <p class="text-danger">Time up. Please initiate a new deposit.</p>
+            </ng-template>
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+    </div>
+  </div>
+</div>

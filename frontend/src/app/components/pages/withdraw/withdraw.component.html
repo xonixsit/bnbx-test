@@ -1,0 +1,73 @@
+<!-- wallet.component.html -->
+
+<div class="wrapper">
+    <div id="content" class="active-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Withdrawal Card -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Withdraw USDT</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="withdrawForm" (ngSubmit)="withdraw()">
+                            <h3 style="float: right;">Balance : {{userBlance}}</h3>
+                            <div class="form-group mb-3">
+                                <label for="withdrawAmount">Amount to Withdraw:</label>
+                                <input
+                                    type="number"
+                                    id="withdrawAmount"
+                                    class="form-control"
+                                    formControlName="amount"
+                                    required
+                                />
+                                <div
+                                    *ngIf="withdrawForm.get('amount')?.invalid && (withdrawForm.get('amount')?.touched || withdrawForm.get('amount')?.dirty)"
+                                    class="text-danger"
+                                >
+                                    Amount is required and must be greater than 0.
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="withdrawPassword">Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showWithdrawPassword ? 'text' : 'password'"
+                                        id="withdrawPassword"
+                                        class="form-control"
+                                        formControlName="password"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            (click)="showWithdrawPassword = !showWithdrawPassword"
+                                        >
+                                            <i [class]="showWithdrawPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div
+                                    *ngIf="withdrawForm.get('password')?.invalid && (withdrawForm.get('password')?.touched || withdrawForm.get('password')?.dirty)"
+                                    class="text-danger"
+                                >
+                                    Password is required.
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-danger btn-block" [disabled]="withdrawForm.invalid">
+                                Withdraw
+                            </button>
+
+                            <h3>Check your USDT BEP20 Address Properly before withdraw funds.</h3>
+                        </form>
+                    </div>
+                </div>
+
+              
+
+                
+            </div>
+        </div>
+    </div>
+</div>

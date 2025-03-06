@@ -1,0 +1,162 @@
+<div class="container-fluid">
+    <div class="row align-items-center justify-content-between">
+        <!-- Logo and Dark Mode Toggle Section (Flexible on Mobile) -->
+        <div class="col-12 d-flex justify-content-between align-items-center mb-3 mb-md-0">
+            <!-- Logo Section -->
+            <div class="text-center text-sm-start mt-3">
+                <img routerLink="/" src="assets/images/logo/BNBX LOGO WEB-01.png" alt="logo" class="img-fluid" width="250" height="50">
+            </div>
+
+            <!-- Dark Mode Toggle Section -->
+            <div class="text-center text-sm-end">
+                <div class="d-inline-block">
+                    <span *ngIf="!isDarkMode" class="me-2">
+                        <i class="fa-solid fa-sun fs-1" (click)="toggleDarkMode(true)"></i>
+                    </span>
+                    <span *ngIf="isDarkMode">
+                        <i class="fa-regular fa-sun fs-1" (click)="toggleDarkMode(false)"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row justify-content-between mt-4">
+            <div class="col-lg-6  mt-3animated fadeIn">
+                <img class="img-fluid animated pulse infinite" style="animation-duration: 3s;"
+                    src="assets/images/loginImage.jpg" alt="" width="1200" height="800">
+            </div>
+            <div class="col-md-6 col-sm-8 col-md-6 col-lg-4 ">
+                <div class="card p-3" [ngClass]="{'dark-mode-card': isDarkMode}">
+                    <div class="yellow-border-top-left" *ngIf="isDarkMode"></div>
+                    <div class="yellow-border-bottom-right" *ngIf="isDarkMode"></div>
+
+                    <h2 class="text-center mb-4" *ngIf="!isForgotPassword && currentStep === 1">Login</h2>
+                    <h2 class="text-center mb-4" *ngIf="isForgotPassword || currentStep !== 1">Change Password</h2>
+
+                    <!-- Login Form -->
+                    <form *ngIf=" currentStep === 1" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                        <!-- Mobile Input with Icon -->
+                        <div class="form-group mb-3">
+                            <label for="mobile">User Id</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-id-card"></i>
+                                </span>
+                                <input type="text" class="form-control" id="mobile" formControlName="loginId"
+                                    placeholder="Enter your login Id">
+                            </div>
+                        </div>
+
+                        <!-- Password Input with Icon and Toggle -->
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-lock"></i>
+                                </span>
+                                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                                    id="password" formControlName="password" placeholder="Enter your password">
+                                <span class="input-group-text" (click)="togglePasswordVisibility()">
+                                    <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Stay Logged In Checkbox -->
+                        <div class="form-group mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="stayLoggedIn">
+                                <label class="form-check-label" for="stayLoggedIn">Stay Logged In</label>
+                            </div>
+                        </div>
+
+                        <!-- Login Button -->
+                        <div class="form-group mb-3 text-center">
+                            <button class="btn btn-primary w-100" type="submit">Login</button>
+                        </div>
+
+                        <!-- Forgot Password Link -->
+                        <div class="form-group mb-3 text-center">
+                            <p>Forgot Password? <a href="javascript:void(0)" (click)="showForgotPassword()">Reset
+                                    here</a></p>
+                        </div>
+
+                        <!-- Sign-up Link -->
+                        <div class="form-group mb-3 text-center">
+                            <p>Don't have an account? <a routerLink="/signup" class="text-primary">Sign Up</a></p>
+                        </div>
+                    </form>
+
+                    <!-- Forgot Password Form -->
+
+                    <!-- Step 1: Email and Send OTP -->
+                    <div *ngIf="currentStep === 2">
+                        <form [formGroup]="changePasswordForm" (ngSubmit)="sendOtp()">
+                            <div class="form-group mb-3">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control" id="email" formControlName="email"
+                                        placeholder="Enter your email" required />
+                                    <button class="btn btn-secondary" type="submit">
+                                        Send OTP
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 2: OTP Verification -->
+                    <div *ngIf="currentStep === 3">
+                        <form [formGroup]="changePasswordFormOTP" (ngSubmit)="verifyOtp()">
+                            <div class="form-group mb-3">
+                                <label for="otp">OTP</label>
+                                <input type="text" class="form-control" id="otp" formControlName="otp"
+                                    placeholder="Enter the OTP" required />
+                                <button class="btn btn-primary w-100 mt-2" type="submit">
+                                    Verify OTP
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Step 3: Reset Password -->
+                    <div *ngIf="currentStep === 4">
+                        <form [formGroup]="changePassword" (ngSubmit)="resetPassword()">
+                            <div class="form-group mb-3">
+                                <label for="newPassword">New Password</label>
+                                <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                                    id="newPassword" formControlName="newPassword" placeholder="Enter new password"
+                                    required />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="cnfPassword">Confirm Password</label>
+                                <div class="input-group">
+                                    <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                                        id="cnfPassword" formControlName="cnfPassword"
+                                        placeholder="Confirm new password" required />
+                                    <span class="input-group-text" (click)="togglePasswordVisibility()">
+                                        <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3 text-center">
+                                <button class="btn btn-primary w-100" type="submit">
+                                    Change Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+/* Add this to your CSS file or inside a <style> tag in your HTML */
+#sidebar {
+    max-height: 100vh; /* Ensure it takes full viewport height */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    position: fixed; /* Keep the sidebar fixed on the left side */
+    top: 0;
+    left: 0;
+    width: 250px; /* Adjust sidebar width as needed */
+    
+  }
+  
+  #sidebar .components {
+    padding: 0;
+  }
+  
+  #sidebar .list-unstyled {
+    margin: 0;
+    padding: 0;
+  }
+  
+  #sidebar .cursor-pointer {
+    cursor: pointer;
+  }
+
+
+  #sidebar {
+    transition: all 0.3s ease;
+    width: 250px;
+  }
+  
+  #sidebar.collapsed {
+    width: 0px;
+  }
+  

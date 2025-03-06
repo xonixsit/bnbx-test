@@ -1,0 +1,93 @@
+<div class="wrapper">
+    <div id="content" class="active-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Staking Card -->
+                <div class="card shadow-sm mt-5 col-12 col-md-6">
+                    <div class="card-header text-white">
+                        <h2 class="card-title text-center mb-0">Fund Transfer</h2>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="fundTransferForm" (ngSubmit)="fundTransfer()">
+                            <h3 style="float: right;">Trade Balance : {{totalInternalTransferBalance}}</h3>
+                            <div class="form-group mb-3">
+                                <label for="stakeAmount">Amount to Fund Transfer:</label>
+                                <input
+                                    type="number"
+                                    id="stakeAmount"
+                                    class="form-control"
+                                    formControlName="amount"
+                                    required
+                                />
+                                <div
+                                    *ngIf="fundTransferForm.get('amount')?.invalid && (fundTransferForm.get('amount')?.touched || fundTransferForm.get('amount')?.dirty)"
+                                    class="text-danger"
+                                >
+                                    Amount is required and must be greater than 0.
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="referralCode">Referral Code:</label>
+                                <input
+                                    type="text"
+                                    id="referralCode"
+                                    class="form-control"
+                                    (blur)="checkReferralCode()"
+                                    formControlName="referralCode"
+                                    required
+                                />
+                                <div
+                                    *ngIf="fundTransferForm.get('referralCode')?.invalid && (fundTransferForm.get('referralCode')?.touched || fundTransferForm.get('referralCode')?.dirty)"
+                                    class="text-danger"
+                                >
+                                    Referral Code is required.
+                                </div>
+                                <div *ngIf="referralName" class="text-success">
+                                    Referral Email: {{ referralName }}
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="password">Password:</label>
+                                <div class="input-group">
+                                    <input
+                                        [type]="showPassword ? 'text' : 'password'"
+                                        id="password"
+                                        class="form-control"
+                                        formControlName="password"
+                                        required
+                                    />
+                                    <div class="input-group-append">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary"
+                                            (click)="showPassword = !showPassword"
+                                        >
+                                            <i [class]="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div
+                                    *ngIf="fundTransferForm.get('password')?.invalid && (fundTransferForm.get('password')?.touched || fundTransferForm.get('password')?.dirty)"
+                                    class="text-danger"
+                                >
+                                    Password is required.
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-block"
+                                [disabled]="fundTransferForm.invalid"
+                            >
+                            Transfer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+       
+    </div>
+</div>

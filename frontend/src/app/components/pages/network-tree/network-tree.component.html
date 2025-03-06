@@ -1,0 +1,89 @@
+<div class="wrapper">
+    <div id="content" class="active-content">
+        <div class="container">
+            <h2>Referral Tree</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-sm-10">
+                    <!-- Referral Tree Table -->
+                    <div class="mt-4">
+                        <div class="card  text-light justify-content-between">
+                            <p-tree [value]="nodes" [filter]="true" selectionMode="checkbox"
+                                (onNodeSelect)="onNodeSelect($event)" [style]="{'margin-top': '20px'}"></p-tree>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-10">
+                    <!-- Referral Tree Table -->
+                    <div class="mt-4">
+                        <div class="card justify-content-between">
+                            <!-- Referral User Info -->
+                            <div class="mt-4">
+                                <div class="card">
+                                    <div class="card-header text-white">
+                                        <h2 class="card-title text-center mb-0">Referral User data</h2>
+                                    </div>
+                                    <div class="card-body" *ngIf="selectedReferral">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                Name:
+                                                <span class="mx-1">{{ selectedReferral.name }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                GOLD Id:
+                                                <span class="mx-1">{{ selectedReferral.loginId }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Referral Code:
+                                            <span class="mx-1">{{ selectedReferral.referralCode }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Email:
+                                                <span class="mx-1">{{ selectedReferral.email }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Sponser:
+                                                <span class="mx-1">{{ selectedReferral.sponser }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Total Team Turnover Balance:
+                                                <span class="mx-1">{{ selectedReferral.totalTeamTurnoverBalance }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Total Team:
+                                                <span class="mx-1">{{ selectedReferral.totalTeam }}</span>
+                                            </li>
+                                            <li class="list-group-item">
+                                                Total Reward Balance:
+                                                <span class="mx-1">{{ selectedReferral.totalRewardBalance }}</span>
+                                            </li>
+                                        
+                                            <li class="list-group-item">
+                                                Total Staked Balance:
+                                                <span class="mx-1">{{ selectedReferral.totalStakedBalance }}</span>
+                                            </li>
+                                            <!-- <li class="list-group-item">
+                                                 Email:
+                                                <span class="mx-1">{{ selectedReferral.email }}</span>
+                                            </li> -->
+                                            <!-- Add more user details with icons as needed -->
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="!selectedReferral">
+                                        <p class="text-center"><i class="fa fa-exclamation-triangle"></i> No user
+                                            selected</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

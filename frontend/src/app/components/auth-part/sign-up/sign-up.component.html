@@ -1,0 +1,270 @@
+<div class="container-fluid">
+    <div class="row align-items-center justify-content-between">
+        <!-- Logo and Dark Mode Toggle Section (Flexible on Mobile) -->
+        <div class="col-12 d-flex justify-content-between align-items-center mb-3 mb-md-0">
+            <!-- Logo Section -->
+            <div class="text-center text-sm-start mt-3">
+                <img routerLink="/" src="assets/images/logo/BNBX LOGO WEB-01.png" alt="logo" class="img-fluid" width="250" height="50">
+            </div>
+
+            <!-- Dark Mode Toggle Section -->
+            <div class="text-center text-sm-end">
+                <div class="d-inline-block">
+                    <span *ngIf="!isDarkMode" class="me-2">
+                        <i class="fa-solid fa-sun fs-1" (click)="toggleDarkMode(true)"></i>
+                    </span>
+                    <span *ngIf="isDarkMode">
+                        <i class="fa-regular fa-sun fs-1" (click)="toggleDarkMode(false)"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row justify-content-between mt-4">
+            <div class="col-lg-6">
+                <img class="img-fluid"
+                src="assets/images/loginImage.jpg" alt="" width="1200" height="800">
+            </div>
+            <div class="col-md-6 col-sm-8 col-md-6 col-lg-4">
+                <div class="card p-3" [ngClass]="{'dark-mode-card': isDarkMode}">
+                    <!-- Yellow Borders in Dark Mode -->
+                    <div class="yellow-border-top-left" *ngIf="isDarkMode"></div>
+                    <div class="yellow-border-bottom-right" *ngIf="isDarkMode"></div>
+
+                    <!-- Sign-Up Header -->
+                    <div *ngIf="!isOtpSent">
+                        <h2 class="text-center mb-4">Sign Up</h2>
+                        <!-- <div *ngIf="loginIdData" class="login-id-container">
+                        
+                        <h3>
+                            Login ID:
+                            <strong class="mx-1 text-success">{{ loginIdData }}</strong>
+                            <i class="fas fa-copy text-primary cursor-pointer" (click)="copyLoginId()"
+                                title="Copy to clipboard"></i>
+                        </h3>
+                      </div> -->
+                        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+
+                            <!-- Full Name Input -->
+                            <div class="form-group mb-3">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Enter your full name"
+                                    formControlName="name" autocomplete="off">
+                                <div *ngIf="signUpForm.get('name').touched && signUpForm.get('name').invalid"
+                                    class="text-danger">
+                                    Full name is required.
+                                </div>
+                            </div>
+
+                            <!-- Email Input with Icon -->
+                            <div class="form-group mb-3">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter your email"
+                                        formControlName="email" autocomplete="off">
+                                </div>
+                                <div *ngIf="signUpForm.get('email').touched && signUpForm.get('email').invalid"
+                                    class="text-danger">
+                                    <div *ngIf="signUpForm.get('email').errors?.['required']">Email is required.</div>
+                                    <div *ngIf="signUpForm.get('email').errors?.['email']">Enter a valid email.</div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Mobile Input -->
+                            <div class="form-group mb-3">
+                                <label for="mobile">Mobile Number</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </span>
+                                    <input type="tel" class="form-control" id="mobile"
+                                        placeholder="Enter your mobile number" formControlName="mobile"
+                                        autocomplete="off">
+                                </div>
+                                <div *ngIf="signUpForm.get('mobile').touched && signUpForm.get('mobile').invalid"
+                                    class="text-danger">
+                                    <div *ngIf="signUpForm.get('mobile').errors?.['required']">Mobile number is
+                                        required.
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Password Input with Icon and Toggle -->
+                            <div class="form-group mb-3">
+                                <label for="password">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                    <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                                        id="password" placeholder="Enter your password" formControlName="password">
+                                    <span class="input-group-text" (click)="togglePasswordVisibility()">
+                                        <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                                <div *ngIf="signUpForm.get('password').touched && signUpForm.get('password').invalid"
+                                    class="text-danger">
+                                    <div *ngIf="signUpForm.get('password').errors?.['required']">Password is required.
+                                    </div>
+                                    <div *ngIf="signUpForm.get('password').errors?.['minlength']">Password must be at
+                                        least
+                                        6
+                                        characters long.</div>
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password Input -->
+                            <div class="form-group mb-3">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                    <input [type]="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                                        id="confirmPassword" placeholder="Confirm your password"
+                                        formControlName="cnfPassword" autocomplete="off">
+                                    <span class="input-group-text" (click)="togglePasswordVisibility()">
+                                        <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                                <div *ngIf="signUpForm.get('cnfPassword').touched && signUpForm.get('cnfPassword').invalid"
+                                    class="text-danger">
+                                    Confirm password is required.
+                                </div>
+                            </div>
+
+                            <!-- Referral Input -->
+                            <div class="form-group mb-3">
+                                <label for="referral">Referral Code</label>
+                                <input type="text" class="form-control" formControlName="referral" id="referral"
+                                    (blur)="checkReferralCode()" placeholder="Enter referral code" autocomplete="off">
+                                <div *ngIf="signUpForm.get('referral').touched && signUpForm.get('referral').invalid"
+                                    class="text-danger">
+                                    Referral code is required.
+                                </div>
+                                <div *ngIf="referralName" class="text-success">
+                                    Referral Email: {{ referralName }}
+                                </div>
+                            </div>
+
+                            <!-- Terms and Conditions Checkbox -->
+                            <div class="form-group mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="termsConditions"
+                                        formControlName="termsConditions">
+                                    <label class="form-check-label" for="termsConditions">I agree to the terms and
+                                        conditions</label>
+                                </div>
+                                <div *ngIf="signUpForm.get('termsConditions').touched && signUpForm.get('termsConditions').invalid"
+                                    class="text-danger">
+                                    You must agree to the terms and conditions.
+                                </div>
+                            </div>
+
+                            <!-- Sign Up Button -->
+                            <div class="form-group mb-3 text-center">
+                                <button type="submit" class="btn btn-primary w-100" [disabled]="signUpForm.invalid">Sign
+                                    Up</button>
+                            </div>
+
+
+                            <!-- Already have an account link -->
+                            <div class="form-group mb-3 text-center">
+                                <p>Already have an account? <a routerLink="/login" class="text-primary">Log In</a></p>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- OTP Verification Section -->
+
+
+                    <div class="mt-4"  *ngIf="isOtpSent">
+
+                        <div class="card" style=" background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%); color: white;">
+                            <div class="card-body justify-content-center">
+                                <h1 class="text-center text-light mb-4">Welcome to join BNBX</h1>
+                                <h3 class="text-center text-light mb-4">Your LoginId is </h3>
+                                <h2 class="text-center text-light mb-4">{{loginIdData}}<i class="fas mx-2 fa-copy  text-success cursor-pointer" (click)="copyLoginIdLink()"
+                                        title="Copy to clipboard"></i>
+                                </h2>
+                                <div class="form-group mb-3 text-center">
+                                    <h3>Already have an account? <a routerLink="/login" class="text-primary">Log In</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div *ngIf="isOtpSent" class="mt-4">
+                    <h2 class="text-center mb-4">Verify Mobile OTP</h2>
+                    <form [formGroup]="otpForm" (ngSubmit)="mobileVerifyOtp()">
+                      <div class="form-group mb-3">
+                        <label for="otp">Enter OTP:</label>
+                        <input class="form-control" id="otp" formControlName="otp" required />
+                      </div>
+                  
+                      <h3 *ngIf="!resendEnabled && timer > 0" class="text-center mt-2">
+                        Resend OTP in {{ timer }} seconds
+                      </h3>
+                  
+                      <div class="form-group mb-3 text-center">
+                        <button class="btn btn-primary w-100 mb-2" type="submit">
+                          Verify OTP
+                        </button>
+                  
+                        <button
+                          class="btn btn-secondary w-100"
+                          type="button"
+                          (click)="mobileVerifyOtp()"
+                          [disabled]="!resendEnabled"
+                        >
+                          Resend OTP
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div *ngIf="isOtpSent" class="mt-4">
+                    <h2 class="text-center mb-4">Verify Mobile OTP</h2>
+                    <form [formGroup]="otpForm" (ngSubmit)="mobileVerifyOtp()">
+                      <div class="form-group mb-3">
+                        <label for="otp">Enter OTP:</label>
+                        <input class="form-control" id="otp" formControlName="otp" required />
+                      </div>
+                  
+                      <h3 *ngIf="!resendEnabled && timer > 0" class="text-center mt-2">
+                        Resend OTP in {{ timer }} seconds
+                      </h3>
+                  
+                      <div class="form-group mb-3 text-center">
+                        <button class="btn btn-primary w-100 mb-2" type="submit">
+                          Verify OTP
+                        </button>
+                  
+                        <button
+                          class="btn btn-secondary w-100"
+                          type="button"
+                          (click)="emailVerifyOtp()"
+                          [disabled]="!resendEnabled"
+                        >
+                          Resend OTP
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                   -->
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
