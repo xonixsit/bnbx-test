@@ -1,0 +1,82 @@
+[
+    {
+        "percentage": 10,
+        "minUser": 1
+    },
+    {
+        "percentage": 5,
+        "minUser": 1
+    },
+    {
+        "percentage": 2.5,
+        "minUser": 2
+    },
+    {
+        "percentage": 2,
+        "minUser": 2
+    },
+    {
+        "percentage": 1.5,
+        "minUser": 3
+    },
+    {
+        "percentage": 1,
+        "minUser": 3
+    },
+    {
+        "percentage": 1,
+        "minUser": 4
+    },
+    {
+        "percentage": 1,
+        "minUser": 4
+    },
+    {
+        "percentage": 0.5,
+        "minUser": 5
+    },
+    {
+        "percentage": 0.5,
+        "minUser": 5
+    },
+    {
+        "percentage": 0.5,
+        "minUser": 6
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 6
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 7
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 7
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 8
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 8
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 9
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 9
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 10
+    },
+    {
+        "percentage": 0.25,
+        "minUser": 10
+    }
+]

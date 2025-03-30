@@ -1,0 +1,138 @@
+<div class="container-fluid min-vh-100 d-flex flex-column overflow-hidden position-relative" style="background-color: #2B3139;"> 
+    <!-- Header Section -->
+    <header class="header navbar-area px-0 position-absolute top-0 w-100">
+        <div class="container-fluid px-0">
+            <div class="row">
+                <div class="col-lg-12 px-0">
+                    <div class="nav-inner">
+                        <nav class="navbar navbar-expand-lg">
+                            <a class="navbar-brand px-4">
+                                <img width="180" height="60" src="assets/logo/bnbx_logo.png" alt="Logo">
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login form section - Centered -->
+    <div class="container flex-grow-1 d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-5 col-lg-4 ">
+                    <div class="card border-0 bg-transparent">
+                        <div class="login-box p-4" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <h2 class="text-center mb-4 text-white" *ngIf="!isForgotPassword">Admin Login</h2>
+                            <h2 class="text-center mb-4 text-white" *ngIf="isForgotPassword">Change Password</h2>
+
+                            <!-- Login Form -->
+                            <form *ngIf="!isForgotPassword" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                <!-- Mobile Input -->
+                                <div class="form-group mb-4">
+                                    <label class="text-white-50 mb-2">Mobile</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-transparent text-white border-0" 
+                                            style="border-bottom: 1px solid rgba(240, 185, 11, 0.5) !important;"
+                                            id="mobile" formControlName="mobile" placeholder="Enter your mobile number">
+                                    </div>
+                                </div>
+
+                                <!-- Password Input -->
+                                <div class="form-group mb-4">
+                                    <label class="text-white-50 mb-2">Password</label>
+                                    <div class="input-group">
+                                        <input [type]="isPasswordVisible ? 'text' : 'password'" 
+                                            class="form-control bg-transparent text-white border-0"
+                                            style="border-bottom: 1px solid rgba(240, 185, 11, 0.5) !important;"
+                                            id="password" formControlName="password" placeholder="Enter your password">
+                                        <span class="input-group-text bg-transparent border-0 text-white-50" 
+                                            style="border-bottom: 1px solid rgba(240, 185, 11, 0.5) !important;"
+                                            (click)="togglePasswordVisibility()">
+                                            <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Login Button -->
+                                <div class="form-group mb-4">
+                                    <button class="btn w-100 text-dark" type="submit" 
+                                        style="background-color: #F0B90B; font-weight: 600;">
+                                        Login
+                                    </button>
+                                </div>
+
+                                <!-- Forgot Password Link -->
+                                <div class="text-center">
+                                    <a href="javascript:void(0)" (click)="showForgotPassword()" 
+                                        class="text-decoration-none" style="color: #F0B90B">
+                                        Change Password?
+                                    </a>
+                                </div>
+                            </form>
+
+                            <!-- Keep the forgot password form with similar styling -->
+                            <!-- Forgot Password Form -->
+                        <form *ngIf="isForgotPassword" [formGroup]="changePasswordForm" (ngSubmit)="onForgotPasswordSubmit()">
+                            <!-- Old Password Input -->
+                            <div class="form-group mb-3">
+                                <label for="oldPassword">Old Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                    <input [type]="isOldPasswordVisible ? 'text' : 'password'" class="form-control"
+                                        id="oldPassword" formControlName="oldPassword" placeholder="Enter your old password">
+                                    <span class="input-group-text" (click)="toggleOldPasswordVisibility()">
+                                        <i class="fa" [ngClass]="isOldPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- New Password Input -->
+                            <div class="form-group mb-3">
+                                <label for="newPassword">New Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                    <input [type]="isNewPasswordVisible ? 'text' : 'password'" class="form-control"
+                                        id="newPassword" formControlName="newPassword" placeholder="Enter your new password">
+                                    <span class="input-group-text" (click)="toggleNewPasswordVisibility()">
+                                        <i class="fa" [ngClass]="isNewPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Confirm Password Input -->
+                            <div class="form-group mb-3">
+                                <label for="cnfPassword">Confirm New Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                    <input [type]="isConfirmPasswordVisible ? 'text' : 'password'" class="form-control"
+                                        id="cnfPassword" formControlName="cnfPassword" placeholder="Confirm your new password">
+                                    <span class="input-group-text" (click)="toggleConfirmPasswordVisibility()">
+                                        <i class="fa" [ngClass]="isConfirmPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"></i>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="form-group mb-3 text-center">
+                                <button class="btn btn-primary w-100" type="submit">Change Password</button>
+                            </div>
+
+                            <!-- Back to Login Link -->
+                            <div class="form-group mb-3 text-center">
+                                <p><a href="javascript:void(0)" (click)="backToLogin()">Back to Login</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
