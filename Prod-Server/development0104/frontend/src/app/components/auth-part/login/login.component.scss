@@ -1,0 +1,45 @@
+.container-fluid {
+  min-height: 100vh;
+  padding-top: 80px;  // Space for fixed header
+}
+
+.card {
+  width: 90%;
+  max-width: 400px;
+  margin: 1rem auto;
+  padding: 2rem 1.5rem;
+  
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+    padding: 1.5rem 1rem;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group {
+  width: 100%;
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .container-fluid {
+    padding-top: 60px;
+  }
+  
+  .card {
+    width: 95%;
+    margin-top: 1rem;
+  }
+  
+  .form-control {
+    font-size: 14px;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 0.6rem;
+  }
+}

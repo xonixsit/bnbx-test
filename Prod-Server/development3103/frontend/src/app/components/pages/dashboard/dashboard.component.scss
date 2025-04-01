@@ -1,0 +1,282 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1a1d20;
+  overflow-x: hidden; // Hide horizontal overflow
+}
+
+.main-content {
+  display: flex;
+  margin-top: 80px;
+  min-height: calc(100vh - 60px);
+  background-color: #1a1d20;
+  width: 100%;
+  overflow: hidden; // Hide overflow
+}
+
+.content-wrapper {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #1a1d20;
+  min-height: calc(100vh - 80px);
+  position: relative;
+}
+
+@media (max-width: 992px) {
+  .content-wrapper {
+    margin-left: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  body {
+    background-color: #1a1d20;
+  }
+}
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1000;
+  width: 100%;
+  display: block;
+  background-color: #232629;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.main-content {
+  display: flex;
+  margin-top: 80px;
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar-wrapper {
+   position: fixed;
+   left: 0;
+   top: 60px;
+   bottom: 0;
+   width: 250px;
+ //   background-color: #232629;
+   overflow-y: auto;
+   z-index: 100;
+}
+
+.content-wrapper {
+  flex: 1;
+  margin-left: 250px;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #1a1d20;
+}
+
+// Table styles for transaction history
+.table-data {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #e4e6eb;
+  
+  th {
+    background-color: #f0b90b;
+    color: #000;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+  }
+  
+  td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+// Card styles
+.card {
+  background-color: #2d3035;
+  border-radius: 8px;
+  border: none;
+  padding: 20px;
+  height: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  .card-title {
+    color: #f0b90b;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    font-size: 22px;
+    font-weight: 600;
+    color: #e4e6eb;
+  }
+}
+
+// Status badges
+.COMPLETED {
+  background-color: #0ecb81;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.PENDING {
+  background-color: #f0b90b;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.REJECTED {
+  background-color: #f6465d;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.mobile-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1050;
+    background: #2c3e50;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    display: none;
+    transition: all 0.3s;
+  
+    &:hover {
+      background: #34495e;
+    }
+  }
+  
+
+// Responsive styles
+@media (max-width: 992px) {
+  .sidebar-wrapper {
+    transform: translateX(-250px);
+    transition: transform 0.3s ease;
+    
+    &.active {
+      transform: translateX(0);
+    }
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
+  #sidebar {
+    position: fixed;
+    left: -250px;
+    height: 100vh;
+    z-index: 1040;
+    transition: all 0.3s;
+
+    &.mobile-view {
+      left: 0;
+    }
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+  }
+
+  @media (max-width: 992px) {
+    .sidebar-wrapper {
+      position: fixed;
+      left: -250px;
+      transition: all 0.3s ease;
+      z-index: 100;
+      
+      &.active {
+        left: 0;
+      }
+    }
+    
+    .sidebar-overlay {
+      &.active {
+        display: block;
+      }
+    }
+  
+    .content-wrapper {
+      margin-left: 0;
+      transition: all 0.3s ease;
+      
+      &.shifted {
+        transform: translateX(250px);
+      }
+    }
+  }
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1d20;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f4447;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4f52;
+}
+
+.sidebar-toggle-btn {
+    display: none;
+    position: fixed;
+    left: 15px;
+    top: 40px;
+    z-index: 1001;
+    background-color: #f0b90b;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    
+    i {
+      font-size: 20px;
+    }
+  
+    &:hover {
+      background-color: darken(#f0b90b, 5%);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar-toggle-btn {
+      display: block;
+    }
+  }

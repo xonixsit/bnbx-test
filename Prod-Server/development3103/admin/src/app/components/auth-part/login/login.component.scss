@@ -1,0 +1,28 @@
+/* Update these styles */
+.header {
+    z-index: 1000;
+}
+
+.login-box {
+    margin-top: -60px; /* Adjust this value to fine-tune vertical centering */
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+.form-control:focus {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border-color: #F0B90B !important;
+    color: white !important;
+}
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}

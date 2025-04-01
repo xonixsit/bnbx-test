@@ -1,0 +1,48 @@
+<div class="wrapper">
+    <div id="content" class="active-content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <div class="card shadow-sm">
+                        <div class="card-header text-white">
+                            <h2 class="card-title text-center mb-0">Profile</h2>
+                        </div>
+                        <div class="card-body">
+                            <!-- Profile Form -->
+                            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                                <!-- Full Name -->
+                                <div class="form-group mb-3">
+                                    <label for="name">Full Name:</label>
+                                    <input type="text" id="name" class="form-control" formControlName="name" />
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group mb-3">
+                                    <label for="email">Email:</label>
+                                    <input type="email" id="email" class="form-control" formControlName="email" />
+                                </div>
+
+                                <!-- Mobile -->
+                                <div class="form-group mb-3">
+                                    <label for="mobile">Mobile Number:</label>
+                                    <input type="text" id="mobile" class="form-control" formControlName="mobile" />
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary btn-block" [disabled]="profileForm.invalid || loading">
+                                    Update Profile
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+               
+            </div>
+
+           
+        </div>
+    </div>
+</div>

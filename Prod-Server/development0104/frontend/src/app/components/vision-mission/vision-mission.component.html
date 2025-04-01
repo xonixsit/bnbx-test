@@ -1,0 +1,65 @@
+
+<section class="vision-mission-new">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="gradient-text">Vision & Mission</h2>
+            <div class="header-line"></div>
+        </div>
+        
+        <!-- Vision Card -->
+        <div class="statement-container">
+            <div class="statement-card vision-card" @fadeInOut>
+                <div class="content-side">
+                    <h3>Our Vision</h3>
+                    <p>Our vision is to empower individuals globally by providing them with innovative financial solutions through AI-driven crypto trading, blockchain technology, and a robust multilevel marketing system. We strive to create a world where everyone, regardless of background, can achieve financial freedom, build wealth, and unlock limitless opportunities in the digital economy.</p>
+                </div>
+                <div class="icon-side">
+                    <div class="floating-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                            <defs>
+                                <linearGradient id="visionGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#F0B90B;stop-opacity:0.8"/>
+                                    <stop offset="100%" style="stop-color:#F0B90B;stop-opacity:1"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="32" cy="32" r="28" fill="none" stroke="url(#visionGlow)" stroke-width="2">
+                                <animate attributeName="stroke-dasharray" values="0,180;180,180" dur="2s"/>
+                            </circle>
+                            <path d="M32 12L52 32L32 52L12 32Z" fill="url(#visionGlow)">
+                                <animateTransform attributeName="transform" type="rotate" from="0 32 32" to="360 32 32" dur="10s" repeatCount="indefinite"/>
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission Card -->
+            <div class="statement-card mission-card" @fadeInOut>
+                <div class="icon-side">
+                    <div class="floating-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                            <defs>
+                                <linearGradient id="missionGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#F0B90B;stop-opacity:0.8"/>
+                                    <stop offset="100%" style="stop-color:#F0B90B;stop-opacity:1"/>
+                                </linearGradient>
+                            </defs>
+                            <g class="mission-paths">
+                                <path d="M32 8L56 32L32 56L8 32Z" fill="none" stroke="url(#missionGlow)" stroke-width="2">
+                                    <animate attributeName="stroke-dasharray" values="0,180;180,180" dur="2s"/>
+                                </path>
+                                <circle cx="32" cy="32" r="16" fill="url(#missionGlow)" opacity="0.8">
+                                    <animate attributeName="r" values="14;16;14" dur="2s" repeatCount="indefinite"/>
+                                </circle>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="content-side">
+                    <h3>Our Mission</h3>
+                    <p>At BNBX, our mission is to revolutionize the way people generate wealth by combining the power of BNB Chain, AI-driven cryptocurrency trading. We aim to provide our subscribers with a secure, transparent, and profitable platform that delivers consistent passive income and offers opportunities for financial growth.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,59 @@
+
+<!-- <div class="sidebar-overlay" [class.active]="!isSidebarCollapsed" (click)="closeSidebar()"></div> -->
+
+<div class="wrapper">
+  <!-- Sidebar -->
+  <nav #sidebar id="sidebar" [class.active]="!isSidebarCollapsed">
+    <ul class="list-unstyled components cursor-pointer">
+      <!-- Dashboard -->
+      <li>
+        <a routerLink="/dashboard" 
+           routerLinkActive="active-link" 
+           (click)="closeSidebarAndNavigate('/dashboard')">
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+      </li>
+      <!-- Network -->
+      <li>
+        <span class="w-100 text-start" data-bs-toggle="collapse" data-bs-target="#networkSubmenu" aria-expanded="false">
+          <i class="fas fa-sitemap"></i> Referral <i class="fas fa-chevron-down float-end"></i>
+        </span>
+        <div class="collapse" id="networkSubmenu" data-bs-parent="#sidebar">
+          <ul class="list-unstyled ps-4">
+            <li><a [routerLink]="['/dashboard', 'reffral-list']" routerLinkActive="active-link" (click)="closeSidebar()">
+                <i class="fas fa-network-wired"></i> Referral List</a></li>
+            <li><a [routerLink]="['/dashboard', 'network-tree']" routerLinkActive="active-link" (click)="closeSidebar()">
+                <i class="fas fa-sitemap"></i> Reffral Tree</a></li>
+          </ul>
+        </div>
+      </li>
+      <!-- Rest of the menu items - replace toggleSidebar() with closeSidebar() -->
+      <li><a [routerLink]="['/dashboard', 'stake']" routerLinkActive="active-link" (click)="closeSidebar()">
+        <i class="fas fa-layer-group"></i> Stake</a></li>
+
+        <li><a [routerLink]="['/dashboard', 'deposit']" routerLinkActive="active-link" (click)="closeSidebar()">
+          <i class="fas fa-arrow-down"></i> Deposit</a></li>
+
+      <li><a [routerLink]="['/dashboard', 'withdraw']" routerLinkActive="active-link" (click)="closeSidebar()">
+        <i class="fas fa-arrow-up"></i> Withdraw</a></li>
+      <li><a [routerLink]="['/dashboard', 'fund-transfer']" routerLinkActive="active-link" (click)="closeSidebar()">
+        <i class="fas fa-exchange-alt"></i> Fund Transfer</a></li>
+      <li>
+        <a [routerLink]="['/dashboard', 'transaction']" routerLinkActive="active-link" (click)="closeSidebar()">
+          <i class="fas fa-exchange-alt"></i> Transaction</a>
+      </li>
+      <li><a [routerLink]="['/dashboard', 'profile']" routerLinkActive="active-link" (click)="closeSidebar()">
+        <i class="fas fa-user"></i> Profile</a></li>
+      <li><a [routerLink]="['/dashboard', 'setting']" routerLinkActive="active-link" (click)="closeSidebar()">
+        <i class="fas fa-shield-alt"></i> Security</a></li>
+      <li>
+        <a (click)="logout(); closeSidebar()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+  <!-- Page Content -->
+ 

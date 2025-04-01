@@ -291,7 +291,7 @@ module.exports.internalTransafer = async (request, response) => {
             fromUser: recepientUser._id,
             transactionType: "FUND-TRANSFER",
             balanceType: "TRADE",
-            currentBalance: userData.BUSDBalance,
+            currentBalance: userData.TRADEBalance - amount,  // Fix: Use TRADEBalance instead of BUSDBalance
             description: `${amount} USDT Send to user ${recepientUser.loginId}`
         });
 
@@ -301,7 +301,7 @@ module.exports.internalTransafer = async (request, response) => {
             user: recepientUser._id,
             balanceType: "TRADE",
             transactionType: "FUND-TRANSFER",
-            currentBalance: recepientUser.BUSDBalance ,
+            currentBalance: recepientUser.TRADEBalance + amount,  // Fix: Use correct balance for recipient
             description: `${amount} USDT received from user ${userData.loginId}`
         });
 

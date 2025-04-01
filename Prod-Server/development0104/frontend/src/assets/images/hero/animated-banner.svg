@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2B3139" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#1A1E24" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F0B90B" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#F0B90B" stop-opacity="0.3" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    
+    <!-- Pattern definitions -->
+    <pattern id="hexPattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M30 10L50 20L50 40L30 50L10 40L10 20Z" fill="none" stroke="#F0B90B" stroke-opacity="0.15" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="0.15;0.3;0.15" dur="4s" repeatCount="indefinite" />
+      </path>
+    </pattern>
+    
+    <!-- Animated circles -->
+    <circle id="circle" cx="0" cy="0" r="5" fill="#F0B90B" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite" />
+    </circle>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#grad1)" />
+  <rect width="100%" height="100%" fill="url(#hexPattern)" />
+  
+  <!-- Animated elements -->
+  <g>
+    <!-- Floating circles in symmetric positions -->
+    <use xlink:href="#circle" x="200" y="150">
+      <animate attributeName="y" values="150;130;150" dur="4s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#circle" x="1000" y="150">
+      <animate attributeName="y" values="150;130;150" dur="4s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#circle" x="300" y="450">
+      <animate attributeName="y" values="450;430;450" dur="6s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#circle" x="900" y="450">
+      <animate attributeName="y" values="450;430;450" dur="6s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#circle" x="500" y="100">
+      <animate attributeName="y" values="100;120;100" dur="8s" repeatCount="indefinite" />
+    </use>
+    <use xlink:href="#circle" x="700" y="100">
+      <animate attributeName="y" values="100;120;100" dur="8s" repeatCount="indefinite" />
+    </use>
+    
+    <!-- Animated gradient overlay -->
+    <rect width="100%" height="100%" fill="url(#grad2)" opacity="0.1">
+      <animate attributeName="opacity" values="0.1;0.2;0.1" dur="5s" repeatCount="indefinite" />
+    </rect>
+    
+    <!-- Binance logo inspired element - central symmetric element -->
+    <g transform="translate(600, 300)" filter="url(#glow)">
+      <path d="M0,-50 L50,0 L0,50 L-50,0 Z" fill="#F0B90B" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite" />
+        <animate attributeName="transform" type="rotate" from="0" to="360" dur="30s" repeatCount="indefinite" />
+      </path>
+      <path d="M0,-30 L30,0 L0,30 L-30,0 Z" fill="#F0B90B" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="transform" type="rotate" from="0" to="-360" dur="20s" repeatCount="indefinite" />
+      </path>
+    </g>
+  </g>
+  
+  <!-- Subtle particle effect in symmetric positions -->
+  <g>
+    <circle cx="300" cy="200" r="2" fill="#F0B90B" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="900" cy="200" r="2" fill="#F0B90B" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="400" cy="400" r="2" fill="#F0B90B" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="800" cy="400" r="2" fill="#F0B90B" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="500" cy="300" r="2" fill="#F0B90B" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="7s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="700" cy="300" r="2" fill="#F0B90B" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="7s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg>
