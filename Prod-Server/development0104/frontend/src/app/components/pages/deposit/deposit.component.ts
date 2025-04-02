@@ -171,6 +171,7 @@ export class DepositComponent implements OnInit {
     const verificationData = {
       transactionHash,
       amount,
+      network: this.depositForm.get('network')?.value
     };
 
     this.walletService.verifyDepositTxnHash(verificationData, this.token).subscribe({

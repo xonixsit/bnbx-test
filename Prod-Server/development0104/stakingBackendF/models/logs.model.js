@@ -5,7 +5,7 @@ const LogSchema = new Schema(
     {
         type: {
             type: String,
-            enum: ['CRON', 'INTEREST', 'ERROR', 'INFO'],
+            enum: ['CRON', 'INTEREST', 'ERROR', 'INFO','TRANSACTION'],
             default: 'INFO'
         },
         message: String,

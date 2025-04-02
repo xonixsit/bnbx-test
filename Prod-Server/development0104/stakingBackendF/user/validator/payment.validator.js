@@ -42,6 +42,7 @@ module.exports.verifyTransaction = (request, response, next) => {
         amount: Joi.number().required(),
         planId: Joi.number().required(),
         planName: Joi.string().required(),
+        network: Joi.string().required(),
         dailyRate: Joi.number().required(),
         lockPeriod: Joi.number().valid(30, 60, 90, 180).required()
     });

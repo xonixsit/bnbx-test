@@ -1,6 +1,6 @@
 const TransactionModel = require("../models/transactions.model");
 const UserModel = require("../models/users.model");
-const investmentPlans = require("../config/plans.config");
+const getInvestmentPlans = require("../config/plans.config");
 
 class StakeService {
     static async validateUser(userId) {
@@ -26,16 +26,19 @@ class StakeService {
         return existingTx;
     }
 
-    static validatePlanDetails(planData) {
+    static async validatePlanDetails(planData) {
         const { planId, planName, dailyRate, amount } = planData;
         
-        const configuredPlan = investmentPlans.find(plan => plan.id === planId);
+        const plans = await getInvestmentPlans();
+        const configuredPlan = plans.find(plan => plan.id === planId);
+        console.log("configuredPlan",configuredPlan);
         if (!configuredPlan) {
             throw new Error("Invalid investment plan");
         }
 
         // Strict rate validation with small tolerance for floating-point precision
         const rateDifference = Math.abs(configuredPlan.rate - dailyRate);
+        console.log("rateDifference",rateDifference);
         if (rateDifference > 0.0001) {
             throw new Error("Invalid plan rate detected");
         }
@@ -53,25 +56,27 @@ class StakeService {
     }
 
     static async createStake(userData, depositData) {
-        const validatedRate = this.validatePlanDetails(depositData);
-        const { amount, planId, planName, lockPeriod, transactionHash } = depositData;
-        // console.log('depositData',depositData);
-        const totalReturn = amount * validatedRate * lockPeriod;
-
+        const validatedRate = await this.validatePlanDetails(depositData);
+        const { amount, planId, planName, lockPeriod, transactionHash, network } = depositData;
+        
+        const totalReturn = Number((amount * validatedRate * lockPeriod).toFixed(4));
+        
         const transaction = await TransactionModel.create({
             user: userData._id,
-            amount,
+            amount: Number(amount),
             transactionType: "BOND-IN",
             balanceType: "TRADE",
-            currentBalance: userData.BUSDBalance,
+            currentBalance: Number(userData.BUSDBalance),
             description: "Please Wait for approval.",
             status: "PENDING",
-            txHash: transactionHash,  // Added txHash field
+            txHash: transactionHash,
+            chain: network,
             planDetails: {
                 planId,
                 planName,
                 dailyRate: validatedRate,
-                lockPeriod,
+                lockPeriod: Number(lockPeriod),
+                originalLockPeriod: Number(lockPeriod),
                 totalReturn
             }
         });

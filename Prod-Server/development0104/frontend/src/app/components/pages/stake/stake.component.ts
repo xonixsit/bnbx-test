@@ -152,11 +152,6 @@ export class StakeComponent implements OnInit {
   
   // Update the deposit method
   stake() {
-    console.log('Form State:', {
-      formValid: this.stakeForm.valid,
-      selectedPlan: this.selectedPlan,
-      amount: this.stakeForm.get('amount')?.value
-    });
     
     if (!this.selectedPlan) {
       this.toastr.error('Please select an investment plan');
@@ -169,11 +164,6 @@ export class StakeComponent implements OnInit {
         return;
       }
   
-      // const depositData = {
-      //   ...this.depositForm.value,
-      //   plan: this.selectedPlan,
-      //   dailyRate: selectedPlanDetails.rate
-      // };
       this.walletService.toggleLoader(true);
       // Store current values before any operations
       // Store current values and plan details
@@ -265,6 +255,7 @@ export class StakeComponent implements OnInit {
     const verificationData = {
       transactionHash,
       amount,
+      network: this.stakeForm.get('network')?.value,
       planId: this.selectedPlan,
       planName: selectedPlanDetails.name,
       dailyRate: selectedPlanDetails.rate,

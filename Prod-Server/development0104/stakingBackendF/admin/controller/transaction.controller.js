@@ -57,12 +57,14 @@ module.exports.transactionList = async (request, response) => {
             const transformed = doc.toObject ? doc.toObject() : doc;
             return {
                 ...transformed,
-                txHash: ((transformed.transactionType === "DEPOSIT" || transformed.transactionType === "BOND-IN") && transformed.status === "PENDING") 
+                txHash: ((transformed.transactionType === "DEPOSIT" || transformed.transactionType === "BOND-IN") && 
+                    (transformed.status === "PENDING" || transformed.status === "COMPLETED")) 
                     ? transformed.txHash || null 
                     : undefined,
-                address: (transformed.transactionType === "WITHDRAW" && transformed.status === "PENDING")
-                    ? transformed.address || null
-                    : undefined
+                address: ((transformed.transactionType === "WITHDRAW" || transformed.transactionType === "DEPOSIT" || transformed.transactionType === "BOND-IN") && 
+                    (transformed.status === "PENDING" || transformed.status === "COMPLETED"))
+                    ? transformed.chain || null
+                    : undefined,
             };
         });
 

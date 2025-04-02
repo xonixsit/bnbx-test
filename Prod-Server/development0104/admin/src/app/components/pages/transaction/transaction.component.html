@@ -69,7 +69,7 @@
                   <th style="width: 8%;">Status</th>
                   <th style="width: 12%;">Date</th>
                   <th style="width: 20%;">Description</th>
-                  <th style="width: 15%;">Transaction Hash</th>
+                  <th style="width: 15%;">Transaction Details</th>
                   <th style="width: 9%;">Actions</th>
                 </tr>
               </thead>
@@ -113,9 +113,15 @@
                     </span>
                   </td>
                   <td>
-                    <span class="d-block" [title]="transaction.txHash">
-                      {{ transaction.txHash || '-' }}
-                    </span>
+                    <div class="d-flex flex-column">
+                      <span class="d-block" [title]="transaction.txHash" *ngIf="transaction.txHash">
+                        Hash: {{ transaction.txHash }}
+                      </span>
+                      <span class="d-block" [title]="transaction.address" *ngIf="transaction.address">
+                        Address: {{ transaction.address }}
+                      </span>
+                      <span *ngIf="!transaction.txHash && !transaction.address">-</span>
+                    </div>
                   </td>
                   <td>
                     <div class="d-flex gap-2" *ngIf="transaction.transactionType === 'DEPOSIT' && transaction.status === 'PENDING'">

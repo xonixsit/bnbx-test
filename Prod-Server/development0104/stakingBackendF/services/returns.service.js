@@ -81,16 +81,25 @@ class ReturnsService {
                     continue;
                 }
 
-                const dailyReturn = Number((deposit.amount * deposit.planDetails.dailyRate).toFixed(4));
+                // Ensure dailyRate is a number
+                const dailyRate = Number(deposit.planDetails.dailyRate);
+                if (isNaN(dailyRate)) {
+                    logger.warn(`Invalid daily rate for deposit ${deposit._id}`);
+                    continue;
+                }
+
+                const dailyReturn = Number((deposit.amount * dailyRate).toFixed(4));
                 const newBalance = Number((user.BUSDBalance + dailyReturn).toFixed(4));
 
                 await TransactionModel.create({
                     user: user._id,
                     amount: dailyReturn,
                     transactionType: "RETURN-INTEREST",
+                    balanceType: "TRADE",
                     currentBalance: newBalance,
                     description: `Daily return for deposit ${user.loginId} -- ${deposit.planDetails.planName}`,
                     status: "COMPLETED",
+                    chain: deposit.chain || "BEP20",
                     relatedDeposit: deposit._id
                 });
 

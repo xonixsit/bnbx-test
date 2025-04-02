@@ -90,7 +90,7 @@ exports.generateQr = async (req, res) => {
 };
 
 module.exports.verifyTransaction = async (request, response) => {
-    const { user, amount, transactionHash, planId, planName, dailyRate, lockPeriod } = request.body;
+    const { user, amount, transactionHash, planId, planName, dailyRate, lockPeriod, network } = request.body;
     // console.log(user, amount, transactionHash, planId, planName, dailyRate, lockPeriod);
     try {
         // Validate user
@@ -106,6 +106,7 @@ module.exports.verifyTransaction = async (request, response) => {
             planName,
             dailyRate,
             lockPeriod,
+            network,
             transactionHash
         });
 
@@ -126,22 +127,15 @@ module.exports.verifyTransaction = async (request, response) => {
 };
 
 module.exports.verifyDepositTxnhash = async (request, response) => {
-    const { user, amount, transactionHash } = request.body;
+    const { user, amount, transactionHash, network } = request.body;
 
-    console.log(user, amount, transactionHash);
+    console.log(request.body);
     try {
         // Validate user
         const userData = await StakeService.validateUser(user._id);
 
         // Check for existing transaction
         await StakeService.checkExistingTransaction(transactionHash);
-
-        // Create deposit with plan details
-        // await StakeService.createDeposit(userData, {
-        //     amount,
-        //     transactionHash
-        // });
-        // const { amount, transactionHash } = depositData;
 
         await TransactionModel.create({
             user: userData._id,
@@ -151,6 +145,7 @@ module.exports.verifyDepositTxnhash = async (request, response) => {
             currentBalance: userData.BUSDBalance,
             description: "Please Wait for approval.",
             status: "PENDING",
+            chain: network,
             txHash: transactionHash,
             planDetails: {
                 lockPeriod: 0,  // 0 for regular deposits

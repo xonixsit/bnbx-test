@@ -46,6 +46,7 @@ export class DashboardComponent {
   ngOnInit(): void {
     // Retrieve the token and profile info
     this.token = localStorage.getItem('authToken');
+    console.log(this.token)
     this.getProfileInfo();
     this.fetchTransactions(this.currentPage, this.pageSize);
   }

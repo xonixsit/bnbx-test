@@ -1,6 +1,6 @@
 const TransactionModel = require("../models/transactions.model");
 const UserModel = require("../models/users.model");
-const investmentPlans = require("../config/plans.config");
+const getInvestmentPlans = require("../config/plans.config");
 
 class DepositService {
     static async validateUser(userId) {
@@ -26,10 +26,11 @@ class DepositService {
         return existingTx;
     }
 
-    static validatePlanDetails(planData) {
+    static async validatePlanDetails(planData) {
         const { planId, planName, dailyRate, amount } = planData;
         
-        const configuredPlan = investmentPlans.find(plan => plan.id === planId);
+        const plans = await getInvestmentPlans();
+        const configuredPlan = plans.find(plan => plan.id === planId);
         if (!configuredPlan) {
             throw new Error("Invalid investment plan");
         }
@@ -48,29 +49,28 @@ class DepositService {
             throw new Error(`Amount must be between ${configuredPlan.min} and ${configuredPlan.max}`);
         }
 
-        // Return validated plan rate to ensure correct rate is used
-        return configuredPlan.rate;
+        return Number(configuredPlan.rate); // Return as number
     }
 
     static async createDeposit(userData, depositData) {
-        const validatedRate = this.validatePlanDetails(depositData);
+        const validatedRate = await this.validatePlanDetails(depositData);
         const { amount, planId, planName, lockPeriod, transactionHash } = depositData;
-        console.log('depositData',depositData);
-        const totalReturn = amount * validatedRate * lockPeriod;
+        
+        const totalReturn = Number((amount * validatedRate * lockPeriod).toFixed(4));
 
         const transaction = await TransactionModel.create({
             user: userData._id,
-            amount,
+            amount: Number(amount),
             transactionType: "DEPOSIT",
-            currentBalance: userData.BUSDBalance,
+            currentBalance: Number(userData.BUSDBalance),
             description: "Please Wait for approval.",
             status: "PENDING",
-            txHash: transactionHash,  // Added txHash field
+            txHash: transactionHash,
             planDetails: {
                 planId,
                 planName,
-                dailyRate: validatedRate,
-                lockPeriod,
+                dailyRate: validatedRate, // Already a number from validatePlanDetails
+                lockPeriod: Number(lockPeriod),
                 totalReturn
             }
         });

@@ -60,20 +60,6 @@ export class WalletServiceService {
     );
   }
 
-  // swapData(depositData: any, token: string): Observable<any> {
-  //   const headers = new HttpHeaders({
-  //     'Authorization': token,
-  //     'Content-Type': 'application/x-www-form-urlencoded'
-  //   });
-
-  //   // Convert the object to URL-encoded format
-  //   const body = new URLSearchParams();
-  //   body.set('amount', depositData.amount);
-  //   body.set('password', depositData.password);
-
-  //   return this.http.post(`${this.baseUrl}/user/wallet/swap`, body.toString(), { headers });
-  // }
-
   getWalletTransactions(page: number, sizePerPage: number, transactionType: string, token: string): Observable<any> {
     const url = `${this.baseUrl}/user/wallet/?page=${page}&sizePerPage=${sizePerPage}&transactionType=${transactionType}`;
     const headers = new HttpHeaders({
