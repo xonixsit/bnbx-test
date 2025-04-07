@@ -264,7 +264,8 @@ module.exports.verifyWithdrawalUSDT = async (request, response) => {
         if (!transaction) {
             throw CustomErrorHandler.notFound("Transaction Not Found!");
         }
-
+        console.log('transaction id',transactionId);
+        console.log('status id',status);
             // const contract = new web3.eth.Contract(config.ABI, config.USDT_CONTRACT_ADDRESS);
             // const amountInWei = web3.utils.toWei((Math.abs(transaction.amount)*95/100).toString(), 'ether');
             
@@ -288,12 +289,14 @@ module.exports.verifyWithdrawalUSDT = async (request, response) => {
         //     await transaction.save();
         // } else {
         if (status === "COMPLETED") {
-
             transaction.status = status;
             await transaction.save();
         }
         // Refund the amount if rejected
         else {
+            transaction.status = "REJECTED";  // Add this line to update transaction status
+            await transaction.save();         // Save the transaction status update
+            
             const user = await UserModel.findById(transaction.user._id);
             user.BUSDBalance -= transaction.amount; // Since amount is negative, this adds back
             await user.save();

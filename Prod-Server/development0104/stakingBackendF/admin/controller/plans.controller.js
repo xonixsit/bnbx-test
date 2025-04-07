@@ -1,6 +1,5 @@
 const PlansModel = require("../../models/plans.model");
 const UserModel = require("../../models/users.model");
-const getInvestmentPlans = require("../../config/plans.config");
 const { handleErrorResponse, CustomErrorHandler } = require("../../middleware/CustomErrorHandler");
 
 module.exports.getPlansList = async (request, response) => {
@@ -14,7 +13,7 @@ module.exports.getPlansList = async (request, response) => {
         });
         if (!adminData) throw CustomErrorHandler.unAuthorized("Access Denied!");
 
-        const plans = await getInvestmentPlans();
+        const plans = await PlansModel.find({ isActive: true }).sort({ id: 1 });
 
         return response.json({
             status: true,
@@ -39,17 +38,18 @@ module.exports.updatePlan = async (request, response) => {
         });
         if (!adminData) throw CustomErrorHandler.unAuthorized("Access Denied!");
 
-        const plans = await getInvestmentPlans();
-        const planIndex = plans.findIndex(plan => plan.id === parseInt(id));
-        if (planIndex === -1) throw CustomErrorHandler.notFound("Plan not found!");
+        const plan = await PlansModel.findOne({ id: parseInt(id), isActive: true });
+        if (!plan) throw CustomErrorHandler.notFound("Plan not found!");
 
-        // Update plan in database
         const updatedPlan = await PlansModel.findOneAndUpdate(
             { id: parseInt(id) },
             {
-                rate: rate || plans[planIndex].rate,
-                min: min || plans[planIndex].min,
-                max: max || plans[planIndex].max
+                $set: {
+                    rate: rate || plan.rate,
+                    min: min || plan.min,
+                    max: max || plan.max,
+                    updatedAt: new Date()
+                }
             },
             { new: true }
         );

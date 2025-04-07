@@ -249,7 +249,7 @@ const calculateUserBalance = async (userId) => {
                 }
             }
         ]);
-
+        console.log('depositTransactions',depositTransactions);
         // Calculate totals with precise financial calculations
         const totalDeposits = Number((depositTransactions.length > 0 ? depositTransactions[0].total : 0).toFixed(2));
         const totalReferral = Number((referralRewards.length > 0 ? referralRewards[0].total : 0).toFixed(2));
@@ -320,7 +320,7 @@ const calculateUserBalance = async (userId) => {
             }
         ]);
 
-
+        console.log('totalDeposits',totalDeposits);
         // Calculate BUSD Balance
         const BUSDBalance = Number((
             totalDeposits + 
@@ -334,7 +334,13 @@ const calculateUserBalance = async (userId) => {
             mainToTrade - 
             totalWithdrawn
         ).toFixed(2));
-
+        console.log("totalDeposits:", totalDeposits);
+        console.log("totalReferral:", totalReferral);
+        console.log("totalBonus:", totalBonus);
+        console.log("tradeToMain:", tradeToMain);
+        console.log("BUSDBalance:", BUSDBalance);
+        console.log("receivedTransfers:", receivedTransfers);
+        console.log("returnInterestTransactions:", returnInterestTransactions);
         // Calculate withdrawable amount (deposits + referral + bonus + tradeToMain - withdrawn - totalTransferred)
         const withdrawableAmount = Number((
             totalDeposits + 

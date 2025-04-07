@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { from } from 'rxjs';
+import { AuthServicesService } from 'src/app/services/auth/auth-services.service';
 import { WalletServiceService } from 'src/app/services/wallet/wallet-service.service';
 interface InvestmentPlan {
   id: number;
@@ -48,24 +50,107 @@ export class StakeComponent implements OnInit {
     premium: { min: 1000, max: 4999, rate: 0.0233 },
     expert: { min: 5000, max: 9999999999, rate: 0.025 }
   };
+  walletBalance: number = 0;
+
 
   // Update the constructor with proper form initialization
   // Update the form initialization in constructor
   // Remove the hardcoded plansArray
   plansArray: InvestmentPlan[] = [];
 
-  constructor(private walletService: WalletServiceService, private fb: FormBuilder, private toastr: ToastrService, private router: Router) {
+  constructor(private authService: AuthServicesService, private walletService: WalletServiceService, private fb: FormBuilder, private toastr: ToastrService, private router: Router) {
     this.stakeForm = this.fb.group({
       amount: [0, [Validators.required]],
       network: ['BEP20', Validators.required],
-      lockPeriod: ['30', Validators.required]
+      lockPeriod: ['30', Validators.required],
+      fromDeposit: [false] 
+    });
+
+    // Add subscription to fromDeposit changes
+    this.stakeForm.get('fromDeposit')?.valueChanges.subscribe(checked => {
+      this.validateStakeAmount();
     });
   }
+
+  // Update selectPlan method
+  selectPlan(plan: InvestmentPlan) {
+    this.selectedPlan = plan.id;
+    const amountControl = this.stakeForm.get('amount');
+    amountControl?.setValue(plan.min);
+    amountControl?.setValidators([
+      Validators.required,
+      Validators.min(plan.min),
+      Validators.max(plan.max || 9999999999)
+    ]);
+    amountControl?.updateValueAndValidity();
+    this.calculateDailyReturn();
+    
+    // Add immediate validation check when plan is selected
+    if (this.stakeForm.get('fromDeposit')?.value) {
+      this.validateStakeAmount();
+    }
+  }
+
+  validateStakeAmount() {
+    const fromDeposit = this.stakeForm.get('fromDeposit')?.value;
+    const amount = this.stakeForm.get('amount')?.value;
+    const selectedPlan = this.getSelectedPlan();
+
+    if (fromDeposit && selectedPlan) {
+      if (this.walletBalance < selectedPlan.min) {
+        this.stakeForm.get('amount')?.setErrors({ 
+          ineligibleDeposit: `Your deposit balance (${this.walletBalance} USDT) is not sufficient for ${selectedPlan.name} plan (minimum ${selectedPlan.min} USDT)`
+        });
+        // Uncheck the deposit checkbox if balance is insufficient
+        this.stakeForm.patchValue({ fromDeposit: false });
+        this.toastr.error(`Insufficient deposit balance for ${selectedPlan.name} plan`);
+        return;
+      }
+      if (amount > this.walletBalance) {
+        this.stakeForm.get('amount')?.setErrors({ 
+          insufficientBalance: `Amount exceeds your available deposit balance of ${this.walletBalance} USDT`
+        });
+      }
+    }
+  }
+    checkBalance() {
+      // Add your balance checking logic here
+      // This should make an API call to get the current balance
+      // For now, just showing the concept
+      if (this.stakeForm.get('amount')?.value >= 100) {
+        // Call your balance checking service
+        this.getWalletBalance();
+      }
+    }
+  
+    getWalletBalance() {
+      console.log('getWalletBalance called');
+      if (!this.token) {
+        this.toastr.error('Authentication token not found');
+        return;
+      }
+      
+      this.authService.getProfile(this.token).subscribe({
+        next: (response: any) => {
+          if (response && response.data) {
+            this.walletBalance =  response.data.balanceComponents.deposits || 0  // Add this line
+            this.toastr.success('Balance updated successfully');
+          } else {
+            this.toastr.warning('No balance information available');
+          }
+        },
+        error: (err) => {
+          const errorMessage = err.error?.message || 'Error fetching balance';
+          this.toastr.error(errorMessage);
+        }
+      });
+    }
 
   ngOnInit(): void {
     this.token = localStorage.getItem('authToken');
     this.walletService.toggleLoader(false);
     this.loadInvestmentPlans();
+    this.getWalletBalance();
   }
 
   loadInvestmentPlans() {
@@ -109,19 +194,26 @@ export class StakeComponent implements OnInit {
     return this.timer % 60;  // Get the remaining seconds
   }
 
-  // Update selectPlan method
-  selectPlan(plan: InvestmentPlan) {
-    this.selectedPlan = plan.id;
-    const amountControl = this.stakeForm.get('amount');
-    amountControl?.setValue(plan.min); // Set minimum amount based on selected plan
-    amountControl?.setValidators([
-      Validators.required,
-      Validators.min(plan.min),
-      Validators.max(plan.max || 9999999999)
-    ]);
-    amountControl?.updateValueAndValidity();
-    this.calculateDailyReturn();
+  
+
+  // Update form validity check
+  get isFormValid(): boolean {
+    const fromDeposit = this.stakeForm.get('fromDeposit')?.value;
+    const amount = this.stakeForm.get('amount')?.value;
+    const selectedPlan = this.getSelectedPlan();
+    
+    if (fromDeposit) {
+      return this.stakeForm.valid && 
+             this.selectedPlan !== 0 && 
+             amount > 0 &&
+             amount <= this.walletBalance &&
+             this.walletBalance >= (selectedPlan?.min || 0);
+    }
+    
+    return this.stakeForm.valid && this.selectedPlan !== 0 && amount > 0;
   }
+  
+  
 
   // Update the selectedPlan type to match plan IDs  
   // Update calculateDailyReturn method
@@ -144,12 +236,7 @@ export class StakeComponent implements OnInit {
     }
     return null;
   }
-  
-  // Add this method to check form state
-  get isFormValid(): boolean {
-    return this.stakeForm.valid && this.selectedPlan !== 0 && this.stakeForm.get('amount')?.value > 0;
-  }
-  
+
   // Update the deposit method
   stake() {
     
@@ -165,11 +252,9 @@ export class StakeComponent implements OnInit {
       }
   
       this.walletService.toggleLoader(true);
-      // Store current values before any operations
-      // Store current values and plan details
+       // Store current values and plan details
       const currentAmount = this.stakeForm.get('amount')?.value;
       const currentNetwork = this.stakeForm.get('network')?.value;
-      // const selectedPlanDetails = this.plansArray.find(plan => plan.id === this.selectedPlan);
       
       const stakeDataSend = {
         amount: currentAmount,
@@ -177,7 +262,8 @@ export class StakeComponent implements OnInit {
         planId: this.selectedPlan,
         planName: selectedPlanDetails?.name,
         dailyRate: selectedPlanDetails?.rate,
-        lockPeriod: this.stakeForm.get('lockPeriod')?.value
+        lockPeriod: this.stakeForm.get('lockPeriod')?.value,
+        fromDeposit: this.stakeForm.get('fromDeposit')?.value
       };
 
       this.walletService.stake(stakeDataSend, this.token!).subscribe({
@@ -259,7 +345,8 @@ export class StakeComponent implements OnInit {
       planId: this.selectedPlan,
       planName: selectedPlanDetails.name,
       dailyRate: selectedPlanDetails.rate,
-      lockPeriod: this.stakeForm.get('lockPeriod')?.value
+      lockPeriod: this.stakeForm.get('lockPeriod')?.value,
+      fromDeposit: this.stakeForm.get('fromDeposit')?.value
     };
 
     this.walletService.verifyTransactionHash(verificationData, this.token).subscribe({

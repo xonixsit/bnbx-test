@@ -11,7 +11,8 @@
             <div class="card-body bg-dark">
               <div class="row g-3">
                 <div class="col-12 col-sm-6 col-lg-3" *ngFor="let plan of plansArray">
-                  <div class="card h-100 plan-card" [class.active-plan]="selectedPlan === plan.id" (click)="selectPlan(plan)">
+                  <div class="card h-100 plan-card" [class.active-plan]="selectedPlan === plan.id"
+                    (click)="selectPlan(plan)">
                     <div class="card-body text-center position-relative p-3 p-sm-4">
                       <!-- Plan Icon based on level -->
                       <div class="plan-icon mb-3">
@@ -22,7 +23,7 @@
                           'fa-crown text-warning': plan.name === 'Expert'
                         }"></i>
                       </div>
-                      
+
                       <h4 class="text-warning fw-bold mb-3">{{plan.name}}</h4>
                       <div class="plan-details">
                         <div class="return-badge mb-3 p-2">
@@ -62,11 +63,11 @@
       </div>
 
       <div class="row">
-        <!-- Existing Deposit Form -->
         <div class="col-md-5">
+          <!-- Existing stake form -->
           <div class="card shadow-sm">
             <div class="card-header">
-              <h3 class="card-title mb-0">Deposit USDT</h3>
+              <h3 class="card-title mb-0">Stake USDT</h3>
             </div>
             <div class="card-body">
               <form [formGroup]="stakeForm" (ngSubmit)="stake()">
@@ -81,21 +82,33 @@
                   </select>
                 </div>
 
+                <div class="stake-from-deposit">
+                  <!-- <h4 class="text-white">Stake from Deposit</h4> -->
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" [formControlName]="'fromDeposit'"
+                      [checked]="stakeForm.get('fromDeposit')?.value" (change)="validateStakeAmount()"
+                      id="stakeFromDeposit">
+                    <label class="form-check-label" for="stakeFromDeposit">
+                      Use deposit balance to Stake (Available: {{walletBalance}} USDT)
+                    </label>
+                  </div>
+                </div>
+
                 <!-- Existing Amount Input -->
                 <div class="form-group mb-3">
                   <label for="stakeAmount">Amount to Deposit</label>
                   <div class="input-group">
-                    <input type="number" 
-                           id="stakeAmount" 
-                           class="form-control" 
-                           formControlName="amount" 
-                           (input)="calculateDailyReturn()"
-                           [min]="getSelectedPlan()?.min || 0"
-                           [max]="getSelectedPlan()?.max || 9999999999"
-                           (blur)="validateMinAmount()"
-                           [attr.placeholder]="'Min: $' + (getSelectedPlan()?.min || 0)"
-                           required />
+                    <input type="number" id="stakeAmount" class="form-control" formControlName="amount"
+                      (input)="calculateDailyReturn(); validateStakeAmount()" [min]="getSelectedPlan()?.min || 0"
+                      [max]="getSelectedPlan()?.max || 9999999999" required />
                     <span class="input-group-text">USDT</span>
+                  </div>
+                  <div class="invalid-feedback d-block" *ngIf="stakeForm.get('amount')?.errors?.['ineligibleDeposit']">
+                    {{stakeForm.get('amount')?.errors?.['ineligibleDeposit']}}
+                  </div>
+                  <div class="invalid-feedback d-block"
+                    *ngIf="stakeForm.get('amount')?.errors?.['insufficientBalance']">
+                    {{stakeForm.get('amount')?.errors?.['insufficientBalance']}}
                   </div>
                   <div class="invalid-feedback d-block" *ngIf="stakeForm.get('amount')?.errors?.['min']">
                     Amount cannot be less than ${{getSelectedPlan()?.min}}
@@ -103,68 +116,69 @@
                   <div class="info-section mt-2">
                     <div class="investment-info">
                       <span class="info-label">Investment Range:</span>
-                      <span class="info-value" *ngIf="selectedPlan">${{getSelectedPlan()?.min}} - {{getSelectedPlan()?.max === 9999999999 ? 'Unlimited' : '$' + getSelectedPlan()?.max}}</span>
+                      <span class="info-value" *ngIf="selectedPlan">${{getSelectedPlan()?.min}} -
+                        {{getSelectedPlan()?.max === 9999999999 ? 'Unlimited' : '$' + getSelectedPlan()?.max}}</span>
                     </div>
                     <div class="returns-info" *ngIf="calculateDailyReturn()">
                       <span class="info-label">Returns:</span>
-                      <span class="info-value">Daily ${{calculateDailyReturn()?.daily}} | Total ${{calculateDailyReturn()?.total}}</span>
+                      <span class="info-value">Daily ${{calculateDailyReturn()?.daily}} | Total
+                        ${{calculateDailyReturn()?.total}}</span>
                     </div>
                   </div>
-                </div>
 
-                <!-- Rest of the existing form -->
-                <div class="form-group mb-3">
-                  <label>Select Network</label>
-                  <div class="network-buttons">
-                    <button type="button" class="btn" [class.btn-primary]="stakeForm.get('network')?.value === 'BEP20'"
-                      (click)="stakeForm.patchValue({network: 'BEP20'})">BEP20</button>
-                    <button type="button" class="btn" [class.btn-primary]="stakeForm.get('network')?.value === 'TRC20'"
-                      (click)="stakeForm.patchValue({network: 'TRC20'})">TRC20</button>
+                  <!-- Rest of the existing form -->
+                  <div class="form-group mb-3">
+                    <label>Select Network</label>
+                    <div class="network-buttons">
+                      <button type="button" class="btn"
+                        [class.btn-primary]="stakeForm.get('network')?.value === 'BEP20'"
+                        (click)="stakeForm.patchValue({network: 'BEP20'})">BEP20</button>
+                      <button type="button" class="btn"
+                        [class.btn-primary]="stakeForm.get('network')?.value === 'TRC20'"
+                        (click)="stakeForm.patchValue({network: 'TRC20'})">TRC20</button>
+                    </div>
                   </div>
-                </div>
-                <button type="submit" class="btn btn-warning w-100" [disabled]="!isFormValid">
-                  Generate Deposit Address
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column - QR Code and Verification -->
-        <div class="col-md-7" *ngIf="imageShow">
-          <div class="card shadow-sm">
-            <div class="card-header">
-              <h3 class="card-title mb-0">Deposit Address</h3>
-            </div>
-            <div class="card-body text-center">
-              <div class="qr-wrapper">
-                <img [src]="qrCodeUrl" alt="QR Code" class="qr-code" />
-              </div>
-              <div class="address-wrapper mt-3">
-                <div class="input-group">
-                  <input type="text" class="form-control" [value]="depositAddress" readonly #addressInput />
-                  <button class="btn btn-warning" (click)="copyToClipboard(addressInput)">
-                    Copy
+                  <button type="submit" class="btn btn-warning w-100" [disabled]="!isFormValid">
+                    Generate Deposit Address
                   </button>
                 </div>
-                <div class="alert alert-warning mt-2 py-2">
-                  Only send USDT {{stakeForm.get('network')?.value}} to this address
-                </div>
+              </form>
+            </div>
+          </div></div>
+          <!-- Right Column - QR Code and Verification -->
+          <div class="col-md-7" *ngIf="imageShow">
+            <div class="card shadow-sm">
+              <div class="card-header">
+                <h3 class="card-title mb-0">Deposit Address</h3>
               </div>
-              
-              <!-- Verification Section -->
-              <div class="verify-section mt-3">
-                <p class="timer mb-2">Time remaining: {{ minutes }}:{{ seconds | number: '2.0' }}</p>
-                <input type="text" [(ngModel)]="transactionHash" class="form-control mb-2"
-                  placeholder="Enter transaction hash" />
-                <button class="btn btn-warning w-100" (click)="verifyTransactionHash(transactionHash)">
-                  Verify Transaction
-                </button>
+              <div class="card-body text-center">
+                <div class="qr-wrapper">
+                  <img [src]="qrCodeUrl" alt="QR Code" class="qr-code" />
+                </div>
+                <div class="address-wrapper mt-3">
+                  <div class="input-group">
+                    <input type="text" class="form-control" [value]="depositAddress" readonly #addressInput />
+                    <button class="btn btn-warning" (click)="copyToClipboard(addressInput)">
+                      Copy
+                    </button>
+                  </div>
+                  <div class="alert alert-warning mt-2 py-2">
+                    Only send USDT {{stakeForm.get('network')?.value}} to this address
+                  </div>
+                </div>
+
+                <!-- Verification Section -->
+                <div class="verify-section mt-3">
+                  <p class="timer mb-2">Time remaining: {{ minutes }}:{{ seconds | number: '2.0' }}</p>
+                  <input type="text" [(ngModel)]="transactionHash" class="form-control mb-2"
+                    placeholder="Enter transaction hash" />
+                  <button class="btn btn-warning w-100" (click)="verifyTransactionHash(transactionHash)">
+                    Verify Transaction
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>

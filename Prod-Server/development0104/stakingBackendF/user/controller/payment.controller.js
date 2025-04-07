@@ -90,8 +90,7 @@ exports.generateQr = async (req, res) => {
 };
 
 module.exports.verifyTransaction = async (request, response) => {
-    const { user, amount, transactionHash, planId, planName, dailyRate, lockPeriod, network } = request.body;
-    // console.log(user, amount, transactionHash, planId, planName, dailyRate, lockPeriod);
+    const { user, amount, transactionHash, planId, planName, dailyRate, lockPeriod, network,fromDeposit } = request.body;
     try {
         // Validate user
         const userData = await StakeService.validateUser(user._id);
@@ -107,7 +106,8 @@ module.exports.verifyTransaction = async (request, response) => {
             dailyRate,
             lockPeriod,
             network,
-            transactionHash
+            transactionHash,
+            fromDeposit
         });
 
         return response.json({
@@ -129,7 +129,6 @@ module.exports.verifyTransaction = async (request, response) => {
 module.exports.verifyDepositTxnhash = async (request, response) => {
     const { user, amount, transactionHash, network } = request.body;
 
-    console.log(request.body);
     try {
         // Validate user
         const userData = await StakeService.validateUser(user._id);

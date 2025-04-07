@@ -4,7 +4,7 @@ const config = require("./../config/config");
 module.exports.verifyJWTToken = (request, response, next) => {
     try {
         const token = request.headers.authorization;
-        console.log("Token:", token); // Debug logging
+        // console.log("Token:", token); // Debug logging
         if (!token) {
             return response.status(403).json({
                 status: false,

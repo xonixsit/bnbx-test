@@ -8,7 +8,9 @@ module.exports.generateQr = (request, response, next) => {
         planId: Joi.number().required(),
         planName: Joi.string().required(),
         dailyRate: Joi.number().required(),
-        lockPeriod: Joi.string().valid('30', '60', '90', '180').required()
+        lockPeriod: Joi.string().valid('30', '60', '90', '180').required(),
+        fromDeposit: Joi.boolean().optional()
+
     });
     const { error } = rules.validate(request.body);
     if (error) {
@@ -44,7 +46,8 @@ module.exports.verifyTransaction = (request, response, next) => {
         planName: Joi.string().required(),
         network: Joi.string().required(),
         dailyRate: Joi.number().required(),
-        lockPeriod: Joi.number().valid(30, 60, 90, 180).required()
+        lockPeriod: Joi.number().valid(30, 60, 90, 180).required(),
+        fromDeposit: Joi.boolean().optional()
     });
     const { error } = rules.validate(request.body);
     if (error) {

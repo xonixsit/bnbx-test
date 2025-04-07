@@ -93,6 +93,10 @@ const Transaction = new Schema(
             type: Boolean,
             default: false,
         },
+        isStaked:{
+            type: Boolean,
+            default: false,
+        },
         // Add this to your existing schema
         planDetails: {
             planId: Number,

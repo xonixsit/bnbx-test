@@ -1,6 +1,6 @@
 const TransactionModel = require("../models/transactions.model");
 const UserModel = require("../models/users.model");
-const getInvestmentPlans = require("../config/plans.config");
+const PlansModel = require("../models/plans.model"); // Add this line
 
 class StakeService {
     static async validateUser(userId) {
@@ -15,11 +15,11 @@ class StakeService {
     }
 
     static async checkExistingTransaction(transactionHash) {
-        const existingTx = await TransactionModel.findOne({ 
+        const existingTx = await TransactionModel.findOne({
             transactionHash,
-            isDeleted: false 
+            isDeleted: false
         });
-        
+
         if (existingTx?.status === 'REJECTED') {
             throw new Error("This transaction has been rejected. Please contact support.");
         }
@@ -28,17 +28,23 @@ class StakeService {
 
     static async validatePlanDetails(planData) {
         const { planId, planName, dailyRate, amount } = planData;
-        
-        const plans = await getInvestmentPlans();
-        const configuredPlan = plans.find(plan => plan.id === planId);
-        console.log("configuredPlan",configuredPlan);
+
+        // Fetch plans from database instead of config
+        const plans = await PlansModel.find({ isActive: true }).lean();
+        console.log("Available plans from DB:", plans);
+        console.log("Requested planId:", planId, "type:", typeof planId);
+
+        const numericPlanId = Number(planId);
+        const configuredPlan = plans.find(plan => plan.id === numericPlanId);
+        console.log("Found plan:", configuredPlan);
+
         if (!configuredPlan) {
-            throw new Error("Invalid investment plan");
+            throw new Error(`Invalid investment plan. Plan ID ${planId} not found`);
         }
 
-        // Strict rate validation with small tolerance for floating-point precision
+        // Use rate from database
         const rateDifference = Math.abs(configuredPlan.rate - dailyRate);
-        console.log("rateDifference",rateDifference);
+        console.log("rateDifference", rateDifference);
         if (rateDifference > 0.0001) {
             throw new Error("Invalid plan rate detected");
         }
@@ -57,10 +63,33 @@ class StakeService {
 
     static async createStake(userData, depositData) {
         const validatedRate = await this.validatePlanDetails(depositData);
-        const { amount, planId, planName, lockPeriod, transactionHash, network } = depositData;
-        
+        const { amount, planId, planName, lockPeriod, transactionHash, network, fromDeposit } = depositData;
+
         const totalReturn = Number((amount * validatedRate * lockPeriod).toFixed(4));
-        
+        console.log("depositData", depositData);
+
+        if (fromDeposit) {
+            console.log("depositData", depositData);
+
+            await TransactionModel.create({
+                user: userData._id,
+                amount: -Number(amount), // Negative amount for debit
+                transactionType: "DEPOSIT",
+                balanceType: "BUSD",
+                currentBalance: Number(userData.BUSDBalance) - Number(amount),
+                description: "Amount moved to staking from deposit",
+                planDetails: {
+                    planId,
+                    planName,
+                    dailyRate: validatedRate,
+                    lockPeriod: Number(lockPeriod),
+                    originalLockPeriod: Number(lockPeriod),
+                    totalReturn
+                },
+                status: "COMPLETED",
+                isStaked: true
+            });
+        }
         const transaction = await TransactionModel.create({
             user: userData._id,
             amount: Number(amount),
@@ -84,7 +113,7 @@ class StakeService {
     }
 
     static async createDeposit(userData, depositData) {
-        
+
         const { amount, transactionHash } = depositData;
 
         const transaction = await TransactionModel.create({

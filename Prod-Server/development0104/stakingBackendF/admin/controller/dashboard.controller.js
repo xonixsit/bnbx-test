@@ -1,6 +1,7 @@
 const UserModel = require("../../models/users.model");
 const TransactionModel = require("../../models/transactions.model");
 const { handleErrorResponse, CustomErrorHandler } = require("../../middleware/CustomErrorHandler")
+const { calculateUserBalance } = require('../../services/balance.service');
 
 module.exports.dashboardData = async (request, response) => {
     try {
@@ -45,17 +46,7 @@ module.exports.dashboardData = async (request, response) => {
             }
         ]);
 
-        // Combine the results
-        // Get user balances (these should stay from UserModel)
-        const userBalances = await UserModel.aggregate([
-            {
-                $group: {
-                    _id: null,
-                    totalBUSDBalance: { $sum: "$BUSDBalance" },
-                    totalTRADEBalance: { $sum: "$TRADEBalance" }
-                }
-            }
-        ]);
+         
 
         // Get all transaction-based totals
         const transactionTotals = await TransactionModel.aggregate([
@@ -92,29 +83,7 @@ module.exports.dashboardData = async (request, response) => {
             }
         ]);
 
-        const balanceTotals = walletBalances.reduce((acc, curr) => {
-            const { balanceType, transactionType, withdrawalSource } = curr._id;
-            
-            if (!acc[balanceType]) {
-                acc[balanceType] = 0;
-            }
-
-            // Handle withdrawals based on their source
-            if (transactionType === 'WITHDRAW' && withdrawalSource) {
-                // Don't subtract withdrawals here as they're handled per source
-                return acc;
-            }
-
-            acc[balanceType] += curr.total;
-            return acc;
-        }, {});
-
-
-        const totals = transactionTotals.reduce((acc, curr) => {
-            acc[curr._id] = curr.total;
-            return acc;
-        }, {});
-
+        
         // Get withdrawals by source
         const withdrawalsBySource = await TransactionModel.aggregate([
             {
@@ -131,48 +100,87 @@ module.exports.dashboardData = async (request, response) => {
                 }
             }
         ]);
+        // Get all users for total calculation
+        const allUsers = await UserModel.find({ isDeleted: false });
+        let totalBalances = {
+            BUSDBalance: 0,
+            withdrawableBalance: 0,
+            totalReferralRewardBalance: 0,
+            totalBonusBalance: 0,
+            totalStakedBalance: 0,
+            totalTeamTurnover: 0,
+            components: {
+                deposits: 0,
+                staked: 0,
+                referral: 0,
+                bonus: 0,
+                tradeToMain: 0,
+                mainToTrade: 0,
+                withdrawn: {
+                    total: 0,
+                    busd: 0,
+                    referral: 0,
+                    bonus: 0
+                },
+                transferred: 0
+            }
+        };
 
-        const withdrawalTotals = withdrawalsBySource.reduce((acc, curr) => {
-            acc[curr._id] = curr.total;
-            return acc;
-        }, {});
-
-        console.log(withdrawalTotals);
-        const dashboardData = {
-            // Current balances from UserModel with all withdrawal sources subtracted
-            totalBUSDBalance: (balanceTotals['BUSD'] || 0) - 
-                (Object.values(withdrawalTotals).reduce((sum, val) => sum + val, 0) || 0),
-            totalTRADEBalance: (balanceTotals['TRADE'] || 0),
-            totalDeposits: totals['DEPOSIT'] || 0,
-            // Transaction-based totals
-            totalStakedBalance: (totals['BOND-IN'] || 0) - Math.abs(totals['UNSTAKE'] || 0),
-            totalRemovedStakedBalance: Math.abs(totals['UNSTAKE'] || 0),
-            totalWithdrawalBalance: Math.abs(totals['WITHDRAW'] || 0),
-            totalInternalTransferBalance: totals['INTERNAL-TRANSFER'] || 0,
-            totalUnlockRewardBalnce: totals['UNLOCK-REWARD'] || 0,
-            // Update referral income to subtract withdrawals
-            totalReferralRewardBalance: (totals['REFER-INCOME'] || 0) - (withdrawalTotals['REFER-INCOME'] || 0),
-            totalStakingRewardBalance: totals['STAKING-REWARD'] || 0,
-            totalRankBonusBalance: totals['RANK-BONUS'] || 0,
-            totalRewardBalance: (totals['REFER-INCOME'] || 0) + (totals['STAKING-REWARD'] || 0) + (totals['RANK-BONUS'] || 0),
-            totalBonusBalance: (
-                (totals['SIGNUP-BONUS'] || 0) + 
-                (totals['LEVEL-AIR-DROP'] || 0) + 
-                (totals['RANK-UPGRADE-BONUS'] || 0) + 
-                (totals['BOND-REWARD'] || 0)
-            ),
+        // Calculate totals for all users
+        for (const user of allUsers) {
+            const userBalance = await calculateUserBalance(user._id);
+            totalBalances.BUSDBalance += Number(userBalance.BUSDBalance);
+            totalBalances.withdrawableBalance += Number(userBalance.withdrawableBalance);
+            totalBalances.totalReferralRewardBalance += Number(userBalance.totalReferralRewardBalance);
+            totalBalances.totalBonusBalance += Number(userBalance.totalBonusBalance);
+            totalBalances.totalStakedBalance += Number(userBalance.totalStakedBalance);
+            totalBalances.totalTeamTurnover += Number(userBalance.totalTeamTurnover);
             
-            // Pending transactions
+            // Add components
+            totalBalances.components.deposits += Number(userBalance.components.deposits);
+            totalBalances.components.staked += Number(userBalance.components.staked);
+            totalBalances.components.referral += Number(userBalance.components.referral);
+            totalBalances.components.bonus += Number(userBalance.components.bonus);
+            totalBalances.components.tradeToMain += Number(userBalance.components.tradeToMain);
+            totalBalances.components.mainToTrade += Number(userBalance.components.mainToTrade);
+            totalBalances.components.withdrawn.total += Number(userBalance.components.withdrawn.total);
+            totalBalances.components.withdrawn.busd += Number(userBalance.components.withdrawn.busd);
+            totalBalances.components.withdrawn.referral += Number(userBalance.components.withdrawn.referral);
+            totalBalances.components.withdrawn.bonus += Number(userBalance.components.withdrawn.bonus);
+            totalBalances.components.transferred += Number(userBalance.components.transferred);
+        }
+
+        const dashboardData = {
+            // Current balances
+            totalBUSDBalance: Number(totalBalances.BUSDBalance.toFixed(4)),
+            totalTRADEBalance: Number(totalBalances.totalStakedBalance.toFixed(4)),
+            totalDeposits: Number(totalBalances.components.deposits.toFixed(4)),
+            
+            // Staking related
+            totalStakedBalance: Number(totalBalances.totalStakedBalance.toFixed(4)),
+            totalStakingRewardBalance: Number((totalBalances.components.staked - totalBalances.totalStakedBalance).toFixed(4)),
+            
+            // Withdrawals and transfers
+            totalWithdrawalBalance: Number(totalBalances.components.withdrawn.total.toFixed(4)),
+            totalInternalTransferBalance: Number(totalBalances.components.transferred.toFixed(4)),
+            
+            // Rewards and bonuses
+            totalReferralRewardBalance: Number(totalBalances.totalReferralRewardBalance.toFixed(4)),
+            totalBonusBalance: Number(totalBalances.totalBonusBalance.toFixed(4)),
+            
+            // Pending transactions (keep existing)
             totalPendingDeposits: pendingDepositsTxns[0]?.pendingDeposits || 0,
             totalPendingWithdraws: Math.abs(pendingWithdrawTxns[0]?.pendingWithdraws || 0),
             
-            // Calculated fields
-            pendingReward: (totals['STAKING-REWARD'] || 0) - (totals['UNLOCK-REWARD'] || 0)
+            // Additional metrics
+            totalTeamTurnover: Number(totalBalances.totalTeamTurnover.toFixed(4)),
+            totalMainToTrade: Number(totalBalances.components.mainToTrade.toFixed(4)),
+            totalTradeToMain: Number(totalBalances.components.tradeToMain.toFixed(4))
         };
         // console.log(dashboardData);
         return response.status(200).json({
             status: true,
-            message: "Dashboard Data.",
+            message: "Dashboard Data....",
             data: dashboardData
         });
     } catch (e) {
