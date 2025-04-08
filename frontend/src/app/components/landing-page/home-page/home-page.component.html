@@ -1,0 +1,59 @@
+<!-- Start Header Area -->
+<app-header-nav></app-header-nav>
+
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="animated-background">
+        <!-- <img src="assets/images/hero/animated-banner.svg" 
+             alt="Animated Background" 
+             class="animated-svg"
+             loading="eager"
+             fetchpriority="high"
+             width="100%"
+             height="auto"> -->
+    </div>
+    
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-5 col-md-12 col-12">
+                <div class="hero-content">
+                    <span class="h1" [attr.data-wow-delay]="'0.2s'">Welcome to BNBX</span>
+                    <span class="h3" [attr.data-wow-delay]="'0.4s'">
+                        Maximize Your Earnings with AI <br/>and Smart Investment Solutions
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lazy loaded sections -->
+<section id="about-us">
+    <app-about-us></app-about-us>
+</section>
+
+<section id="team-section">
+    <app-tariff></app-tariff>
+</section>
+
+<app-history-culture></app-history-culture>
+
+<app-vision-mission></app-vision-mission>
+
+<app-what-we-do></app-what-we-do>
+
+<section id="why-choose-section">
+    <app-why-choose></app-why-choose>
+</section>
+
+<section id="benefits-section">
+    <app-benefits></app-benefits>
+</section>
+
+<section id="contact-section">
+    <app-footer></app-footer>
+</section>
+
+<a href="#" class="scroll-top" [class.active]="showScrollTop" (click)="scrollToTop($event)" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>

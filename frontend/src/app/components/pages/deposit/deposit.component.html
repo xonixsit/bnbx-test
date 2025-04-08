@@ -1,0 +1,82 @@
+<div class="wrapper">
+  <div id="content" class="active-content">
+    <div class="container">
+      <div class="row">
+        <!-- Existing Deposit Form -->
+        <div class="col-md-5">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title mb-0">Deposit USDT</h3>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="depositForm" (ngSubmit)="deposit()">
+                <!-- Add Lock Period Selection -->
+                <!-- Existing Amount Input -->
+                <div class="form-group mb-3">
+                  <label for="stakeAmount">Amount to Deposit</label>
+                  <div class="input-group">
+                    <input type="number" 
+                           id="stakeAmount" 
+                           class="form-control" 
+                           formControlName="amount" 
+                           required />
+                    <span class="input-group-text">USDT</span>
+                  </div>
+                </div>
+
+                <!-- Rest of the existing form -->
+                <div class="form-group mb-3">
+                  <label>Select Network</label>
+                  <div class="network-buttons">
+                    <button type="button" class="btn" [class.btn-primary]="depositForm.get('network')?.value === 'BEP20'"
+                      (click)="depositForm.patchValue({network: 'BEP20'})">BEP20</button>
+                    <button type="button" class="btn" [class.btn-primary]="depositForm.get('network')?.value === 'TRC20'"
+                      (click)="depositForm.patchValue({network: 'TRC20'})">TRC20</button>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-warning w-100" [disabled]="!isFormValid">
+                  Generate Deposit Address
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - QR Code and Verification -->
+        <div class="col-md-7" *ngIf="imageShow">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title mb-0">Deposit Address</h3>
+            </div>
+            <div class="card-body text-center">
+              <div class="qr-wrapper">
+                <img [src]="qrCodeUrl" alt="QR Code" class="qr-code" />
+              </div>
+              <div class="address-wrapper mt-3">
+                <div class="input-group">
+                  <input type="text" class="form-control" [value]="depositAddress" readonly #addressInput />
+                  <button class="btn btn-warning" (click)="copyToClipboard(addressInput)">
+                    Copy
+                  </button>
+                </div>
+                <div class="alert alert-warning mt-2 py-2">
+                  Only send USDT {{depositForm.get('network')?.value}} to this address
+                </div>
+              </div>
+              
+              <!-- Verification Section -->
+              <div class="verify-section mt-3">
+                <p class="timer mb-2">Time remaining: {{ minutes }}:{{ seconds | number: '2.0' }}</p>
+                <input type="text" [(ngModel)]="transactionHash" class="form-control mb-2"
+                  placeholder="Enter transaction hash" />
+                <button class="btn btn-warning w-100" (click)="verifyDepositTxnHash(transactionHash)">
+                  Verify Transaction
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

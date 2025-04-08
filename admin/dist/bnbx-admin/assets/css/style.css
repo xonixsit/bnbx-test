@@ -1,0 +1,118 @@
+/* General */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+  
+  /* Button */
+  .btn {
+    background-color: var(--border-color-dark);
+    color: var(--button-text-color);
+  }
+  
+  /* Navbar */
+  .navbar .nav-link {
+    color: var(--header-color-light);
+  }
+  
+  .dark-mode .navbar .nav-link {
+    color: var(--header-color-dark);
+  }
+  
+  .navbar .nav-link:hover {
+    color: var(--primary);
+  }
+ /* Container Styling */
+body {
+    /* background-image: url('../../assets/img/hero-shape-2.svg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 80px 0;
+    
+    text-align: left;
+  }
+  
+  /* Heading and Text Styling */
+  .hero-header h1 {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    animation: slideInDown 1s ease-out;
+  }
+  
+  .hero-header p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    animation: slideInDown 1.2s ease-out;
+  }
+  
+  /* Button Styling */
+  .hero-header .btn-primary {
+    padding: 12px 30px;
+    background-color: #2C5364;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    animation: slideInDown 1.4s ease-out;
+  }
+  
+  .hero-header .btn-primary:hover {
+    background-color: #203A43;
+  }
+  
+  /* Image Animation */
+  .hero-header img {
+    animation: pulse 3s infinite ease-in-out;
+    max-width: 100%;
+    border-radius: 15px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero-header {
+      padding: 50px 0;
+      text-align: center;
+    }
+  
+    .hero-header h1 {
+      font-size: 2.5em;
+    }
+  
+    .hero-header img {
+      margin-top: 20px;
+    }
+  }
+  
+  
+  /* Service Item */
+  .service-item.bg-white::after {
+    border-color: transparent transparent var(--light) transparent;
+  }
+  
+  .dark-mode .service-item.bg-white::after {
+    border-color: transparent transparent var(--card-bg-color) transparent;
+  }
+  
+  /* Roadmap Carousel */
+  .roadmap-carousel .roadmap-item::before {
+    border-right: 2px dashed var(--border-color-light);
+  }
+  
+  .dark-mode .roadmap-carousel .roadmap-item::before {
+    border-right: 2px dashed var(--border-color-dark);
+  }
+  
+  /* Footer */
+  .footer .btn.btn-square {
+    border: 1px solid var(--primary);
+  }
+  
+  .footer .btn.btn-square:hover {
+    color: var(--button-text-color);
+    background-color: var(--primary);
+  }
+  

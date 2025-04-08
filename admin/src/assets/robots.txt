@@ -1,0 +1,20 @@
+# robots.txt for boostbullion.com
+
+# Allow all web crawlers full access
+User-agent: *
+Disallow:
+
+# Block specific sensitive or non-public directories
+Disallow: /admin/
+Disallow: /scripts/
+Disallow: /private/
+Disallow: /cart/
+Disallow: /checkout/
+
+# Block crawling of certain file types (e.g., PDF, images)
+Disallow: /*.pdf$
+Disallow: /*.jpg$
+Disallow: /*.png$
+
+# Sitemap location
+Sitemap: https://www.boostbullion.com/sitemap.xml

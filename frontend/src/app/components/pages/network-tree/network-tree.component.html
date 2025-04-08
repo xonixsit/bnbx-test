@@ -1,0 +1,88 @@
+<div class="wrapper">
+    <div id="content" class="active-content">
+        <div class="container-fluid py-4">
+            <h2 class="text-warning mb-4 text-center">Referral Network Tree</h2>
+            <div class="row justify-content-center g-4">
+                <!-- Tree View Section -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="card bg-dark border-0 shadow-lg h-100">
+                        <div class="card-header bg-gradient-primary border-0">
+                            <h4 class="text-white mb-0">Network Structure</h4>
+                        </div>
+                        <div class="card-body custom-tree-container">
+                            <p-tree [value]="nodes" 
+                                   [filter]="true" 
+                                   selectionMode="checkbox"
+                                   (onNodeSelect)="onNodeSelect($event)" 
+                                   styleClass="custom-tree"
+                                   [style]="{'background': 'transparent', 'color': '#fff'}">
+                            </p-tree>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Details Section -->
+                <div class="col-lg-4 col-md-5">
+                    <div class="card bg-dark border-0 shadow-lg h-100">
+                        <div class="card-header bg-gradient-warning border-0">
+                            <h4 class="text-dark mb-0">Referral Details</h4>
+                        </div>
+                        <div class="card-body" *ngIf="selectedReferral">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-user me-2 text-warning"></i>
+                                    <strong>Name:</strong>
+                                    <span class="float-end">{{ selectedReferral.name }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-id-card me-2 text-warning"></i>
+                                    <strong>BNB ID:</strong>
+                                    <span class="float-end">{{ selectedReferral.loginId }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-link me-2 text-warning"></i>
+                                    <strong>Referral Code:</strong>
+                                    <span class="float-end">{{ selectedReferral.referralCode }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-envelope me-2 text-warning"></i>
+                                    <strong>Email:</strong>
+                                    <span class="float-end">{{ selectedReferral.email }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-user-plus me-2 text-warning"></i>
+                                    <strong>Sponsor:</strong>
+                                    <span class="float-end">{{ selectedReferral.sponser }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-chart-line me-2 text-warning"></i>
+                                    <strong>Team Turnover:</strong>
+                                    <span class="float-end">{{ selectedReferral.totalTeamTurnoverBalance }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-users me-2 text-warning"></i>
+                                    <strong>Total Team:</strong>
+                                    <span class="float-end">{{ selectedReferral.totalTeam }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light border-bottom border-secondary">
+                                    <i class="fas fa-gift me-2 text-warning"></i>
+                                    <strong>Total Rewards:</strong>
+                                    <span class="float-end">{{ selectedReferral.totalRewardBalance }}</span>
+                                </li>
+                                <li class="list-group-item bg-transparent text-light">
+                                    <i class="fas fa-coins me-2 text-warning"></i>
+                                    <strong>Total Staked:</strong>
+                                    <span class="float-end">{{ selectedReferral.totalStakedBalance }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body text-center" *ngIf="!selectedReferral">
+                            <i class="fas fa-user-circle fa-4x text-warning mb-3"></i>
+                            <p class="text-light">Select a user from the tree to view details</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

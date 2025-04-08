@@ -1,0 +1,106 @@
+<div class="dashboard-container">
+    <div class="main-content">
+        <div class="wrapper1">
+            <div class="container">
+                <!-- Updated header section -->
+                <div class="dashboard-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="dashboard-title mb-0">Dashboard</h2>
+                        <div class="referral-code-wrapper">
+                            <span class="referral-label">Referral code:</span>
+                            <strong class="mx-1 text-warning">{{ refferalcode }}</strong>
+                            <i class="fas fa-copy text-warning cursor-pointer" (click)="copyReferralLink()"
+                                title="Copy to clipboard"></i>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="row justify-content-center g-4">
+                    <div class="col-md-4 mb-3" *ngFor="let card of [
+                        {title: 'BALANCE', value: userBlance, icon: 'fa-wallet'},
+                        {title: 'Total Staked', value: totalStakedBalance, icon: 'fa-arrow-circle-down'},
+                        {title: 'Total Withdrawal', value: totalWithdrawalBalance, icon: 'fa-arrow-circle-up'},
+                        {title: 'Pending Deposit', value: pendingDepositBalance, icon: 'fa-clock'},
+                        {title: 'Pending Withdrawal', value: pendingWithdrawalBalance, icon: 'fa-hourglass-half'},
+                        {title: 'Total Referral balance', value: totalReferralRewardBalance, icon: 'fa-users'},
+                        {title: 'Total Bonus Balance', value: totalBonusBalance, icon: 'fa-gift'},
+                        {title: 'Rank Bonus Balance', value: totalRankBonusBalance, icon: 'fa-crown'}]">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <i class="fas {{card.icon}} card-icon"></i>
+                                <h3 class="card-title">{{card.title}}</h3>
+                            </div>
+                            <p class="card-value">{{card.value}} USDT</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Updated transaction table section -->
+                <div class="row justify-content-center mt-5">
+                    <div class="transaction-section">
+                        <h2 class="section-title">Latest Transactions</h2>
+                        <div class="table-responsive">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Transaction Type</th>
+                                        <th>Credited Amount</th>
+                                        <th>Debited Amount</th>
+                                        <!-- <th>Current Balance</th> -->
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let transaction of transactions; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>
+                                            <span class="badge" [ngClass]="{
+                                                'bg-success': transaction.transactionType === 'DEPOSIT',
+                                                'bg-danger': transaction.transactionType === 'WITHDRAW',
+                                                'bg-info': transaction.transactionType === 'BOND-IN',
+                                                'bg-warning': transaction.transactionType === 'CONVERT-REWARD'
+                                              }">{{ transaction.transactionType }}</span></td>
+                                        <td [class.amount-positive]="transaction.amount > 0">
+                                            {{ transaction.amount > 0 ? transaction.amount : '-' }}
+                                        </td>
+                                        <td [class.amount-negative]="transaction.amount < 0">
+                                            {{ transaction.amount < 0 ? transaction.amount : '-' }}
+                                        </td>
+                                        <!-- <td>{{ transaction.currentBalance }}</td> -->
+                                        <td class="px-3 py-3">
+                                            <ng-container [ngSwitch]="transaction.status">
+                                              <span *ngSwitchCase="'REJECTED'">Transaction Rejected</span>
+                                              <span *ngSwitchCase="'PENDING'">Please Wait for approval</span>
+                                              <span *ngSwitchDefault>{{ transaction.description }}</span>
+                                            </ng-container>
+                                          </td>
+                                          <td class="px-3 py-3">
+                                            <span class="badge text-nowrap" [ngClass]="{
+                                              'bg-success': transaction.status === 'COMPLETED',
+                                              'bg-danger': transaction.status === 'FAILED' || transaction.status === 'REJECTED',
+                                              'bg-warning': transaction.status === 'PENDING'
+                                            }">{{ transaction.status }}</span>
+                                          </td>
+                                        <td>{{ transaction.createdAt | date: 'MMM dd, yyyy, h:mm:ss a' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div *ngIf="transactions.length === 0" class="text-white">No transactions available.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <li>
+    <a routerLink="/dashboard" 
+       routerLinkActive="router-link-active"
+       [routerLinkActiveOptions]="{exact: true}">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+    </a>
+</li> -->

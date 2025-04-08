@@ -1,0 +1,241 @@
+.dashboard-container {
+    // display: flex;
+    background-color: #2B3139;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    // margin-left: 240px; // Width of sidebar
+    // padding: 1rem 2rem;
+    margin-top:6.2rem;
+    .wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+.content1 {
+    padding-top: 0;
+}
+
+.referral-code {
+    color: #fff;
+    font-size: 1.1rem;
+    
+    .cursor-pointer {
+        cursor: pointer;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+.dashboard-card {
+    padding: 1.5rem;
+    background: linear-gradient(145deg, #2B3139, #1E2329);
+    border-radius: 12px;
+    border: 1px solid rgba(240, 185, 11, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        border-color: rgba(240, 185, 11, 0.3);
+        box-shadow: 0 8px 25px rgba(240, 185, 11, 0.1);
+    }
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-icon {
+    color: #F0B90B;
+    font-size: 1.75rem;
+    background: rgba(240, 185, 11, 0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.card-title {
+    margin: 0;
+    color: #848E9C;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-value {
+    color: #F0B90B;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding-left: 3.5rem;
+}
+.custom-table {
+    background-color: #1E2329;
+    color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+
+    thead {
+        background-color: #1E2329;
+        
+        th {
+            color: #848E9C;
+            font-weight: 500;
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(240, 185, 11, 0.1);
+            font-size: 14px;
+            white-space: nowrap;
+            text-transform: none;
+        }
+    }
+   
+
+    tbody {
+        tr {
+            border-bottom: 1px solid rgba(43, 49, 57, 1);
+            background-color: #1E2329;
+            
+            &:hover {
+                background-color: #2B3139;
+            }
+
+            td {
+                padding: 16px 24px;
+                color: #fff;
+                font-size: 14px;
+                white-space: nowrap;
+
+                &.amount-positive {
+                    color: #02C076;
+                }
+
+                &.amount-negative {
+                    color: #F6465D;
+                }
+                span{
+                    padding:0.5rem;
+                }
+            }
+        }
+
+        .status-cell {
+            &.COMPLETED {
+                color: #02C076;
+            }
+            &.PENDING {
+                color: #F0B90B;
+            }
+            &.REJECTED {
+                color: #F6465D;
+            }
+            &.APPROVED {
+                color: #02C076;
+            }
+        }
+    }
+}
+
+.transaction-section {
+    margin-top: 2rem;
+    
+    .section-title {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+    }
+}
+
+.transaction-title {
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+// Status colors
+.status-completed {
+    color: #02C076;
+}
+.container{
+    padding: 0 !important;
+}
+.status-pending {
+    color: #F0B90B;
+}
+
+.status-rejected {
+    color: #F6465D;
+}
+
+.status-approved {
+    color: #02C076;
+}
+
+.text-warning {
+    color: #F0B90B !important;
+}
+
+.text-success {
+    color: #02C076 !important;
+}
+
+.text-danger {
+    color: #F6465D !important;
+}
+
+.user-info-section {
+    width: 100%;
+}
+
+.id-info-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.id-item {
+    display: flex;
+    align-items: center;
+    background: rgba(240, 185, 11, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    
+    .id-label {
+        color: #999;
+        margin-right: 0.5rem;
+        white-space: nowrap;
+    }
+    
+    .fa-copy {
+        margin-left: 0.5rem;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .id-info-wrapper {
+        gap: 0.75rem;
+    }
+
+    .id-item {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}

@@ -1,0 +1,48 @@
+# robots.txt for BNBX - SEO Optimized and Secure
+
+User-agent: *
+# Allow essential pages
+Allow: /
+Allow: /blog/
+Allow: /products/
+Allow: /categories/
+
+# Block sensitive and unnecessary directories
+Disallow: /admin/
+Disallow: /backend/
+Disallow: /private/
+Disallow: /user/
+Disallow: /account/
+Disallow: /login/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /scripts/
+Disallow: /config/
+Disallow: /temp/
+Disallow: /cgi-bin/
+
+# Block specific file types from crawling
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.xls$
+Disallow: /*.csv$
+Disallow: /*.zip$
+Disallow: /*.exe$
+
+# Block image crawling to avoid image-based search indexing (optional)
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.gif$
+Disallow: /*.svg$
+Disallow: /*.webp$
+
+# Set crawl delay (optional, prevents excessive server load)
+Crawl-delay: 5
+
+# Disallow indexing of query parameters to avoid duplicate content issues
+Disallow: /*?*
+Disallow: /*&*
+
+# Sitemap location
+Sitemap: https://www.bnbx.pro/sitemap.xml

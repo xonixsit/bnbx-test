@@ -1,0 +1,1 @@
+{"ast":null,"code":"// src/environments/environment.ts\nexport const environment = {\n  production: false,\n  //apiUrl: 'https://bnbx.pro/api', // Live API URL\n  apiUrl: 'http://localhost:8080' // Local API URL\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
