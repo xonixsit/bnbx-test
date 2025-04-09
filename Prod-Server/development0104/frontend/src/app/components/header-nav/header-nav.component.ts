@@ -77,8 +77,9 @@ export class HeaderNavComponent {
     return false;
   }
 
+
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+      this.isMenuOpen = !this.isMenuOpen;
   }
 
 }

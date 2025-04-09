@@ -1,7 +1,7 @@
 .wrapper {
   // display: flex;
   min-height: 100vh;
-  background-color: #2B3139;
+  // background-color: #2B3139;
 }
 
 #sidebar {
@@ -21,7 +21,7 @@
   margin-left: 240px;
   min-height: calc(100vh - 60px);
   transition: all 0.3s;
-  padding: 24px;
+  // padding: 24px;
   width: calc(100% - 240px);
 
   .content-container {
@@ -30,7 +30,7 @@
     max-width: 100%;
 
     .content-area {
-      background-color: #2B3139;
+      background-color: #000;
       border-radius: 8px;
       padding: 20px;
       width: 100%;

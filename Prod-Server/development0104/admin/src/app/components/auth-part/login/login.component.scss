@@ -1,6 +1,9 @@
 /* Update these styles */
 .header {
     z-index: 1000;
+    .navbar{
+        padding: 0 !important;
+    }
 }
 
 .login-box {

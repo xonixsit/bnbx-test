@@ -1,256 +1,124 @@
 .tariff-section {
-    padding: 20px 0;
-    background-color: #1a1d20;
-    
-    .section-title {
-        color: #f0b90b;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        background: linear-gradient(45deg, #F0B90B, #ffdb4d);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-
-        @media (max-width: 1200px) {
-            font-size: 2.2rem;
-        }
-
-        @media (max-width: 992px) {
-            font-size: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            font-size: 1.8rem;
-        }
-
-        @media (max-width: 576px) {
-            font-size: 1.5rem;
-        }
-    }
-    
-    .section-subtitle {
-        color: #e4e6eb;
-        font-size: 1.1rem;
-        opacity: 0.8;
-    }
-}
-
-.tariff-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #232629;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    
-    th, td {
-        padding: 1.2rem;
-        text-align: center;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        color: #e4e6eb;
-    }
-    
-    th {
-        background-color: #f0b90b;
-        color: #000;
-        font-weight: 600;
-        text-transform: uppercase;
-        font-size: 1.1rem;
-        
-        &.duration-col {
-            background-color: #2d3035;
-            color: #f0b90b;
-        }
-    }
-    
-    tr {
-        &:hover {
-            background-color: rgba(240,185,11,0.05);
-        }
-        
-        td:first-child {
-            background-color: #2d3035;
-            color: #f0b90b;
-            font-weight: 600;
-        }
-    }
-}
-
-// Responsive styles
-@media (max-width: 768px) {
-    .table-responsive {
-        border-radius: 12px;
-        overflow-x: auto;
-        
-        &::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        &::-webkit-scrollbar-thumb {
-            background-color: #f0b90b;
-            border-radius: 4px;
-        }
-        
-        &::-webkit-scrollbar-track {
-            background-color: #2d3035;
-        }
-    }
-    
-    .tariff-table {
-        th, td {
-            padding: 0.8rem;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-    }
-}
-
-// Add at the beginning of your file
-.investment-icon-wrapper {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 2rem;
+    padding: 80px 0;
+    background: linear-gradient(180deg, #06051E 0%, #1A0F1F 100%);
     position: relative;
+    overflow: hidden;
     
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(255, 108, 40, 0.08), transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(255, 108, 40, 0.08), transparent 50%);
+        pointer-events: none;
+    }
+
     &::after {
         content: '';
         position: absolute;
-        top: -10px;
-        left: -10px;
-        right: -10px;
-        bottom: -10px;
-        background: radial-gradient(circle, rgba(240,185,11,0.2) 0%, rgba(0,0,0,0) 70%);
-        border-radius: 50%;
-        animation: pulse 2s infinite;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
+        background: linear-gradient(0deg, rgba(255, 108, 40, 0.05), transparent);
+        pointer-events: none;
     }
-}
-
-.investment-icon {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 0 10px rgba(240,185,11,0.3));
-    
-    .outer-circle {
-        fill: none;
-        stroke: #f0b90b;
-        stroke-width: 2;
-        stroke-dasharray: 283;
-        stroke-dashoffset: 283;
-        animation: drawCircle 2s ease forwards, rotateCircle 20s linear infinite;
+    .section-title {
+        font-size: 4rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        text-align: center;
+        line-height: 1.2;
+        background: linear-gradient(90deg, #FF6C28, #FFB694);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     
-    .bnb-symbol {
-        fill: #f0b90b;
-        transform-origin: center;
-        animation: glowSymbol 2s ease-in-out infinite alternate;
+    .section-subtitle {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.125rem;
+        text-align: center;
+        margin-bottom: 3.5rem;
+        font-weight: 300;
     }
-    
-    .inner-circle {
-        fill: #f0b90b;
-        transform-origin: center;
-        animation: pulse 2s ease-in-out infinite;
-    }
-}
-
-@keyframes drawCircle {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
-@keyframes rotateCircle {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes glowSymbol {
-    from {
-        filter: drop-shadow(0 0 2px rgba(240,185,11,0.5));
-        opacity: 0.8;
-    }
-    to {
-        filter: drop-shadow(0 0 8px rgba(240,185,11,0.8));
-        opacity: 1;
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.5;
-    }
-    50% {
-        transform: scale(1.05);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 0.5;
-    }
-}
-
-.commission-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 2px;
-    background: rgba(240, 185, 11, 0.05);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.commission-table th,
-.commission-table td {
-    padding: 15px 10px;
-    text-align: center;
-    border: 1px solid rgba(240, 185, 11, 0.1);
-}
-
-.commission-table thead tr {
-    background: linear-gradient(45deg, #F0B90B, #ffdb4d);
-    color: #000;
-}
-
-.commission-table thead th {
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.commission-table tbody td {
-    font-size: 0.9rem;
-}
-
-.commission-table .turnover-row {
-    background: rgba(240, 185, 11, 0.1);
-}
-
-.commission-table tbody tr:hover {
-    background: rgba(240, 185, 11, 0.1);
-    transition: all 0.3s ease;
-}
-
-.total-row {
-    background: rgba(240, 185, 11, 0.15);
-    font-weight: 600;
-}
-
-.table-responsive {
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 768px) {
-    .commission-table {
-        font-size: 0.8rem;
+    .tariff-section {
+        .section-title {
+            font-size: 2.5rem;
+        }
+        
+        .section-subtitle {
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
+    }
+}
+.tariff-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0 auto;
+    max-width: 1200px;
+    
+    th, td {
+        height: 65px;  // Increased from 55px
+        padding: 0 25px;
+        
+        &:not(:first-child)::before {
+            top: 20%;  // Adjusted for new height
+            height: 60%;  // Adjusted for new height
+        }
     }
     
-    .commission-table th,
-    .commission-table td {
-        padding: 10px 5px;
+    thead tr th {
+        height: 70px;  // Slightly taller header cells
+        &:first-child {
+            width: 220px;
+            background: linear-gradient(90deg, #FF6C28, #FF8F28);
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+        
+        &:not(:first-child) {
+            background: linear-gradient(90deg, #FF6C28 0%, #FF8F28 50%, #FFAE28 100%);
+        }
+        
+        &:last-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
     }
+    
+    tbody tr td {
+        &:first-child {
+            background: linear-gradient(145deg, rgba(26, 31, 44, 0.98), rgba(13, 17, 23, 0.95));
+            border-radius: 12px;
+        }
+        
+        &:not(:first-child) {
+            background: linear-gradient(145deg, #2B1E24 0%, #1A1518 100%);
+            border: 1px solid rgba(255, 108, 40, 0.15);
+            box-shadow: inset 0 0 20px rgba(255, 108, 40, 0.05);
+        }
+        thead tr th:first-child {
+            background: linear-gradient(90deg, #FF6C28, #FF8F28);
+            border: none;
+            box-shadow: none;
+        }
+    }
+}
+
+.table-responsive {
+    padding: 0 15px;
+    margin: 0 auto;
+    max-width: 1230px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(26, 31, 44, 0.3), rgba(13, 17, 23, 0.3));
 }

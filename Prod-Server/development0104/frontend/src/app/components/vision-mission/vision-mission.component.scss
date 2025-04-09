@@ -1,162 +1,116 @@
-
-.vision-mission-new {
-    padding: 50px 0;
-    background: linear-gradient(135deg, #1c1c1c 0%, #2b3139 100%);
+.values-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, rgba(255, 108, 40, 0.15) 0%, #06051E 25%, #0D0B2F 100%);
     position: relative;
     overflow: hidden;
 
     &::before {
         content: '';
         position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 50% 50%, rgba(240, 185, 11, 0.05) 0%, transparent 70%);
-        pointer-events: none;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+        radial-gradient(circle at top left, rgba(255, 108, 40, 0.15), transparent 35%),
+        radial-gradient(circle at center right, rgba(64, 89, 255, 0.1), transparent 50%),
+        radial-gradient(circle at bottom left, rgba(13, 11, 47, 0.8), transparent 40%);
+    pointer-events: none;
     }
 
-    .section-header {
-        margin-bottom: 60px;
-
-        h2 {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #F0B90B, #FFD700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .header-line {
-            width: 80px;
-            height: 4px;
-            background: #F0B90B;
-            margin: 0 auto;
-            position: relative;
-            
-            &::before, &::after {
-                content: '';
-                position: absolute;
-                width: 40px;
-                height: 4px;
-                background: #F0B90B;
-                opacity: 0.5;
-            }
-            
-            &::before { left: -50px; }
-            &::after { right: -50px; }
-        }
+    .section-title {
+        font-size: 4rem;
+        line-height: 1.2;
+        text-align: center;
+        margin-bottom: 4rem;
+        background: linear-gradient(90deg, #FF6C28, #FFB694);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
-    .statement-container {
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, auto);
+        gap: 2rem;
         max-width: 1200px;
         margin: 0 auto;
-    }
+        position: relative;
 
-    .statement-card {
-        display: flex;
-        align-items: center;
-        background: rgba(28, 28, 28, 0.95);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(240, 185, 11, 0.2);
-        border-radius: 24px;
-        margin-bottom: 40px;
-        overflow: hidden;
-        transition: transform 0.4s ease;
+        .value-card {
+            background: rgba(13, 11, 47, 0.85);
+            border: 1px solid rgba(255, 108, 40, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.3s ease;
 
-        &:hover {
-            transform: translateY(-5px);
-            border-color: rgba(240, 185, 11, 0.4);
-            box-shadow: 0 8px 32px rgba(240, 185, 11, 0.15);
-
-            .floating-icon svg {
-                transform: scale(1.1);
-            }
-        }
-
-        .content-side {
-            flex: 1;
-            padding: 40px;
-
-            h3 {
-                color: #F0B90B;
-                font-size: 2rem;
-                margin-bottom: 20px;
-                font-weight: 700;
+            .number {
+                font-size: 4rem;
+                color: rgba(255, 108, 40, 0.15);
+                font-weight: 300;
+                margin-bottom: 1.5rem;
+                font-family: 'Work Sans', sans-serif;
             }
 
-            p {
-                color: #ffffff;
-                font-size: 1.1rem;
+            .title {
+                color: #FF6C28;
+                font-size: 1.75rem;
+                margin-bottom: 1.5rem;
+                font-weight: 500;
+            }
+
+            .description {
+                color: rgba(255, 255, 255, 0.9);
                 line-height: 1.8;
-                opacity: 0.9;
+                font-size: 1.1rem;
+                font-weight: 300;
             }
-        }
 
-        .icon-side {
-            width: 300px;
-            padding: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(240, 185, 11, 0.05);
-
-            .floating-icon {
-                width: 180px;
-                height: 180px;
-                
-                svg {
-                    width: 100%;
-                    height: 100%;
-                    transition: transform 0.4s ease;
-                }
-            }
-        }
-
-        &.mission-card {
-            flex-direction: row-reverse;
-        }
-    }
-
-    @media (max-width: 992px) {
-        .statement-card {
-            flex-direction: column !important;
-
-            .icon-side {
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
                 width: 100%;
-                padding: 30px;
-
-                .floating-icon {
-                    width: 120px;
-                    height: 120px;
-                }
-            }
-
-            .content-side {
-                padding: 30px;
-                text-align: center;
+                height: 1px;
+                background: linear-gradient(90deg, rgba(255, 108, 40, 0.3), transparent);
             }
         }
     }
+}
 
-    @media (max-width: 576px) {
+@media (max-width: 991px) {
+    .values-section {
         padding: 60px 0;
 
-        .section-header h2 {
-            font-size: 2.2rem;
+        .section-title {
+            font-size: 3rem;
         }
 
-        .statement-card {
-            margin: 0 15px 30px;
+        .values-grid {
+            grid-template-columns: 1fr;
+            padding: 0 1rem;
+        }
+    }
+}
 
-            .content-side {
-                padding: 20px;
+@media (max-width: 576px) {
+    .values-section {
+        .section-title {
+            font-size: 2.5rem;
+        }
 
-                h3 {
-                    font-size: 1.8rem;
-                }
+        .values-grid .value-card {
+            padding: 1.5rem;
 
-                p {
-                    font-size: 1rem;
-                }
+            .number {
+                font-size: 2.5rem;
+            }
+
+            .title {
+                font-size: 1.25rem;
             }
         }
     }

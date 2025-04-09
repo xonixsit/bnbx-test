@@ -2,15 +2,15 @@
 :root {
   --background-color: #2B3139; 
   // --text-color: black;
-  --button-bg-color: #F0B90B;
+  --button-bg-color: #FF6C28;
   --button-text-color: #000;
   --card-bg-color: #2B3139;
   --border-color-light: transparent;
   --card-gradient-light: radial-gradient(ellipse farthest-corner at right bottom, rgba(224, 184, 9, 1) 0%, rgba(224, 184, 9, 0.8) 8%, rgba(159, 121, 40, 0.6) 30%, rgba(138, 110, 47, 0.5) 40%, transparent 80%);
   --header-color-light: black;
   --header-bg-color-light: transparent;
-  --border-color-dark: #F0B90B;
-  --card-background-color: #F0B90B;
+  --border-color-dark: #FF6C28;
+  --card-background-color: #FF6C28;
 }
 
 /* Dark Mode (Dark Blue Theme) */
@@ -20,7 +20,7 @@
   --button-bg-color: #2B3139;
   --button-text-color: #fff;
   --card-bg-color: #2B3139;
-  --border-color-dark: #F0B90B;
+  --border-color-dark: #FF6C28;
   --card-gradient-dark: radial-gradient(circle at top left, rgba(7, 29, 226, 0.8), transparent 50%);
   --header-color-light: white;
   --header-bg-color-light: transparent;
@@ -95,7 +95,7 @@ input button:hover {
 /* Header styling */
 .navbar {
   // background-color: var(--card-bg-color);
-  background-color: #2b313991;
+  // background-color: #2b313991;
   color: #FFF;
   a{
     color: #FFF;
@@ -144,20 +144,20 @@ input button:hover {
     border-radius: 8px;
   }
   .header .navbar .navbar-nav .nav-item a:hover {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar .navbar-nav .nav-item a.active {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item {
     margin: 0;
   }
   .header .navbar-nav .nav-item:hover a {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item a {
     padding: 12px 16px !important;
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item a::before {
     display: none;
@@ -173,14 +173,14 @@ input button:hover {
     border: none;
     margin-left: 15px;
     margin-right: 15px;
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
 
   }
   .header .navbar-nav .nav-item .sub-menu .nav-item a {
     padding: 12px 12px;
   }
   .header .navbar-nav .nav-item .sub-menu .nav-item a:hover {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item a {
     // color: #051441;
@@ -198,7 +198,7 @@ input button:hover {
   }
   .header .navbar-nav .nav-item .sub-menu li.active {
     background: #fff !important;
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item .sub-menu .nav-item {
     margin: 0 !important;
@@ -208,13 +208,13 @@ input button:hover {
   }
   .header .navbar-nav .nav-item .sub-menu li:hover {
     background: #fff !important;
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item a {
     font-size: 14px;
   }
   .header .navbar-nav .nav-item a:hover {
-    color: #F0B90B;
+    color: #FF6C28;
   }
 }
 
@@ -224,16 +224,16 @@ input button:hover {
   }
   
   .header .navbar .navbar-nav .nav-item a:hover {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar .navbar-nav .nav-item a.active {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item {
     margin: 0;
   }
   .header .navbar-nav .nav-item:hover a {
-    color: #F0B90B;
+    color: #FF6C28;
   }
   .header .navbar-nav .nav-item a {
     padding: 12px 16px !important;
@@ -257,7 +257,7 @@ input button:hover {
     padding: 12px 12px;
   }
   .header .navbar-nav .nav-item .sub-menu .nav-item a:hover {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item a {
     // color: #2B3139;
@@ -275,7 +275,7 @@ input button:hover {
   }
   .header .navbar-nav .nav-item .sub-menu li.active {
     background: #2B3139 !important;
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item .sub-menu .nav-item {
     margin: 0 !important;
@@ -285,13 +285,13 @@ input button:hover {
   }
   .header .navbar-nav .nav-item .sub-menu li:hover {
     background: #fff !important;
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
   }
   .header .navbar-nav .nav-item a {
     font-size: 14px;
   }
   .header .navbar-nav .nav-item a:hover {
-    color: #F0B90B;
+    color: #FF6C28;
   }
 }
 
@@ -318,12 +318,12 @@ input button:hover {
 }
 
 .header.sticky .button .btn {
-  background-color: #F0B90B;
+  background-color: #FF8F28;
   color: #fff;
 }
 
 .header.sticky .button .btn:hover {
-  background-color: #F0B90B;
+  background-color: #FF8F28;
   color: #fff;
 }
 
@@ -349,11 +349,11 @@ input button:hover {
 }
 
 .sticky .navbar .navbar-nav .nav-item a.active {
-  color: #F0B90B;
+  color: #FF6C28;
 }
 
 .sticky .navbar .navbar-nav .nav-item a {
-  color: #F0B90B;
+  color: #FF6C28;
 }
 
 .header .navbar .navbar-nav .nav-item .sub-menu a.active {
@@ -448,11 +448,11 @@ input button:hover {
 }
 
 .navbar-nav .nav-item:hover a {
-  color: #F0B90B;
+  color: #FF6C28;
 }
 
 .sticky .navbar-nav .nav-item:hover a {
-  color: #F0B90B;
+  color: #FF6C28;
 }
 
 .navbar-nav .nav-item a {
@@ -580,7 +580,7 @@ input button:hover {
 }
 
 .navbar-nav .nav-item .sub-menu .nav-item a:hover {
-  color: #F0B90B;
+  color: #FF6C28;
 }
 
 .navbar-nav .nav-item .sub-menu.left-menu {
@@ -607,7 +607,7 @@ input button:hover {
 }
 
 .navbar-nav .nav-item .sub-menu > li.active > a {
-  color: #F0B90B !important;
+  color: #FF6C28 !important;
 }
 
 .navbar-nav .nav-item .sub-menu > li > a {
@@ -1206,32 +1206,32 @@ input[type = "textarea"]:focus {
 
 .header .button .btn:hover {
   color: #fff;
-  background-color: #F0B90B;
+  background-color: #FF6C28;
 }
 
 .sticky .button .btn {
-  background-color: #F0B90B;
+  background-color: #FF6C28;
   color: #fff;
 }
 
 .sticky .button .btn:hover {
-  // background-color: #F0B90B;
+  // background-color: #FF6C28;
   color: #fff;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
   .header .button .signin {
-    color: #F0B90B;
+    color: #FF6C28;
   }
   .header .button .signin:hover {
-    color: #F0B90B;
+    color: #FF6C28;
   }
   .header .button .signup {
-    background-color: #F0B90B;
+    background-color: #FF6C28;
     color: #fff;
   }
   .header .button .signup:hover {
-    background-color: #F0B90B;
+    background-color: #FF6C28;
     color: #fff;
   }
 }

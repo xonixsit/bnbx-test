@@ -1,6 +1,6 @@
 .dashboard-container {
     // display: flex;
-    background-color: #2B3139;
+    background-color: #000;
     min-height: 100vh;
 }
 
@@ -33,16 +33,24 @@
 
 .dashboard-card {
     padding: 1.5rem;
-    background: linear-gradient(145deg, #2B3139, #1E2329);
+    background: linear-gradient(145deg, rgba(26, 31, 44, 0.95), rgba(13, 17, 23, 0.98)),
+                radial-gradient(circle at top right, rgba(255, 143, 40, 0.2), transparent 50%),
+                linear-gradient(180deg, rgba(255, 143, 40, 0.08), transparent);
+    backdrop-filter: blur(10px);
     border-radius: 12px;
-    border: 1px solid rgba(240, 185, 11, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 143, 40, 0.15);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2),
+                inset 0 0 30px rgba(255, 143, 40, 0.05);
     transition: all 0.3s ease;
 
     &:hover {
         transform: translateY(-5px);
-        border-color: rgba(240, 185, 11, 0.3);
-        box-shadow: 0 8px 25px rgba(240, 185, 11, 0.1);
+        border-color: rgba(255, 143, 40, 0.3);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
+                    inset 0 0 40px rgba(255, 143, 40, 0.1);
+        background: linear-gradient(145deg, rgba(26, 31, 44, 0.98), rgba(13, 17, 23, 0.95)),
+                    radial-gradient(circle at top right, rgba(255, 143, 40, 0.25), transparent 60%),
+                    linear-gradient(180deg, rgba(255, 143, 40, 0.1), transparent);
     }
 }
 
@@ -54,7 +62,7 @@
 }
 
 .card-icon {
-    color: #F0B90B;
+    color: #FF6C28;
     font-size: 1.75rem;
     background: rgba(240, 185, 11, 0.1);
     padding: 0.75rem;
@@ -72,7 +80,7 @@
 }
 
 .card-value {
-    color: #F0B90B;
+    color: #FF6C28;
     font-size: 1.5rem;
     font-weight: 600;
     margin: 0;
@@ -133,7 +141,7 @@
                 color: #02C076;
             }
             &.PENDING {
-                color: #F0B90B;
+                color: #FF6C28;
             }
             &.REJECTED {
                 color: #F6465D;
@@ -171,7 +179,7 @@
     padding: 0 !important;
 }
 .status-pending {
-    color: #F0B90B;
+    color: #FF6C28;
 }
 
 .status-rejected {
@@ -183,7 +191,7 @@
 }
 
 .text-warning {
-    color: #F0B90B !important;
+    color: #FF6C28 !important;
 }
 
 .text-success {

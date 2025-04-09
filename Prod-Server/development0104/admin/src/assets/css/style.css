@@ -6,9 +6,45 @@ body {
   
   /* Button */
   .btn {
-    background-color: var(--border-color-dark);
+    background: linear-gradient(145deg, #FF6C28, #FF8F28);
     color: var(--button-text-color);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 108, 40, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
   }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+  }
+
+  .btn:hover {
+    background: linear-gradient(145deg, #FF8F28, #FF6C28);
+    box-shadow: 0 6px 20px rgba(255, 108, 40, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+  /* }
+  background-color: var(--border-color-dark);
+    color: var(--button-text-color);
+  } */
   
   /* Navbar */
   .navbar .nav-link {

@@ -1,95 +1,149 @@
 .benefits-section {
-    padding: 50px 0;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1f2b 100%);
+    padding: 100px 0;
+    background: linear-gradient(135deg, #040333 0%, rgba(10, 7, 55, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
     position: relative;
     overflow: hidden;
+
+    .section-title {
+        font-size: 3.5rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        color: #fff;
+        line-height: 1.2;
+
+        span {
+            color: #FF6C28;
+            font-size: 4rem;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #FF6C28, #FFB694);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+            label {
+                background: linear-gradient(90deg, #FF6C28, #FFB694);
+
+            }
+        }
+    
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at top right, rgba(255, 108, 40, 0.2), transparent 40%),
+            linear-gradient(135deg, #06051E 0%, #0D0B2F 100%);
+        pointer-events: none;
+        pointer-events: none;
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, auto);
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+
+        .benefit-card {
+            // background: rgba(13, 11, 47, 0.4);
+            border: 1px solid rgba(255, 108, 40, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            min-height: 300px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(315deg, rgba(6, 5, 30, 0.95), rgba(6, 5, 30, 0.98));
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: 
+                    radial-gradient(circle at top right, rgba(255, 108, 40, 0.15), transparent 70%),
+                    linear-gradient(315deg, transparent, rgba(255, 108, 40, 0.02));
+                pointer-events: none;
+            }
+
+            &:hover {
+                &::before {
+                    background: 
+                        radial-gradient(circle at top right, rgba(255, 108, 40, 0.2), transparent 70%),
+                        linear-gradient(315deg, transparent, rgba(255, 108, 40, 0.05));
+                }
+            }
+
+            .card-title {
+                font-size: 1.75rem;
+                background: linear-gradient(90deg, #FF6C28, #FFB694);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: 500;
+                margin: 0;
+                text-align: left;
+                padding-left: 0.5rem;
+            }
+        }
+    }
 }
 
-.section-header {
-    text-align: center;
-    margin-bottom: 80px;
-    position: relative;
-    z-index: 2;
+@media (max-width: 991px) {
+    .benefits-section {
+        .benefits-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
 }
 
-.subtitle {
-    display: block;
-    color: #F0B90B;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 15px;
-}
+@media (max-width: 576px) {
+    .benefits-section {
+        padding: 60px 0;
 
-.gradient-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
-    background: linear-gradient(90deg, #F0B90B, #FFD700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-    line-height: 1.1;
+        .section-title {
+            font-size: 2.5rem;
+            
+            span {
+                font-size: 3rem;
+            }
+        }
+
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 }
 
 .benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
-    margin-bottom:15px;
-    z-index: 2;
-}
+    .benefit-card {
+        padding: 1.75rem;
+        gap: 1rem;
 
-.benefit-card {
-    background: rgba(28, 28, 28, 0.95);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(240, 185, 11, 0.2);
-    border-radius: 24px;
-    padding: 40px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
+        .icon-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.75rem 0;
 
-.benefit-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, transparent, rgba(240, 185, 11, 0.1), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s;
+            .glow-icon {
+                width: 45px;
+                height: 45px;
+                filter: drop-shadow(0 0 12px rgba(255, 108, 40, 0.3));
+                object-fit: contain;
+            }
+        }
+    }
 }
-
-.benefit-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(240, 185, 11, 0.4);
-    box-shadow: 0 8px 32px rgba(240, 185, 11, 0.15);
-}
-
-.benefit-card:hover::before {
-    transform: translateX(100%);
-}
-
-.icon-wrapper {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 24px;
-}
-
-.content h3 {
-    color: #F0B90B;
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.content p {
-    color: #ffffff;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    opacity: 0.9;
-}
-

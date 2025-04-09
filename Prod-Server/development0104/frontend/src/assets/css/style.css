@@ -10,6 +10,25 @@
   --header-bg-color-light: #2B3139;
   --border-color-dark: #F0B90B;
   --card-background-color: rgba(185, 137, 5, .846);
+  
+  /* Brand Gradient Colors */
+  --primary-gradient-start: #FF6C28;
+  --primary-gradient-middle: #FCA854;
+  --primary-gradient-end: #FFAE28;
+  
+  /* Additional Gradient Colors */
+  --secondary-gradient-start: #E85511;
+  --secondary-gradient-middle: #A52100;
+  --secondary-gradient-end: #A52100;
+  
+  /* Gradient Combinations */
+  --brand-gradient: linear-gradient(90deg, var(--primary-gradient-start), var(--primary-gradient-middle));
+  --brand-gradient-extended: linear-gradient(90deg, var(--primary-gradient-start) 0%, var(--primary-gradient-middle) 50%, var(--primary-gradient-end) 100%);
+  --secondary-gradient: linear-gradient(90deg, var(--secondary-gradient-start), var(--secondary-gradient-middle));
+  --secondary-gradient-extended: linear-gradient(90deg, var(--secondary-gradient-start) 0%, var(--secondary-gradient-middle) 50%, var(--secondary-gradient-end) 100%);
+  --header-left-bg: #FF6C2859;
+  --header-right-bg: #06051E;
+  --header-gradient: linear-gradient(90deg, var(--header-left-bg) 0%, var(--header-right-bg) 100%);
 }
 
 /* General */

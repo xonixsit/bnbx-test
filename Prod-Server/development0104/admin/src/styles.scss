@@ -1,12 +1,13 @@
 /* Dark Mode (Dark Blue Theme) */
 :root {
-  --background-color: #2B3139; /* Dark blue color */
+  --background-color: #000; 
   --text-color: white;
   --button-bg-color: #333;
   --button-text-color: #fff;
   --card-bg-color:#2B3139;
-  --border-color-dark: #F0B90B;
-  --card-gradient-dark: radial-gradient(circle at top left, rgba(7, 29, 226, 0.8), transparent 50%);
+  --border-color-dark: #FF6C28;
+  --card-gradient-dark: radial-gradient(circle at top left, rgba(255, 108, 40, 0.8), rgba(255, 108, 40, 0.1) 50%), 
+                       linear-gradient(45deg, rgba(255, 108, 40, 0.3), rgba(255, 108, 40, 0.1));
   --header-color-light: white;
   --header-bg-color-light: transparent;
   --card-background-color: transparent;
@@ -14,7 +15,7 @@
 
 // Core variables
 $colors: (
-  primary: #F0B90B,
+  primary: #FF6C28,
   bg-dark: #1E2329,
   bg-darker: #2B3139,
   success: #0ECB81,
@@ -101,12 +102,14 @@ input button:hover {
 
 /* Header styling */
 .navbar {
-  background-color: #2b2c28;
+  background-color: #000;
   color: var(--header-color-light);
   
   // border-bottom: 2px solid yellow !important;
 }
-
+input[type=text], input[type=email], input[type=password] input[type=textarea] {
+  background-color: var(--background-color)!important;
+}
 .list-unstyled li a {
   cursor: pointer;
 }
@@ -431,7 +434,7 @@ input[type = "textarea"]:focus {
 #sidebar ul li a.router-link-active,
 #sidebar ul li a.router-link-active i,
 #sidebar ul li a:hover {
-  background-color: #F0B90B; /* Gold background for active item */
+  background-color: #FF6C28; /* Gold background for active item */
   color: #2B3139 !important; /* Text color for active item */
   border-radius: 4px;
 }
@@ -453,7 +456,7 @@ input[type = "textarea"]:focus {
 
 /* Style for the active link */
 .active-link {
-  background-color: #F0B90B; /* Gold background for active item */
+  background-color: #FF6C28; /* Gold background for active item */
   color: #000 !important; /* Text color for active item */
   font-weight: bold;
   border-radius: 4px;
