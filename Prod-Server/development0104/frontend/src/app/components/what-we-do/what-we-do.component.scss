@@ -15,17 +15,21 @@
         pointer-events: none;
     }
 
+    
     .section-title {
         font-size: 4rem;
         text-align: center;
-        line-height: 1.2;
         margin-bottom: 4rem;
-        background: linear-gradient(90deg, #FF6C28, #FFB694);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+        color: #fff;
+        line-height: 1.2;
 
+        span {
+            background: linear-gradient(90deg, #FF6C28, #FFB694);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
     .trading-illustration {
         position: relative;
         text-align: center;

@@ -58,9 +58,11 @@
         flex-direction: column;
         gap: 2px;  // Minimal gap to show background
         margin-bottom: 3rem;
-        max-width: 800px;
+        // max-width: 800px;
         margin: 0 auto 3rem;
         background: rgba(255, 108, 40, 0.1);
+        background: linear-gradient(90deg, rgba(255, 191, 17, 0) 27.13%, rgba(255, 191, 17, 0.957527) 74.6%, #FFBF11 89.52%, #FF7A28 94.95%);
+
         padding: 2px;
         border-radius: 8px;
 
