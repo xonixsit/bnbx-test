@@ -193,3 +193,17 @@
         text-align: center;
     }
 }
+
+.footer-email {
+    color: #FF6C28;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    &:hover {
+        color: #FFB694;
+        transform: translateX(5px);
+    }
+}
