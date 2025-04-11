@@ -21,7 +21,7 @@
 .table {
   width: 100%;
   margin: 0;
-  color: #F0B90B;
+  color: #FF6C28;
   background: #2B3139 !important;
   font-size: 0.9rem;
 }
@@ -32,13 +32,13 @@
 }
 
 .table th {
-  color: #F0B90B;
+  color: #FF6C28;
   font-weight: 600;
   background: rgba(43, 49, 57, 0.95);
 }
 
 .table td {
-  color: rgba(240, 185, 11, 0.9);
+  color: #FF6C28;
 }
 
 .table tbody tr {
@@ -73,7 +73,7 @@
 
 .status-pending {
   background: rgba(240, 185, 11, 0.2);
-  color: #F0B90B;
+  color: #FF6C28;
 }
 
 .status-failed {
@@ -105,7 +105,7 @@
 }
 
 .text-warning {
-  color: #F0B90B !important;
+  color: #FF6C28 !important;
 }
 
 .text-white {
@@ -114,12 +114,12 @@
 
 /* Buttons */
 .export-btn {
-  border: 1px solid #F0B90B;
+  border: 1px solid #FF6C28;
   color: #2B3139;
 }
 
 .export-btn:hover {
-  background: #F0B90B;
+  background: #FF6C28;
   color: #2B3139;
 }
 
@@ -149,7 +149,7 @@ td.date{
   background:#2B3139!important;
 }
 .custom-select:focus {
-  border-color: #F0B90B;
+  border-color: #FF6C28;
   box-shadow: 0 0 0 0.2rem rgba(240, 185, 11, 0.25);
 }
 
@@ -182,7 +182,7 @@ td.user-info {
 
 .user-name {
   font-weight: 500;
-  color: #F0B90B;
+  color: #FF6C28;
   margin-bottom: 0;
   display: inline-block;
   margin-right: 8px;

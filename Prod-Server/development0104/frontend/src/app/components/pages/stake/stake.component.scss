@@ -36,13 +36,13 @@
 }
   .timer {
     font-size: 0.9rem;
-    color: #ffc107;
+    color: #FF6C28;
   }
 }
 
 // Remove the separate .active-plan class as it's conflicting
 // .active-plan {
-//   border: 2px solid #ffc107;
+//   border: 2px solid #FF6C28;
 //   transform: scale(1.02);
 //   transition: all 0.3s ease;
 // }
@@ -62,7 +62,7 @@
   }
   
   &.active-plan {
-    border: 3px solid #ffd700 !important;
+    border: 3px solid #FF6C28 !important;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     transform: scale(1.02);
   }
@@ -99,7 +99,7 @@
     transform: translateX(-50%);
     width: 50px;
     height: 2px;
-    background-color: #ffc107;
+    background-color: #FF6C28;
   }
 }
 
@@ -116,7 +116,7 @@ select#lockPeriod {
   }
   
   &:focus {
-    border-color: #ffc107;
+    border-color: #FF6C28;
     box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
   }
 
@@ -126,7 +126,7 @@ select#lockPeriod {
     
     &:checked {
       background-color: rgba(255, 193, 7, 0.15);
-      color: #ffc107;
+      color: #FF6C28;
     }
     
     &:hover {
@@ -136,7 +136,7 @@ select#lockPeriod {
       font-size: 0.9rem;
       
       strong {
-        color: #ffc107;
+        color: #FF6C28;
       }
     }
   }
@@ -160,7 +160,7 @@ select#lockPeriod {
   }
 
   .info-label {
-    color: #ffc107;
+    color: #FF6C28;
     font-weight: 500;
   }
 
@@ -176,7 +176,7 @@ select#lockPeriod {
     color: #fff;
     
     &:focus {
-      border-color: #ffc107;
+      border-color: #FF6C28;
       box-shadow: none;
     }
   }
@@ -193,7 +193,7 @@ select#lockPeriod {
   padding: 15px;
   border-radius: 10px;
   margin: 15px 0;
-  color: #ffd700;
+  color: #FF6C28;
   
   .daily-rate {
     display: flex;
@@ -203,7 +203,7 @@ select#lockPeriod {
     .rate-value {
       font-size: 2rem;
       font-weight: bold;
-      color: #ffd700;
+      color: #FF6C28;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
     }
     
@@ -217,6 +217,7 @@ select#lockPeriod {
   }
 }
 
+
 .investment-range {
   background: rgba(0, 0, 0, 0.15);
   padding: 12px;
@@ -228,7 +229,9 @@ select#lockPeriod {
   transition: all 0.3s ease;
   background: rgba(30, 33, 36, 0.95);
   border: 2px solid transparent;
-  
+  .text-warning {
+    color: #FF6C28 !important;
+  }
   @media (hover: hover) {
     &:hover {
       transform: translateY(-5px);
@@ -237,7 +240,7 @@ select#lockPeriod {
   }
   
   &.active-plan {
-    border-color: #ffd700;
+    border-color: #FF6C28;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
     
     .selected-check {
@@ -247,6 +250,12 @@ select#lockPeriod {
   }
 }
 
+
+
+.btn.bep20.btn-primary{
+  background: #06051E !important;
+  color:#FFF !important;
+}
 .plan-icon {
   height: 50px;
   display: flex;

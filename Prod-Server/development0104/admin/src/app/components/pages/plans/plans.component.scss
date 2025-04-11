@@ -4,7 +4,7 @@
     background-color:  rgba(240, 185, 11, 0.1) !important;
     border-color: rgba(255, 255, 255, 0.1);
     th {
-      color: #F0B90B;
+      color: #FF6C28;
       font-weight: 600;
       border-color: rgba(240, 185, 11, 0.1);
     }
@@ -39,9 +39,12 @@
     &.btn-warning {
       color: #000;
       &:hover {
-        background: #F0B90B;
-        border-color: #F0B90B;
+        background: #FF6C28;
+        border-color: #FF6C28;
       }
     }
   }
+}
+.container-fluid{
+  margin-top:130px;
 }

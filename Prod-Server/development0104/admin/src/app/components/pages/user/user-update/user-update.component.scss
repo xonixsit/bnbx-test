@@ -1,6 +1,6 @@
 // Core variables
 $colors: (
-  primary: #F0B90B,
+  primary: #FF6C28,
   bg-dark: #1E2329,
   bg-darker: #2B3139,
   success: #0ECB81,
@@ -154,7 +154,7 @@ input {
   transition: all 0.3s ease;
   
   &:focus {
-      border-color: #F0B90B;
+      border-color: #FF6C28;
       box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.1);
       outline: none;
       color:#FFF;
@@ -262,7 +262,7 @@ input {
             transition: all 0.3s ease;
             
             &:focus {
-                border-color: #F0B90B;
+                border-color: #FF6C28;
                 box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.1);
                 outline: none;
                 color:#FFF;
@@ -307,7 +307,7 @@ input {
   right: 8px;
   top: 50%;
   transform: translateY(-50%);
-  background: #F0B90B;
+  background: #FF6C28;
   border: none;
   color: #848E9C;
   padding: 8px;
@@ -315,7 +315,7 @@ input {
   transition: all 0.2s ease;
   z-index: 9999;
   &:hover, &:focus {
-    color: #F0B90B;
+    color: #FF6C28;
     outline: none;
     background-color: #1E2329;
   }
@@ -363,7 +363,7 @@ input {
         transition: all 0.3s ease;
         
         &:focus {
-          border-color: #F0B90B;
+          border-color: #FF6C28;
           box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.1);
           outline: none;
         }
@@ -423,7 +423,7 @@ input {
         transition: color 0.2s;
         
         &:hover {
-          color: #F0B90B;
+          color: #FF6C28;
         }
         
         i {

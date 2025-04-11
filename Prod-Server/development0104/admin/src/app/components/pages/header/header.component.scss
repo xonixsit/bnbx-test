@@ -1,11 +1,11 @@
 .navbar {
     color: var(--header-color-light);
     width: 100%;
-    z-index: 1;
+    z-index: 10000;
     position: fixed;
-    border-bottom: 2px solid rgb(185, 137, 5) !important;
+    border-bottom: 2px solid #FF6C28 !important;
     padding: 0.5rem 1rem;
-    
+    background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 0%, rgba(6, 5, 30, 0.95) 0%);
     .navbar-brand {
         transition: all 0.3s ease;
         

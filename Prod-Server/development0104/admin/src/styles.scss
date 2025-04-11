@@ -1,6 +1,6 @@
 /* Dark Mode (Dark Blue Theme) */
 :root {
-  --background-color: #000; 
+   --background-color: linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
   --text-color: white;
   --button-bg-color: #333;
   --button-text-color: #fff;
@@ -26,8 +26,7 @@ $colors: (
 
 /* Applying the variables globally */
 body {
-  background-color: var(--background-color);
- 
+  background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 35%, rgba(6, 5, 30, 0.95) 100%); 
   color: var(--text-color);
   font-family: Arial, sans-serif;
   margin: 0;
@@ -99,17 +98,18 @@ button {
 input button:hover {
   background-color: var(--button-text-color);
 }
-
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl{
+  padding: 0 !important;
+}
 /* Header styling */
-.navbar {
-  background-color: #000;
-  color: var(--header-color-light);
+.header {
+  //  background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 35%, rgba(6, 5, 30, 0.95) 100%);  color: var(--header-color-light);
   
   // border-bottom: 2px solid yellow !important;
 }
-input[type=text], input[type=email], input[type=password] input[type=textarea] {
-  background-color: var(--background-color)!important;
-}
+// input[type=text], input[type=email], input[type=password] input[type=textarea] {
+//   // background-color: var(--background-color)!important;
+// }
 .list-unstyled li a {
   cursor: pointer;
 }
@@ -174,7 +174,7 @@ input[type=text], input[type=email], input[type=password] input[type=textarea] {
 }
 
 #sidebar {
-  background-color:var(--background-color)
+background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 0%, rgba(6, 5, 30, 0.95) 0%);
 }
 
 #sidebar {
@@ -211,7 +211,7 @@ input[type = "textarea"]{
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: border-color 0.3s ease;
-  background-color: var(--background-color) !important;
+  // background-color: var(--background-color) !important;
   color: var(--text-color);
 }
 
@@ -372,7 +372,7 @@ input[type = "textarea"]:focus {
 #sidebar {
   position: fixed;
   width: 15rem;
-  margin-top: 2.4rem;
+  // margin-top: 2.4rem;
   background-color: var(--card-bg-color);
   color: var(--text-color);
   transition: all 0.3s;
@@ -488,7 +488,7 @@ input[type = "textarea"]:focus {
 
 #content {
   // margin-left: 8rem;
-  margin-top: 4rem;
+  margin-top: 7rem;
   flex-grow: 1;
   overflow-y: auto;
   height: auto;

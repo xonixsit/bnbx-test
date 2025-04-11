@@ -18,7 +18,7 @@
 }
 
 .table {
-    color: #F0B90B;
+    color: #FF6C28;
     margin: 0;
     width: 100%;
     border-collapse: separate;
@@ -26,7 +26,7 @@
     
     th {
         background: #2B3139;
-        color: #F0B90B;
+        color: #FF6C28;
         font-weight: 600;
         padding: 1rem;
         border-bottom: 2px solid rgba(240, 185, 11, 0.2);
@@ -42,7 +42,7 @@
 
     td {
         background: #2B3139;
-        color: #F0B90B;
+        color: #FF6C28;
         padding: 1rem;
         border-bottom: 1px solid rgba(240, 185, 11, 0.1);
         vertical-align: middle;
@@ -110,7 +110,7 @@
                   .btn-icon {
                     background: transparent;
                     border: 1px solid rgba(240, 185, 11, 0.2);
-                    color: #F0B90B;
+                    color: #FF6C28;
                     width: 32px;
                     height: 32px;
                     padding: 0;
@@ -133,7 +133,7 @@
                   }
 
                   .page-info {
-                    color: #F0B90B;
+                    color: #FF6C28;
                     margin: 0 1rem;
                     min-width: 100px;
                     text-align: center;
@@ -142,21 +142,21 @@
                   .form-select {
                     background-color: rgba(43, 49, 57, 0.9);
                     border: 1px solid rgba(240, 185, 11, 0.2);
-                    color: #F0B90B;
+                    color: #FF6C28;
                     
                     &:focus {
-                      border-color: #F0B90B;
+                      border-color: #FF6C28;
                       box-shadow: 0 0 0 0.2rem rgba(240, 185, 11, 0.25);
                     }
 
                     option {
                       background-color: #2B3139;
-                      color: #F0B90B;
+                      color: #FF6C28;
                     }
                   }
 
                   span {
-                    color: #F0B90B;
+                    color: #FF6C28;
                   }
                 }
             }
@@ -175,11 +175,11 @@
     border-radius: 6px;
     transition: all 0.2s ease;
     background: transparent;
-    color: #F0B90B;
+    color: #FF6C28;
 
     &:hover {
         background: rgba(240, 185, 11, 0.1);
-        border-color: #F0B90B;
+        border-color: #FF6C28;
     }
 
     i {
@@ -202,11 +202,11 @@
         height: 42px;
         background: #2B3139;
         border: 1px solid rgba(240, 185, 11, 0.2);
-        color: #F0B90B;
+        color: #FF6C28;
         padding-left: 1rem;
 
         &:focus {
-            border-color: #F0B90B;
+            border-color: #FF6C28;
             box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.1);
         }
 
@@ -222,7 +222,7 @@
     
     ::ng-deep {
         .mat-paginator-container {
-            color: #F0B90B;
+            color: #FF6C28;
             min-height: 48px;
         }
 
@@ -233,11 +233,11 @@
 
         .mat-select-value,
         .mat-select-arrow {
-            color: #F0B90B;
+            color: #FF6C28;
         }
 
         .mat-paginator-navigation-button {
-            color: #F0B90B;
+            color: #FF6C28;
         }
     }
 }

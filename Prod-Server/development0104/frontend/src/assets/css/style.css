@@ -1,14 +1,14 @@
 :root {
-  --background-color: #2B3139;
+  --background-color:linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
   --text-color: #FFF;
-  --button-bg-color: #F0B90B;
+  --button-bg-color: #FF6C28;
   --button-text-color: #2B3139;
-  --card-bg-color: #2B3139;
+  --card-bg-color:  linear-gradient(315deg, rgba(6, 5, 30, 0.95), rgba(6, 5, 30, 0.98));;
   --border-color-light: transparent;
   --card-gradient-light: radial-gradient(ellipse farthest-corner at right bottom, rgba(224, 184, 9, 1) 0%, rgba(224, 184, 9, .8) 8%, rgba(159, 121, 40, .6) 30%, rgba(138, 110, 47, .5) 40%, transparent 80%);
-  --header-color-light: #F0B90B;
+  --header-color-light: #FF6C28;
   --header-bg-color-light: #2B3139;
-  --border-color-dark: #F0B90B;
+  --border-color-dark: #FF6C28;
   --card-background-color: rgba(185, 137, 5, .846);
   
   /* Brand Gradient Colors */
@@ -32,17 +32,30 @@
 }
 
 /* General */
-body {
+/* body {
     background-color: #2B3139;
     color: #ffffff;
     position: relative;
     overflow-x: hidden;
-  }
+  } */
+  .section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #fff;
+    line-height: 1.2;
   
+    span {
+        background: linear-gradient(90deg, #FF6C28, #FFB694);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+  }
   /* Button */
   .btn {
-    background-color: #F0B90B;
-    color: #2B3139;
+    background: linear-gradient(90deg, #FF6C28 0%, #FFB694 100%) !important;
+    color: #FFF;
     border: none;
     border-radius: 12px;
     padding: 12px 24px;
@@ -51,10 +64,47 @@ body {
     backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(240, 185, 11, 0.1);
   }
-
+  .generate-btn {
+    background: linear-gradient(90deg, #ff6a00 0%, #ffb100 100%) !important;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+      color: #fff;
+    border: none;
+    padding: 12px 24px;
+  }
+  .section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #fff;
+    line-height: 1.2;
+  
+    span {
+        background: linear-gradient(90deg, #FF6C28, #FFB694);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+  }
+  .btn.bep20{
+    background: #FF6C28 !important;
+  }
+  .btn.trc20{
+    background: #FFB593  !important;
+    color:#06051E !important;
+  }
+  .btn.trc20.btn-primary{
+    background: #06051E !important;
+    color:#FFF !important;
+  }
   .btn:hover {
     transform: translateY(-2px);
-    background-color: #F0B90B;
+    background-color: #FF6C28;
     color: #2B3139;
     box-shadow: 0 10px 40px 0 rgba(240, 185, 11, 0.2);
   }
@@ -73,23 +123,22 @@ body {
   }
  /* Container Styling */
 body {
-    background: linear-gradient(135deg, #2B3139 0%, #1a1f24 100%);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 80px 0;
-    text-align: left;
+    background: linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
+    color: #ffffff;
     position: relative;
-  }
+    overflow-x: hidden;
+}
 
-  body::before {
+body::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(240, 185, 11, 0.1) 0%, transparent 50%);
+    background: 
+        radial-gradient(circle at top right, rgba(255, 108, 40, 0.1), transparent 70%),
+        radial-gradient(circle at bottom left, rgba(255, 108, 40, 0.05), transparent 70%);
     pointer-events: none;
     z-index: 1;
   }
@@ -111,7 +160,7 @@ body {
   /* Button Styling */
   .hero-header .btn-primary {
     padding: 14px 32px;
-    background-color: #F0B90B;
+    background-color: #FF6C28;
     border: none;
     border-radius: 12px;
     font-weight: bold;

@@ -32,21 +32,9 @@
     overflow-x: hidden;
   }
   
-  body {
-    background-color: #1a1d20;
-  }
-}
-.header-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  z-index: 1000;
-  width: 100%;
-  display: block;
-  background-color: #232629;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  // body {
+  //   background-color: #1a1d20;
+  // }
 }
 
 .main-content {
@@ -71,7 +59,7 @@
   margin-left: 250px;
   padding: 20px;
   overflow-y: auto;
-  background-color: #1a1d20;
+  // background-color: #1a1d20;
 }
 
 // Table styles for transaction history
@@ -82,7 +70,7 @@
   color: #e4e6eb;
   
   th {
-    background-color: #f0b90b;
+    background-color: linear-gradient(90deg, #FF6C28 0%, #FFC011 100%);
     color: #000;
     padding: 12px 15px;
     text-align: left;
@@ -101,37 +89,46 @@
 
 // Card styles
 .card {
-  background-color: #2d3035;
-  border-radius: 8px;
-  border: none;
-  padding: 20px;
-  height: 100%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, 
+      rgba(255, 108, 40, 0.1) 0%,
+      rgba(13, 11, 47, 0.95) 100%
+  );
+  border: 1px solid rgba(255, 108, 40, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  
+  &:hover {
+      border-color: rgba(255, 108, 40, 0.3);
+      box-shadow: 0 12px 40px rgba(255, 108, 40, 0.1);
+      transform: translateY(-2px);
+  }
   
   .card-title {
-    color: #f0b90b;
-    font-size: 16px;
-    margin-bottom: 10px;
+      color: #FF6C28;
+      font-size: 16px;
+      margin-bottom: 10px;
   }
   
   .card-text {
-    font-size: 22px;
-    font-weight: 600;
-    color: #e4e6eb;
+      font-size: 22px;
+      font-weight: 600;
+      color: #fff;
   }
 }
 
 // Status badges
 .COMPLETED {
   background-color: #0ecb81;
-  color: white;
+  color: rgb(22, 215, 54);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
 }
 
 .PENDING {
-  background-color: #f0b90b;
+  background-color: #db7209;
   color: black;
   padding: 4px 8px;
   border-radius: 4px;
@@ -258,7 +255,7 @@
     left: 15px;
     top: 40px;
     z-index: 1001;
-    background-color: #f0b90b;
+    background-color: #FF6C28;
     border: none;
     border-radius: 4px;
     padding: 10px 15px;
@@ -271,7 +268,7 @@
     }
   
     &:hover {
-      background-color: darken(#f0b90b, 5%);
+      background-color: darken(#FF6C28, 5%);
     }
   }
   

@@ -7,9 +7,11 @@
 .bg-gradient-primary {
     background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
 }
-
+.text-warning {
+    color: #FF6C28!important; 
+}
 .bg-gradient-warning {
-    background: linear-gradient(45deg, #ffc107, #ffab00);
+    background: linear-gradient(45deg, #FF6C28, #FFB694);
 }
 
 :host ::ng-deep {
@@ -30,7 +32,7 @@
                     }
                     
                     .p-tree-toggler {
-                        color: #ffc107;
+                        color: #FF6C28;
                     }
                     
                     .p-treenode-label {

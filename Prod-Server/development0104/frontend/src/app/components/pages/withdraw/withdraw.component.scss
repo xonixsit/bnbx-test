@@ -26,7 +26,15 @@ input::placeholder, .text-muted,.example {
 small{
     color:#FFF;
 }
+.text-warning{
+  color: #FF6C28 !important
+}
 
+.plan-header{
+  .bg-warning{
+    background-color: #FF6C28 !important
+  }
+}
 
 .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
     margin-left: -1px;
@@ -47,7 +55,7 @@ small{
   
       &:focus {
         box-shadow: none;
-        border-color: #ffc107;
+        border-color: #FF6C28;
         background-color: #262626;
       }
   
@@ -69,12 +77,12 @@ small{
   
       &:hover {
         background-color: #262626;
-        border-color: #ffc107;
+        border-color: #FF6C28;
         .fa {
-          color: #ffc107;
+          color: #FF6C28;
         }
       }
-  
+    
       &:focus {
         box-shadow: none;
         outline: none;
@@ -106,7 +114,7 @@ small{
   }
   
 button{
-    background-color: #ffc107;
+    background-color: #FF6C28;
 }
 .btn-icon {
  i{
@@ -117,7 +125,7 @@ button{
   background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
 }
 .balance-item{
-  color:#ffc107;
+  color:#FF6C28;
 }
 .card {
   transition: transform 0.3s ease;
@@ -178,7 +186,7 @@ button{
         
         .plan-name {
             font-weight: 600;
-            color: #ffc107;
+            color: #FF6C28;
             font-size: 1.1rem;
             text-transform: capitalize;
             letter-spacing: 0.5px;
@@ -353,7 +361,7 @@ button{
         }
 
         &:hover {
-          color: #ffc107;
+          color: #FF6C28;
         }
       }
 
@@ -362,4 +370,28 @@ button{
       }
     }
   }
+}
+.btn-gradient {
+    background: linear-gradient(90deg, #FF6C28 0%, #FFB694 100%);
+    color: #06051E; // Updated text color for better contrast
+    font-weight: 700; // Increased font weight
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2); // Added subtle text shadow
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(255, 108, 40, 0.2);
+        color: #06051E; // Maintain dark text on hover
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
 }

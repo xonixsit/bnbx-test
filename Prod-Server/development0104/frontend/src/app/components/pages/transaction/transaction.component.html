@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div id="content" class="active-content">
     <div class="container py-4">
-      <h2 class="text-warning mb-4 text-center">Transaction History</h2>
+      <h2 class="section-title b-4 text-center"><span>Transaction History</span></h2>
 
       <!-- Loading and Error Messages -->
       <div *ngIf="loading" class="text-center py-4">
@@ -16,7 +16,7 @@
         <div class="card-body">
           <div class="row g-3">
             <div class="col-md-6">
-              <label for="transactionType" class="form-label text-warning">Transaction Type</label>
+              <label for="transactionType" class="form-label">Transaction Type</label>
               <select id="transactionType" class="form-select bg-dark text-light border-secondary" [(ngModel)]="transactionType" (ngModelChange)="applyFilters()">
                 <option value="">All</option>
                 <option value="DEPOSIT">Fund Transfer</option>
@@ -24,7 +24,7 @@
               </select>
             </div>
             <div class="col-md-6">
-              <label for="status" class="form-label text-warning">Status</label>
+              <label for="status" class="form-label">Status</label>
               <select id="status" class="form-select bg-dark text-light border-secondary" [(ngModel)]="status" (ngModelChange)="applyFilters()">
                 <option value="">All</option>
                 <option value="COMPLETED">Completed</option>

@@ -1,6 +1,7 @@
 .container-fluid {
   min-height: 100vh;
-  padding-top: 80px;  // Space for fixed header
+  padding-top: 80px;
+  background: linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
 }
 
 .card {
@@ -8,10 +9,72 @@
   max-width: 400px;
   margin: 1rem auto;
   padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, 
+      rgba(255, 108, 40, 0.1) 0%,
+      rgba(13, 11, 47, 0.95) 100%
+  );
+  border: 1px solid rgba(255, 108, 40, 0.15);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   
-  @media (max-width: 768px) {
-    margin-top: 2rem;
-    padding: 1.5rem 1rem;
+  &:hover {
+      border-color: rgba(255, 108, 40, 0.3);
+      box-shadow: 0 15px 40px rgba(255, 108, 40, 0.1);
+  }
+
+  .form-control {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 108, 40, 0.2);
+      color: #fff;
+      transition: all 0.3s ease;
+  
+      &:focus {
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(255, 108, 40, 0.4);
+          box-shadow: 0 0 15px rgba(255, 108, 40, 0.1);
+      }
+  }
+
+  .btn-primary {
+    background: linear-gradient(90deg, #ff6a00 0%, #ffb100 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  
+  &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.2)
+      );
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+  }
+  
+  &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 108, 40, 0.3);
+      
+      &::before {
+          transform: translateX(100%);
+      }
+  }
+  
+  &:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 12px rgba(255, 108, 40, 0.2);
+  }
   }
 }
 

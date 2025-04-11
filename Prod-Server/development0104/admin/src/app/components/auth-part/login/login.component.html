@@ -17,12 +17,12 @@
     </header>
 
     <!-- Login form section - Centered -->
-    <div class="container flex-grow-1 d-flex align-items-center">
+    <div class="login-container container flex-grow-1 d-flex align-items-center">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-5 col-lg-4 ">
-                    <div class="card border-0 bg-transparent">
-                        <div class="login-box p-4" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div class=" border-0 bg-transparent">
+                        <div class="login-box p-4">
                             <h2 class="text-center mb-4 text-white" *ngIf="!isForgotPassword">Admin Login</h2>
                             <h2 class="text-center mb-4 text-white" *ngIf="isForgotPassword">Change Password</h2>
 
@@ -57,7 +57,7 @@
                                 <!-- Login Button -->
                                 <div class="form-group mb-4">
                                     <button class="btn w-100 text-dark" type="submit" 
-                                        style="background-color: #F0B90B; font-weight: 600;">
+                                        style="background-color: #FF6C28; font-weight: 600;">
                                         Login
                                     </button>
                                 </div>
@@ -65,7 +65,7 @@
                                 <!-- Forgot Password Link -->
                                 <div class="text-center">
                                     <a href="javascript:void(0)" (click)="showForgotPassword()" 
-                                        class="text-decoration-none" style="color: #F0B90B">
+                                        class="text-decoration-none" style="color: #FF6C28">
                                         Change Password?
                                     </a>
                                 </div>

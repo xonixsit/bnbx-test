@@ -2,15 +2,16 @@
   // display: flex;
   min-height: 100vh;
   // background-color: #2B3139;
+  background-color: #1a1d20;
 }
 
 #sidebar {
   width: 240px;
   position: fixed;
-  top: 60px; // Header height
+  top: 115px; // Header height
   left: 0;
-  height: calc(100vh - 60px);
-  background-color: #000;
+  height: calc(100vh - 70px);
+  // background-color: #000;
   border-right: 1px solid rgba(240, 185, 11, 0.1);
   z-index: 1000;
   transition: all 0.3s;
@@ -23,6 +24,7 @@
   transition: all 0.3s;
   // padding: 24px;
   width: calc(100% - 240px);
+  background-color: #1a1d20;
 
   .content-container {
     height: 100%;
@@ -30,7 +32,7 @@
     max-width: 100%;
 
     .content-area {
-      background-color: #000;
+      // background-color: #000;
       border-radius: 8px;
       padding: 20px;
       width: 100%;
@@ -106,7 +108,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
+  // background: rgba(0, 0, 0, 0.7);
   z-index: 999;
   opacity: 0;
   transition: all 0.3s;

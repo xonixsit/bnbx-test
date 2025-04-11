@@ -1,6 +1,6 @@
 //* Light Mode (Golden Theme) */
 :root {
-  --background-color: #2B3139; 
+  --background-color: linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%); 
   // --text-color: black;
   --button-bg-color: #FF6C28;
   --button-text-color: #000;
@@ -14,7 +14,7 @@
 
 /* Dark Mode (Dark Blue Theme) */
 :root.dark-mode {
-  --background-color: #2B3139; /* Dark blue color */
+  --background-color: linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%); /* Dark blue color */
   --text-color: white;
   --button-bg-color: #2B3139;
   --button-text-color: #fff;
@@ -30,7 +30,7 @@
 
 /* Applying the variables globally */
 body {
-  background-color: var(--background-color);
+  background-color: var(--background-color) !important;
   color: var(--text-color);
   font-family: Arial, sans-serif;
   margin: 0;
@@ -675,19 +675,6 @@ input button:hover {
   padding: 20px;
 }
 
-.dark-mode .card {
-  // background-color: var(--card-bg-color) !important;
-}
-
-.dark-mode .navbar,
-.dark-mode #sidebar {
-  // background-color: var(--card-bg-color) !important;
-}
-
-.dark-mode #sidebar {
-  border-bottom: 2px solid var(--border-color-dark);
-}
-
 /* Styles for login and signup forms */
 .form-container {
   max-width: 400px;
@@ -836,9 +823,6 @@ input[type = "textarea"]:focus {
   .navbar-brand {
     color: var(--header-color-light);
   }
-  #sidebar{
-    // margin-left: -18rem;
-  }
   .container{
     // width: 100% !important;
     left: 0 !important;
@@ -890,18 +874,13 @@ input[type = "textarea"]:focus {
 #sidebar {
   // position: fixed;
   width: 15rem;
-   margin-top:6.3rem;
-  background-color: #000;
+  margin-top:6.7rem;
+  // background-color: #000;
   color: var(--text-color);
   transition: all 0.3s;
   height: 100vh;
   z-index: 1;
   
-}
-
-#sidebar.active {
-  // margin-left: -18rem;
-
 }
 
 .sidebar-header {
@@ -952,7 +931,7 @@ input[type = "textarea"]:focus {
 #sidebar ul li a.router-link-active,
 #sidebar ul li a.router-link-active i,
 #sidebar ul li a:hover {
-  background-color: #ffc107; /* Gold background for active item */
+  background-color: #FF6C28; /* Gold background for active item */
   color: #000 !important; /* Text color for active item */
   border-radius: 4px;
 }
@@ -974,7 +953,7 @@ input[type = "textarea"]:focus {
 
 /* Style for the active link */
 .active-link {
-  background-color: #ffc107; /* Gold background for active item */
+  background-color: #FF6C28; /* Gold background for active item */
   color: #000 !important; /* Text color for active item */
   font-weight: bold;
   border-radius: 4px;

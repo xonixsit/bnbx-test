@@ -14,12 +14,7 @@
                                     <h5 class="text-white">Main Balance: {{totalBalance}} USDT</h5>
                                     <h5 class="text-white">Trade Balance: {{totalInternalTransferBalance}} USDT</h5>
                                 </div>
-                                <!-- <div *ngIf="withdrawableBalance" class="alert alert-info">
-                                    <p class="mb-1 text-warning-emphasis">Withdrawable Amount: {{withdrawableBalance}} USDT</p>
-                                    <small *ngIf="bondedAmount > 0">
-                                        ({{bondedAmount}} USDT locked in staking)
-                                    </small>
-                                </div> -->
+                             
                             </div>
 
                             <!-- Rest of the form remains the same -->
@@ -102,19 +97,21 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-3 mt-4">
                                 <button
                                     type="submit"
-                                    class="btn btn-primary flex-grow-1"
+                                    class="btn btn-gradient flex-grow-1 d-flex align-items-center justify-content-center gap-2"
                                     [disabled]="fundTransferForm.invalid"
                                 >
+                                    <i class="fas fa-exchange-alt"></i>
                                     Transfer
                                 </button>
                                 <button
                                     type="button"
-                                    class="btn btn-secondary flex-grow-1"
+                                    class="btn btn-outline-gradient flex-grow-1 d-flex align-items-center justify-content-center gap-2"
                                     routerLink="/dashboard"
                                 >
+                                    <i class="fas fa-times"></i>
                                     Cancel
                                 </button>
                             </div>

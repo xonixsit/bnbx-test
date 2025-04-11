@@ -1,14 +1,15 @@
 .dashboard-container {
     // display: flex;
-    background-color: #000;
+    // background-color: #000;
     min-height: 100vh;
+    margin-top:20px;
 }
 
 .main-content {
     flex: 1;
     // margin-left: 240px; // Width of sidebar
     // padding: 1rem 2rem;
-    margin-top:6.2rem;
+    margin-top:8.2rem;
     .wrapper {
         max-width: 1400px;
         margin: 0 auto;
