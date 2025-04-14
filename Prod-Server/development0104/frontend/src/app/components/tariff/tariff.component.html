@@ -8,59 +8,37 @@
             </div>
         </div>
         
-        <div class="table-responsive wow fadeInUp" data-wow-delay=".6s">
+        <div class="table-responsive wow fadeInUp" data-wow-delay=".6s" *ngIf="investmentPlans.length > 0">
             <table class="tariff-table">
                 <thead>
                     <tr>
                         <th class="duration-col">USDT</th>
-                        <th class="basic">BASIC</th>
-                        <th class="advance">ADVANCE</th>
-                        <th class="premium">PREMIUM</th>
-                        <th class="expert">EXPERT</th>
+                        <th [class]="plan.name.toLowerCase()" *ngFor="let plan of investmentPlans">
+                            {{plan.name.toUpperCase()}}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>30 DAYS</td>
-                        <td>50%</td>
-                        <td>60%</td>
-                        <td>70%</td>
-                        <td>75%</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.thirtyDaysReturn}}</td>
                     </tr>
                     <tr>
                         <td>60 DAYS</td>
-                        <td>100%</td>
-                        <td>120%</td>
-                        <td>140%</td>
-                        <td>150%</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.sixtyDaysReturn}}</td>
                     </tr>
                     <tr>
                         <td>90 DAYS</td>
-                        <td>150%</td>
-                        <td>180%</td>
-                        <td>210%</td>
-                        <td>300%</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.ninetyDaysReturn}}</td>
                     </tr>
+                   
                     <tr>
                         <td>INVESTMENT AMOUNT</td>
-                        <td>100$</td>
-                        <td>500$</td>
-                        <td>1000$</td>
-                        <td>5000$</td>
-                    </tr>
-                    <tr>
-                        <td>TOTAL WITHDRAWL IN 90 DAYS</td>
-                        <td>250$</td>
-                        <td>1400$</td>
-                        <td>3100$</td>
-                        <td>15000$</td>
+                        <td *ngFor="let plan of investmentPlans">${{plan.min}}</td>
                     </tr>
                     <tr>
                         <td>DAILY PROFIT</td>
-                        <td>1.66%</td>
-                        <td>2%</td>
-                        <td>2.33%</td>
-                        <td>2.5%</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.dailyProfit}}</td>
                     </tr>
                 </tbody>
             </table>
