@@ -50,6 +50,7 @@ export class FundTransferComponent {
     private fb: FormBuilder,
     private toastr: ToastrService
   ) {
+    // In the constructor's form validation
     this.fundTransferForm = this.fb.group({
       amount: [0, [
         Validators.required, 
@@ -62,8 +63,8 @@ export class FundTransferComponent {
           
           switch(walletType) {
             case 'main':
-              return amount > this.withdrawableBalance ? 
-                { exceedsWithdrawable: { max: this.withdrawableBalance, actual: amount } } : 
+              return amount > this.totalBalance ? 
+                { exceedsWithdrawable: { max: this.totalBalance, actual: amount } } : 
                 null;
             case 'trade':
             case 'trade-to-main':

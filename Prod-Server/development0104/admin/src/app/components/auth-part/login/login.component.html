@@ -24,7 +24,7 @@
                     <div class=" border-0 bg-transparent">
                         <div class="login-box p-4">
                             <h2 class="text-center mb-4 text-white" *ngIf="!isForgotPassword">Admin Login</h2>
-                            <h2 class="text-center mb-4 text-white" *ngIf="isForgotPassword">Change Password</h2>
+                            <h2 class="text-center mb-4 text-white" *ngIf="isForgotPassword">Forgot Password</h2>
 
                             <!-- Login Form -->
                             <form *ngIf="!isForgotPassword" [formGroup]="loginForm" (ngSubmit)="onSubmit()">

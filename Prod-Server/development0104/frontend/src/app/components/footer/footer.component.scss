@@ -303,3 +303,33 @@
         transform: translateX(5px);
     }
 }
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer-column {
+    width: 100%;
+    text-align: center;
+  }
+
+  .quick-links {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .quick-link-item {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+  .logo {
+    margin: 0 auto;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
