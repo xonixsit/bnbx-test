@@ -124,7 +124,6 @@ export class StakeComponent implements OnInit {
     }
   
     getWalletBalance() {
-      console.log('getWalletBalance called');
       if (!this.token) {
         this.toastr.error('Authentication token not found');
         return;

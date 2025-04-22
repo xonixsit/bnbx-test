@@ -46,6 +46,8 @@ export class UserServicesService {
     return this.http.get(`${this.baseUrl}/admin/user/${id}`, { headers });
   }
 
+
+
   // Method to sign up a user
   updateProfile(updatedData: any , token: string ): Observable<any> {
     const headers = new HttpHeaders({
@@ -132,4 +134,17 @@ export class UserServicesService {
       loader.style.display = show ? 'flex' : 'none';
     }
   }
+
+
+
+
+    // Add delete user method
+    deleteUser(userId: string, token: string): Observable<any> {
+      const headers = new HttpHeaders().set('Authorization', token);
+      return this.http.delete(`${this.baseUrl}/admin/user/delete/${userId}`, { headers })
+        .pipe(
+          catchError(this.handleError)
+        );
+    }
+  
 }

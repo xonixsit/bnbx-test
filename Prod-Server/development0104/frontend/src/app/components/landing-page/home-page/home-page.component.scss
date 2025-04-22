@@ -763,7 +763,12 @@ background-position: center;
         pointer-events: none;
     }
 }
-
+.hero-background1 {
+  width: 100%;
+  img {
+      object-fit: cover;
+  }
+}
 .hero-content {
     width: 100%;
     padding: 60px 0;

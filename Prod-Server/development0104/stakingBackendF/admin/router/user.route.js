@@ -14,5 +14,5 @@ router.put("/change/login/password", userValidation.changePassword, verifyJWTTok
 router.get("/referral/tree", userValidation.getUserReferralAllList, verifyJWTToken, userController.getUserReferralAllList);
 router.put("/team/transfer", userValidation.teamTransfer, verifyJWTToken, userController.teamTransfer);
 router.put("/update/kyc", userValidation.updateUserKyc, verifyJWTToken, userController.updateUserKyc);
-
+router.delete("/delete/:userId", userValidation.deleteUser, verifyJWTToken, userController.deleteUser);
 module.exports = router;

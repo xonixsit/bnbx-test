@@ -15,6 +15,20 @@ module.exports.userDetails = (request, response, next) => {
     }
 };
 
+module.exports.deleteUser = (request, response, next) => {
+    let rules = Joi.object().keys({
+        userId: Joi.string().required()
+    });
+    const { error } = rules.validate(request.params);
+    if (error) {
+        return response
+            .status(422)
+            .json({ status: false, message: error.message, data: null });
+    } else {
+        next();
+    }
+};
+
 module.exports.updateUser = (request, response, next) => {
 
     console.log('totalTeamTurnoverBalance',request.body.totalTeamTurnoverBalance);

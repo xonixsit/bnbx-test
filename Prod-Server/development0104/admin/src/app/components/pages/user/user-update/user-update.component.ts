@@ -20,7 +20,8 @@ interface TreCustomTreeNode extends TreeNode {
 @Component({
   selector: 'app-user-update',
   templateUrl: './user-update.component.html',
-  styleUrls: ['./user-update.component.scss']
+  styleUrls: ['./user-update.component.scss'],
+  providers: []
 })
 export class UserUpdateComponent {
   error: string | null = null;
@@ -50,6 +51,7 @@ export class UserUpdateComponent {
   transactionType: string = '';
   status: string = '';
   isSubmitting = true;
+  isAdminProfile: boolean = true;
   totalTransactions: number = 0; // total transactions for paginator
   constructor(
     private fb: FormBuilder,
@@ -141,6 +143,7 @@ export class UserUpdateComponent {
 
     this.authService.getUserDataWithId(this.token, this.decryptedId).subscribe({
       next: (response) => {
+        this.isAdminProfile = response.data.role === 'ADMIN' || response.data.isAdmin;
         this.authServices.toggleLoader(false);
         this.profileForm.patchValue({
           userId: response.data._id,
@@ -169,15 +172,6 @@ export class UserUpdateComponent {
 
           isTrxPassCreated: response.data.isTrxPassCreated,
 
-          // totalDirectTeamTurnoverBalance: response.data.totalDirectTeamTurnoverBalance,
-          // totalRemovedStakedBalance: response.data.totalRemovedStakedBalance,
-          // totalDelegateRewardBalance: response.data.totalDelegateRewardBalance,
-          // totalStakingRewardBalance: response.data.totalStakingRewardBalance,
-          // totalRankBonusBalance: response.data.totalRankBonusBalance,
-          // totalUnlockRewardBalance: response.data.totalUnlockRewardBalnce,
-
-          // airDorpLevel: response.data.airDorpLevel,
-          // stakingLevel: response.data.stakingLevel,
         });
 
         // Update password form fields
@@ -195,12 +189,13 @@ export class UserUpdateComponent {
     });
   }
 
-  // setActiveSection(section: string): void {
-  //   this.activeSection = section;
-  // }
   onSectionChange(event: Event) {
     const target = event.target as HTMLSelectElement;  // Type assertion in TypeScript
-    this.setActiveSection(target.value);
+    if (target.value === 'delete') {
+      this.deleteUser();
+    } else {
+      this.setActiveSection(target.value);
+    }
   }
 
   setActiveSection(value: string) {
@@ -454,5 +449,25 @@ export class UserUpdateComponent {
     this.fetchTransactions(this.currentPage , this.pageSize);
   }
 
+deleteUser(): void {
+    if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+      this.authService.deleteUser(this.decryptedId, this.token).subscribe({
+        next: (response) => {
+          this.toastr.success('User deleted successfully', 'Success', {
+            positionClass: 'toast-bottom-center',
+            timeOut: 3000,
+            progressBar: true
+          });
+          this.location.back();
+        },
+        error: (error) => {
+          this.toastr.error(error.error.message || 'Failed to delete user', 'Error', {
+            positionClass: 'toast-bottom-center',
+            timeOut: 3000,
+            progressBar: true
+          });
+        }
+      });
+    }
+  }
 }
-

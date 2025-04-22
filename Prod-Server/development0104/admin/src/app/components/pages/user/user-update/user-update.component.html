@@ -26,6 +26,9 @@
                     <button class="btn btn-secondary" [class.active]="activeSection === 'Transaction_history'" (click)="setActiveSection('Transaction_history')">
                         <i class="fas fa-history me-2"></i>Transactions
                     </button>
+                    <button class="btn btn-danger" (click)="deleteUser()" *ngIf="!isAdminProfile">
+                        <i class="fas fa-trash-alt me-2"></i>Delete User
+                    </button>
                 </div>
 
                 <!-- Mobile View -->
@@ -35,28 +38,10 @@
                     <option value="createPassword">🔒 Transaction Password</option>
                     <option value="referral-tree">🌳 Referral Tree</option>
                     <option value="Transaction_history">📊 Transaction History</option>
+                    <option value="delete">🗑️ Delete User</option>
                 </select>
             </div>
-            <!-- <div class="d-flex justify-content-center my-4">
-                <button class="btn btn-primary mx-2" (click)="setActiveSection('profile')">
-                    Profile update
-                </button>
-                <button class="btn btn-warning mx-2" (click)="setActiveSection('changePassword')">
-                    Login Password
-                </button>
-                <button class="btn btn-success mx-2" (click)="setActiveSection('createPassword')">
-                    Transaction Password
-                </button>
-                <button class="btn btn-success mx-2" (click)="setActiveSection('referral-tree')">
-                    Reffral Tree
-                </button>
-                <button class="btn btn-success mx-2" (click)="setActiveSection('Transaction_history')">
-                    Transaction History
-                </button> -->
-                <!-- <button class="btn btn-success mx-2" (click)="setActiveSection('Fund_deposit')">
-                    Fund Deposit
-                </button> -->
-            <!-- </div> -->
+            
 
             <div class="row justify-content-center" *ngIf="activeSection === 'profile'">
                 <div class="col-lg-6 col-md-8 col-sm-10">
@@ -200,12 +185,7 @@
                                         formControlName="totalStakedBalance" />
                                 </div>
 
-                                <!-- Total Withdrawal Balance -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="totalWithdrawalBalance">Total Withdrawal Balance:</label>
-                                    <input type="text" id="totalWithdrawalBalance" class="form-control"
-                                        formControlName="totalWithdrawalBalance" />
-                                </div> -->
+                            
 
                                 <!-- Total Team Turnover Balance -->
                                 <div class="form-group mb-3">
@@ -214,34 +194,7 @@
                                         formControlName="totalTeamTurnoverBalance" />
                                 </div>
 
-                                <!-- Total Direct Team Turnover Balance -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="totalDirectTeamTurnoverBalance">Total Direct Team Turnover
-                                        Balance:</label>
-                                    <input type="text" id="totalDirectTeamTurnoverBalance" class="form-control"
-                                        formControlName="totalDirectTeamTurnoverBalance" />
-                                </div> -->
-
-                                <!-- Total Removed Staked Balance -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="totalRemovedStakedBalance">Total Removed Staked Balance:</label>
-                                    <input type="text" id="totalRemovedStakedBalance" class="form-control"
-                                        formControlName="totalRemovedStakedBalance" />
-                                </div> -->
-
-                                <!-- Total Delegate Reward Balance -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="totalDelegateRewardBalance">Total Delegate Reward Balance:</label>
-                                    <input type="text" id="totalDelegateRewardBalance" class="form-control"
-                                        formControlName="totalDelegateRewardBalance" />
-                                </div> -->
-
-                                <!-- Total Unlock Reward Balance -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="totalUnlockRewardBalnce">Total Unlock Reward Balance:</label>
-                                    <input type="text" id="totalUnlockRewardBalnce" class="form-control"
-                                        formControlName="totalUnlockRewardBalnce" />
-                                </div> -->
+                               
 
                                 <!-- Total Referral Reward Balance -->
                                 <div class="form-group mb-3">
@@ -250,19 +203,7 @@
                                         formControlName="totalReferralRewardBalance" />
                                 </div>
 
-                                <!-- Total Staking Reward Balance -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="totalStakingRewardBalance">Total Staking Reward Balance:</label>
-                                    <input type="text" id="totalStakingRewardBalance" class="form-control"
-                                        formControlName="totalStakingRewardBalance" />
-                                </div> -->
-
-                                <!-- Total Rank Bonus Balance
-                                <div class="form-group mb-3">
-                                    <label for="totalRankBonusBalance">Total Rank Bonus Balance:</label>
-                                    <input type="text" id="totalRankBonusBalance" class="form-control"
-                                        formControlName="totalRankBonusBalance" />
-                                </div> -->
+                                
 
                                 <!-- Total Reward Balance -->
                                 <div class="form-group mb-3">
@@ -281,19 +222,7 @@
                                     </select>
                                 </div>
 
-                                <!-- AirDrop Level -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="airDorpLevel">AirDrop Level:</label>
-                                    <input type="text" id="airDorpLevel" class="form-control"
-                                        formControlName="airDorpLevel" />
-                                </div> -->
-
-                                <!-- Staking Level -->
-                                <!-- <div class="form-group mb-3">
-                                    <label for="stakingLevel">Staking Level:</label>
-                                    <input type="text" id="stakingLevel" class="form-control"
-                                        formControlName="stakingLevel" />
-                                </div> -->
+                              
                                 <!-- Submit Button -->
                                 <button type="submit" class="btn btn-primary btn-block"
                                 [disabled]="profileForm2.invalid"
@@ -403,7 +332,7 @@
                     <div class="tree-container mt-4">
                         <div class="card custom-card">
                             <div class="card-header">
-                                <h3 class="text-warning mb-0">
+                                <h3 class="mb-0">
                                     <i class="fas fa-sitemap me-2"></i>Referral Network
                                 </h3>
                             </div>
@@ -425,7 +354,7 @@
                     <div class="details-container mt-4">
                         <div class="card custom-card">
                             <div class="card-header">
-                                <h3 class="text-warning mb-0">
+                                <h3 class="mb-0">
                                     <i class="fas fa-user-circle me-2"></i>Member Details
                                 </h3>
                             </div>
@@ -574,41 +503,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row justify-content-center" *ngIf="activeSection === 'Fund_deposit'">
-                <div class="card shadow-sm mt-5 col-12 col-md-6">
-                    <div class="card-header text-white">
-                        <h2 class="card-title text-center mb-0">Fund Deposit:</h2>
-                    </div>
-                    <div class="card-body">
-                        <form [formGroup]="fundDeposite" (ngSubmit)="fundDepositeData()">
-                            <div class="form-group mb-3">
-                                <label for="amount">Amount:</label>
-                                <div class="input-group">
-                                    <input type="text" id="amount" class="form-control" formControlName="amount"
-                                        required />
-
-                                </div>
-                            </div>
-                           
-                            <div class="form-group mb-3">
-                                <label for="referralCode">ReferralCode:</label>
-                                <div class="input-group">
-                                    <input type="text" id="referralCode" class="form-control" formControlName="referralCode"
-                                        required />
-
-                                </div>
-                            </div>
-                           
-                            <button type="submit" class="btn btn-primary btn-block"
-                                [disabled]="fundDeposite.invalid">
-                                 Deposit
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div> -->
-
         </div>
     </div>
 </div>

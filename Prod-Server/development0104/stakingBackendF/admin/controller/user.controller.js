@@ -245,6 +245,7 @@ module.exports.getUserById = async (request, response) => {
         if(!userData) throw CustomErrorHandler.notFound("User Not Found!");
         // Get detailed balance information
         const balanceInfo = await calculateUserBalance(userData._id);
+        console.log('balanceInfo',balanceInfo);
         return response.json({
             status: true,
             message: "User Data",
@@ -254,10 +255,10 @@ module.exports.getUserById = async (request, response) => {
                     BUSDBalance: balanceInfo.BUSDBalance,
                     withdrawableBalance: balanceInfo.withdrawableBalance,
                     components: balanceInfo.components,
-                    totalReferralRewardBalance: balanceInfo.components.referral,
+                    totalReferralRewardBalance: balanceInfo.totalReferralRewardBalance,
                     totalBonusBalance: balanceInfo.components.bonus,
                     totalStakedBalance: balanceInfo.components.staked,
-                    totalTeamTurnover: balanceInfo.components.teamTurnover
+                    totalTeamTurnover: balanceInfo.totalTeamTurnover
                 }
             }
         });
@@ -480,6 +481,35 @@ module.exports.teamTransfer = async (request, response) => {
             status: true,
             message: "Team Transferred.",
             data: targetUser,
+        });
+    } catch (e) {
+        handleErrorResponse(e, response);
+    }
+};
+
+
+module.exports.deleteUser = async (request, response) => {
+    try {
+        const { user } = request.body;
+        const { userId } = request.params;
+        
+        const adminData = await UserModel.findOne({
+            _id: user._id,
+            role: "ADMIN",
+            isDeleted: false,
+        });
+        if(!adminData) throw CustomErrorHandler.unAuthorized("Access Denied!");
+
+        const userData = await UserModel.findById(userId);
+        if(!userData) throw CustomErrorHandler.notFound("User Not Found!");
+
+        userData.isDeleted = true;
+        await userData.save();
+
+        return response.json({
+            status: true,
+            message: "User Deleted Successfully.",
+            data: userData
         });
     } catch (e) {
         handleErrorResponse(e, response);
