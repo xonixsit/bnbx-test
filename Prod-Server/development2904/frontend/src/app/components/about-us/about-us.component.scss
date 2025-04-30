@@ -1,0 +1,189 @@
+.about-section {
+    background: linear-gradient(180deg, #06051E 0%, #1A0F1F 100%);
+    position: relative;
+    color: #fff;
+    padding: 6rem 2rem;
+    text-align: center;
+    overflow: hidden;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(255, 108, 40, 0.08), transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(255, 108, 40, 0.08), transparent 50%);
+        pointer-events: none;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
+        background: linear-gradient(0deg, rgba(255, 108, 40, 0.05), transparent);
+        pointer-events: none;
+    }
+}
+
+.title {
+    background: linear-gradient(90deg, #fca55d, #ff9966, #fca55d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+          -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.main-text {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    color: #fff;
+    font-weight: 300;
+}
+
+.feature-cards {
+    margin-top: 60px;
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 153, 0, 0.2);
+        border-radius: 16px;
+        box-shadow: 0 0 24px rgba(255, 102, 0, 0.15);
+        padding: 24px;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #FF6C28, transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        &:hover {
+            box-shadow: 0 0 32px rgba(255, 102, 0, 0.4);
+            transform: translateY(-4px);
+          
+            &::after {
+                opacity: 1;
+            }
+        }
+
+        .icon {
+            margin-bottom: 1.5rem;
+            
+            img {
+                width: 64px;
+                height: 64px;
+                filter: drop-shadow(0 0 10px rgba(255, 108, 40, 0.3));
+            }
+        }
+
+        h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+    }
+}
+.section-title {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 4rem;
+    color: #fff;
+    line-height: 1.2;
+
+    span {
+        background: linear-gradient(90deg, #FF6C28, #FFB694);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+.mission-section {
+    margin-top: 8rem;
+    position: relative;
+    
+    .mission-content {
+        padding-right: 3rem;
+        
+        .mission-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            
+            background: linear-gradient(90deg, #FF6C28, #fca55d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .mission-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: #fff;
+        }
+    }
+    
+    .mission-image {
+        position: relative;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at center, rgba(255, 108, 40, 0.2), transparent 70%);
+            pointer-events: none;
+        }
+        
+        img {
+            filter: drop-shadow(0 0 20px rgba(255, 108, 40, 0.3));
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .mission-section {
+        margin-top: 4rem;
+        text-align: center;
+        
+        .mission-content {
+            padding-right: 0;
+            margin-bottom: 3rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        .title {
+            font-size: 2rem;
+        }
+
+        .feature-cards {
+            .feature-card {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}

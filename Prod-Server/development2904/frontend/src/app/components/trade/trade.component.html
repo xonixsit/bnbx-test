@@ -1,0 +1,14 @@
+<div class="container">
+  <h2 class="section-title"><span>BNBX Live Trades</span></h2>
+  <div class="row justify-content-center">
+    <div class="col-md-8" *ngIf="!isLoading && tradeImage">
+      <div class="card custom-card">
+        <div class="trade-section text-center">
+          <div *ngIf="!isLoading && imageData" class="trade-image">
+            <img [src]="imageData" [alt]="tradeImage?.filename" class="img-fluid rounded">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

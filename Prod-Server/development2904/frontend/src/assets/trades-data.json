@@ -1,0 +1,88 @@
+{
+  "liveTrades": [
+    {
+        "product": "NILUSDT",
+        "cross": "Cross25.00x",
+        "quantity": "133,000 NIL",
+        "value": "73,309.60 USDT",
+        "entryPrice": "0.5512",
+        "marketPrice": "75.00.39",
+        "liquidationPrice": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "im": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "mm": {
+          "usdt": "11,365.00",
+          "percentage": "8.5",
+          "usd": "2,758.22"
+        }
+      },
+      {
+        "product": "NILUSDT",
+        "cross": "Cross25.00x",
+        "quantity": "133,000 NIL",
+        "value": "73,309.60 USDT",
+        "entryPrice": "0.5512",
+        "marketPrice": "75.00.39",
+        "liquidationPrice": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "im": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "mm": {
+          "usdt": "11,365.00",
+          "percentage": "8.5",
+          "usd": "2,758.22"
+        }
+      },
+      {
+        "product": "NILUSDT",
+        "cross": "Cross25.00x",
+        "quantity": "133,000 NIL",
+        "value": "73,309.60 USDT",
+        "entryPrice": "0.5512",
+        "marketPrice": "75.00.39",
+        "liquidationPrice": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "im": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "mm": {
+          "usdt": "11,365.00",
+          "percentage": "8.5",
+          "usd": "2,758.22"
+        }
+      },
+      {
+        "product": "NILUSDT",
+        "cross": "Cross25.00x",
+        "quantity": "133,000 NIL",
+        "value": "73,309.60 USDT",
+        "entryPrice": "0.5512",
+        "marketPrice": "75.00.39",
+        "liquidationPrice": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "im": {
+          "usdt": "11,365.00",
+          "usd": "2,758.22"
+        },
+        "mm": {
+          "usdt": "11,365.00",
+          "percentage": "8.5",
+          "usd": "2,758.22"
+        }
+      }
+  ]
+}

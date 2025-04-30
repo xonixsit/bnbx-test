@@ -1,0 +1,190 @@
+
+.web3-pillars {
+    .row {
+        margin: 0 auto;
+        max-width: 1400px;
+    }
+    .pillar-card {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+    .pillar-icon {
+    width: 164px;  /* Default for consistency */
+    height: 164px; 
+}
+
+.vision-card .pillar-icon {
+    width: 124px; /* Slightly smaller size for "Our History" */
+    height: 124px;
+}
+
+    @media (max-width: 992px) {
+        .col-md-12 {
+            padding: 0 20px;
+        }
+    }
+}
+
+    .web3-pillars::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(240, 185, 11, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .pillar-card {
+        background: rgba(28, 28, 28, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(240, 185, 11, 0.2);
+        border-radius: 24px;
+        padding: 40px;
+        height: 100%;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .pillar-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #FF6C28, transparent);
+        animation: borderFlow 2s linear infinite;
+    }
+
+    .pillar-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(240, 185, 11, 0.15);
+        border-color: rgba(240, 185, 11, 0.4);
+    }
+
+    .web3-title {
+        color: #FF6C28;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 24px 0;
+        line-height: 1.1;
+        text-align: center;
+        /* text-transform: uppercase; */
+        letter-spacing: 1.5px;
+        background: linear-gradient(90deg, #FF6C28, #FFD700);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .web3-text {
+        color: #ffffff;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-top:5px;
+        margin-bottom: 0;
+        opacity: 0.9;
+    }
+
+    @keyframes borderFlow {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .icon-wrapper {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .pillar-icon {
+        width: 100%;
+        height: 100%;
+        filter: drop-shadow(0 0 10px rgba(240, 185, 11, 0.3));
+    }
+    .company-pillars {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    
+    .pillar-card {
+        background: rgba(240, 185, 11, 0.05);
+        border: 1px solid rgba(240, 185, 11, 0.15);
+        border-radius: 20px;
+        padding: 30px;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(240, 185, 11, 0.1);
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+
+            .pillar-icon {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        h3 {
+            color: #FF6C28;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+    }
+
+    .timeline {
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 12px;
+                height: 12px;
+                background: #FF6C28;
+                border-radius: 50%;
+                transform: translateY(-50%);
+            }
+
+            .year {
+                color: #FF6C28;
+                font-weight: 600;
+                margin-right: 10px;
+            }
+
+            p {
+                display: inline;
+                color: #ffffff;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .company-pillars {
+        .pillar-card {
+            margin-bottom: 30px;
+        }
+    }
+}

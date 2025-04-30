@@ -1,0 +1,61 @@
+.custom-tree-container {
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
+}
+.text-warning {
+    color: #FF6C28!important; 
+}
+.bg-gradient-warning {
+    background: linear-gradient(45deg, #FF6C28, #FFB694);
+}
+
+:host ::ng-deep {
+    .p-tree {
+        background: transparent;
+        border: none;
+        
+        .p-tree-container {
+            .p-treenode {
+                padding: 0.5rem;
+                
+                .p-treenode-content {
+                    border-radius: 8px;
+                    transition: all 0.3s ease;
+                    
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+                    
+                    .p-tree-toggler {
+                        color: #FF6C28;
+                    }
+                    
+                    .p-treenode-label {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.card {
+    transition: transform 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.list-group-item {
+    transition: background-color 0.3s ease;
+    
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+}

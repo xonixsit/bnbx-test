@@ -1,0 +1,728 @@
+/* Dark Mode (Dark Blue Theme) */
+:root {
+   --background-color: linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
+  --text-color: white;
+  --button-bg-color: #333;
+  --button-text-color: #fff;
+  --card-bg-color:#2B3139;
+  --border-color-dark: #FF6C28;
+  --card-gradient-dark: radial-gradient(circle at top left, rgba(255, 108, 40, 0.8), rgba(255, 108, 40, 0.1) 50%), 
+                       linear-gradient(45deg, rgba(255, 108, 40, 0.3), rgba(255, 108, 40, 0.1));
+  --header-color-light: white;
+  --header-bg-color-light: transparent;
+  --card-background-color: transparent;
+}
+
+// Core variables
+$colors: (
+  primary: #FF6C28,
+  bg-dark: #1E2329,
+  bg-darker: #2B3139,
+  success: #0ECB81,
+  error: #F6465D,
+  muted: #848E9C,
+  white: #fff
+);
+
+/* Applying the variables globally */
+body {
+  background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 35%, rgba(6, 5, 30, 0.95) 100%); 
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.card-title {
+  color: var(--border-color-dark);
+}
+
+.card-text {
+  color: var(--text-color);
+}
+
+p {
+  color: var(--text-color);
+}
+
+.list-group-item {
+  background-color: var(--card-bg-color) !important;
+  color: var(--text-color);
+  border: none !important;
+  padding: 1rem;
+}
+.p-tree {
+  background-color: var(--card-bg-color) !important;
+}
+.p-checkbox-box{
+  display: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-color) !important;
+}
+span{
+  color: var(--text-color) !important;
+}
+a{
+  color: var(--text-color) !important;
+}
+
+.pagination,
+.mat-mdc-select-value-text,
+.mat-mdc-select-arrow-wrapper,
+.mat-mdc-select-arrow {
+  background-color: var(--card-bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.mdc-notched-outline {
+  border: 1px solid var(--text-color) !important;
+}
+
+button {
+  background-color: var(--border-color-dark);
+  color: var(--button-text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input button:hover {
+  background-color: var(--button-text-color);
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl{
+  padding: 0 !important;
+}
+/* Header styling */
+.header {
+  //  background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 35%, rgba(6, 5, 30, 0.95) 100%);  color: var(--header-color-light);
+  
+  // border-bottom: 2px solid yellow !important;
+}
+// input[type=text], input[type=email], input[type=password] input[type=textarea] {
+//   // background-color: var(--background-color)!important;
+// }
+.list-unstyled li a {
+  cursor: pointer;
+}
+
+.table-data {
+  background-color: var(--card-bg-color);
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-data thead th {
+  padding: 0.8rem;
+  background-color: var(--border-color-dark);
+}
+
+.table-data tbody tr td {
+  padding: 0.8rem;
+}
+
+.table {
+  margin: 0;
+}
+
+.navbar-toggler {
+  background-color: var(--button-bg-color);
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-image: none;
+}
+
+.navbar-brand {
+  color: var(--header-color-light);
+}
+
+.navbar-nav .nav-link {
+  color: var(--text-color);
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--header-color-dark);
+}
+
+.card {
+  background-color: var( --card-bg-color) ;
+  position: relative;
+  transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  // border-bottom-right-radius: 3rem;
+  // border-top-left-radius: 3rem;
+  border: 1px solid rgb(203, 201, 201) !important;
+  border-radius: 1rem;
+  border: none;
+  padding: 20px;
+}
+
+.dark-mode .card {
+  background-color: var(--card-bg-color) !important;
+}
+
+#sidebar {
+background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 0%, rgba(6, 5, 30, 0.95) 0%);
+}
+
+#sidebar {
+  border-bottom: 2px solid var(--border-color-dark);
+  border-right: 2px solid var(--border-color-dark);
+}
+
+/* Styles for login and signup forms */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--card-bg-color);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] 
+input[type = "textarea"]{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  // background-color: var(--background-color) !important;
+  color: var(--text-color);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus
+input[type = "textarea"]:focus {
+  border-color: var(--header-color-dark);
+}
+
+.btn-submit {
+  width: 100%;
+}
+
+/* Dark mode adjustments for the form */
+.form-container {
+  background-color: var(--background-color)
+}
+
+.dark-mode input[type="text"],
+.dark-mode input[type="email"],
+.dark-mode input[type="password"]
+.dark-mode input[type="textarea"] {
+  background-color: #333;
+  color: white;
+  border: 1px solid #666;
+}
+
+.dark-mode input[type="text"]:focus,
+.dark-mode input[type="email"]:focus,
+.dark-mode input[type="password"] 
+.dark-mode input[type="textarea"]{
+  border-color: var(--header-color-dark);
+}
+
+// loader css start
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(72 72 72 / 80%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.logo-wrapper {
+  position: relative;
+  width: 100px; /* Adjust size */
+  height: 100px; /* Adjust size */
+}
+
+.loader-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%; /* Adjust logo size */
+  height: auto;
+  animation: zoom 1s ease-in-out infinite; /* Adding the zoom animation */
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px; /* Spinner size */
+  height: 100px; /* Spinner size */
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  border-top: 4px solid rgb(255 166 0);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes zoom {
+  0% {
+    transform: translate(-50%, -50%) scale(1); /* Normal size */
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2); /* Slightly larger */
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1); /* Back to normal size */
+  }
+}
+
+
+// loader css end
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  #content {
+    width: 100%;
+    // margin-top: 3.5rem !important;
+    margin-left: 0rem !important;
+  }
+
+  .table-data {
+    overflow-x: auto !important;
+    overflow-y: hidden;
+  }
+
+  .navbar-brand {
+    color: var(--header-color-light);
+  }
+  // #sidebar{
+  //   margin-left: -18rem;
+  // }
+  .container{
+    width: 100% !important;
+    left: 0 !important;
+    max-width: 100% !important;
+  }
+  #sidebar.active{
+    z-index: 12;
+    position: absolute;
+    top: 0;
+    margin-left: 0 !important;
+  }
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+  background-color: var(--card-bg-color);
+  border: none;
+}
+
+.dropdown-item {
+  color: var(--text-color);
+}
+
+.dropdown-item:hover {
+  background-color: var(--header-color-dark);
+  color: var(--header-color-light);
+}
+
+/* Wrapper for sidebar and content */
+.wrapper {
+  display: flex;
+  align-items: stretch;
+  min-height: auto;
+  overflow-y: auto;
+}
+
+#sidebar {
+  position: fixed;
+  width: 15rem;
+  // margin-top: 2.4rem;
+  background-color: var(--card-bg-color);
+  color: var(--text-color);
+  transition: all 0.3s;
+  height: 100vh;
+  z-index: 1;
+  
+}
+
+#sidebar.active {
+  margin-left: -18rem;
+
+}
+
+.sidebar-header {
+  padding: 20px;
+  background: var(--header-bg-color-light);
+  text-align: center;
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  color: var(--header-color-light);
+}
+
+.sidebar-header strong {
+  display: none;
+  font-size: 2rem;
+}
+
+#sidebar ul.components {
+  padding: 20px 0;
+  list-style: none;
+}
+
+#sidebar ul li {
+  padding: 10px;
+  font-size: 1rem;
+  // font-weight: 600;
+}
+
+#sidebar ul li a {
+  color: var(--text-color);
+  display: block;
+  text-decoration: none;
+  transition: color 0.3s;
+  // font-weight: 600;
+}
+
+#sidebar ul li a:hover {
+  color: var(--header-color-dark);
+}
+
+#sidebar ul li a i {
+  margin-right: 10px;
+
+}
+
+/* Active link styling */
+#sidebar ul li a.router-link-active,
+#sidebar ul li a.router-link-active i,
+#sidebar ul li a:hover {
+  background-color: #FF6C28; /* Gold background for active item */
+  color: #2B3139 !important; /* Text color for active item */
+  border-radius: 4px;
+}
+
+#sidebar ul li a.router-link-active {
+  font-weight: bold; /* Make active link text bold */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Slight shadow for effect */
+}
+
+#sidebar ul li a i {
+  margin-right: 8px; /* Add space between icon and text */
+}
+
+/* Active link icon styling */
+#sidebar ul li a.router-link-active i {
+  color: #2B3139; /* Icon color for active item */
+}
+
+
+/* Style for the active link */
+.active-link {
+  background-color: #FF6C28; /* Gold background for active item */
+  color: #000 !important; /* Text color for active item */
+  font-weight: bold;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Slight shadow for effect */
+}
+
+.active-link i {
+  color: #2B3139; /* Icon color for active item */
+}
+
+
+#sidebar .list-unstyled.components li {
+  padding: 10px 15px;  // Adjust as needed
+}
+
+#sidebar .list-unstyled.components li a {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;  // Adjust as needed
+ 
+}
+
+#sidebar .list-unstyled.components li span {
+  padding: 10px 15px; // Adjust as needed
+}
+#sidebar .list-unstyled.ps-4 li {
+  padding: 8px 15px;  // Adjust padding as needed for submenu items
+}
+
+#content {
+  // margin-left: 8rem;
+  margin-top: 7rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  height: auto;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.active-content{
+  margin-left: 0 !important;
+}
+.container{
+  margin: 0 !important;
+  padding: 24px !important;
+  position: relative;
+  // left: 250px;
+  // width: calc(100% - 250px);
+  max-width: 100% !important;
+  transition: all .3s ease-in-out;
+}
+.active-container{
+  max-width: 100% !important;
+  width: 100%;
+  left: 0;
+}
+#sidebarCollapse {
+  margin-bottom: 20px;
+}
+
+#sidebar.active~#content {
+  margin-left: 0;
+}
+
+
+/* Custom Toastr Styles */
+.toast {
+  /* Ensures toast notifications are on top of other elements */
+  z-index: 9999;
+  /* Adjust z-index if needed */
+  width: auto;
+  /* Set width to auto for dynamic sizing */
+  max-width: 25rem !important;
+  /* Optional: set a maximum width */
+  word-wrap: break-word;
+  /* Allows long words to wrap to the next line */
+}
+
+
+.toast-error {
+  background-color: #82020f;
+  color: #fff !important;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+/* Ensure the position remains fixed to top right */
+.toast-top-right {
+  top: 20px;
+  /* Distance from top */
+  right: 20px;
+  /* Distance from right */
+}
+
+/* Progress bar styles */
+.toast-progress {
+  background-color: #fff !important;  /* Customize as needed */
+  height: 4px !important;  /* Adjust height if it's too small */
+}
+
+.toast-bottom-center {
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  max-width: 90%; /* Ensures it doesn’t exceed screen width */
+}
+
+/* Optional: Customize the look of the toastr */
+.toast-success {
+  background-color: #28a745 !important; /* Subtle green for success */
+  color: #fff !important;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.toast-close-button {
+  color: #fff !important;
+}
+/* Common styles for toastr notifications */
+.toast-custom {
+  display: flex;
+  align-items: center;
+  color: white !important;
+}
+
+/* Success Notification */
+.toast-custom.toast-success {
+  background-color: #28a745 !important;
+}
+.toast-custom.toast-success:before {
+  content: '\f058'; /* Check-circle icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 8px;
+}
+
+/* Error Notification */
+.toast-custom.toast-error {
+  background-color: #dc3545 !important;
+}
+.toast-custom.toast-error:before {
+  content: '\f057'; /* Times-circle icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 8px;
+}
+
+/* Info Notification */
+.toast-custom.toast-info {
+  background-color: #17a2b8 !important;
+}
+.toast-custom.toast-info:before {
+  content: '\f05a'; /* Info-circle icon */
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  margin-right: 8px;
+}
+
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.fcs-brand{
+ display: none !important;
+}
+#fx-pricing-widget-copyright{
+  display: none;
+}
+
+.fcs-link{
+  display: none !important;
+}
+
+
+
+/* Dark mode styling for iframe wrapper */
+.iframe-container {
+  background-color: #121212 !important; /* Dark background for iframe */
+  padding: 10px; /* Space around the iframe */
+  border-radius: 8px;
+}
+
+/* Applying the dark mode effect */
+.dark-mode .iframe-container iframe {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9);
+  border: none; /* Hide iframe borders */
+}
+
+.mandatory{
+  color: red !important;
+}
+
+// Base mixins
+@mixin base-card {
+  background: map-get($colors, bg-dark);
+  border-radius: 8px;
+}
+
+.transaction {
+  &-container {
+    @include base-card;
+    padding: 1.5rem;
+  }
+
+  &-table {
+    width: 100%;
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(map-get($colors, primary), .1);
+    }
+    th {
+      background: rgba(map-get($colors, primary), .1);
+      color: map-get($colors, primary);
+    }
+  }
+}
+
+.filter {
+  &-section {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(map-get($colors, primary), .05);
+  }
+  &-group select {
+    width: 100%;
+    padding: .75rem;
+    background: map-get($colors, bg-darker);
+    border: 1px solid rgba(map-get($colors, primary), .2);
+    color: map-get($colors, white);
+    border-radius: 4px;
+  }
+}
+
+.status-badge {
+  padding: .375rem .75rem;
+  border-radius: 4px;
+  font-size: .875rem;
+  
+  @each $status, $color in (
+    completed: success,
+    pending: primary,
+    failed: error,
+    rejected: error
+  ) {
+    &.#{$status} {
+      background: rgba(map-get($colors, $color), .1);
+      color: map-get($colors, $color);
+    }
+  }
+}
+
+.user-info {
+  @include base-card;
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    padding: .75rem 1rem;
+    border-bottom: 1px solid rgba(map-get($colors, white), .05);
+  }
+}
+
+@media (max-width: 768px) {
+  .transaction-container { padding: 1rem; }
+  .transaction-table {
+    th, td { padding: .75rem; }
+  }
+}

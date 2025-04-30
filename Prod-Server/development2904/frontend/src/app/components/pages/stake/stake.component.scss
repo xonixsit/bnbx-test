@@ -1,0 +1,324 @@
+.network-buttons {
+  display: flex;
+  gap: 1rem;
+  
+  .btn {
+    flex: 1;
+    background: #2c3034;
+    color: #fff;
+    
+    &.btn-primary {
+      background: #0d6efd;
+    }
+  }
+}
+
+
+.qr-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  
+  .qr-code {
+    width: 150px;
+    height: 150px;
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+}
+
+.verify-section {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1rem;
+  input{
+    color:#fff;
+}
+  .timer {
+    font-size: 0.9rem;
+    color: #FF6C28;
+  }
+}
+
+// Remove the separate .active-plan class as it's conflicting
+// .active-plan {
+//   border: 2px solid #FF6C28;
+//   transform: scale(1.02);
+//   transition: all 0.3s ease;
+// }
+
+.card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  overflow: hidden;
+  background: #1e2124;
+  border-radius: 8px;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 193, 7, 0.15);
+  }
+  
+  &.active-plan {
+    border: 3px solid #FF6C28 !important;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    transform: scale(1.02);
+  }
+}
+
+// @keyframes borderGlow {
+//   0% { transform: rotate(0deg); }
+//   100% { transform: rotate(360deg); }
+// }
+
+.plan-details {
+  padding: 15px 0;
+  
+  p {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    
+    &:first-child {
+      color: #28a745;
+      font-weight: 600;
+    }
+  }
+}
+
+.text-warning {
+  position: relative;
+  padding-bottom: 10px;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background-color: #FF6C28;
+  }
+}
+
+
+select#lockPeriod {
+  background-color: #2c3034;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: rgba(255, 193, 7, 0.5);
+  }
+  
+  &:focus {
+    border-color: #FF6C28;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+  }
+
+  option {
+    background-color: #2c3034;
+    color: #fff;
+    
+    &:checked {
+      background-color: rgba(255, 193, 7, 0.15);
+      color: #FF6C28;
+    }
+    
+    &:hover {
+      background: rgba(255, 193, 7, 0.1);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      
+      strong {
+        color: #FF6C28;
+      }
+    }
+  }
+}
+
+.info-section {
+  background: rgba(33, 37, 41, 0.6);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 10px;
+
+  .investment-info, .returns-info {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 4px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .info-label {
+    color: #FF6C28;
+    font-weight: 500;
+  }
+
+  .info-value {
+    color: #fff;
+  }
+}
+
+.input-group {
+  .form-control {
+    background: rgba(33, 37, 41, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    
+    &:focus {
+      border-color: #FF6C28;
+      box-shadow: none;
+    }
+  }
+  
+  .input-group-text {
+    background: rgba(33, 37, 41, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+}
+
+.return-badge {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  color: #FF6C28;
+  
+  .daily-rate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .rate-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #FF6C28;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    
+    .rate-label {
+      font-size: 0.9rem;
+      color: #ffffff;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+
+.investment-range {
+  background: rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.plan-card {
+  transition: all 0.3s ease;
+  background: rgba(30, 33, 36, 0.95);
+  border: 2px solid transparent;
+  .text-warning {
+    color: #FF6C28 !important;
+  }
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(255, 193, 7, 0.15);
+    }
+  }
+  
+  &.active-plan {
+    border-color: #FF6C28;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    
+    .selected-check {
+      color: #28a745;
+      opacity: 1;
+    }
+  }
+}
+
+
+
+.btn.bep20.btn-primary{
+  background: #06051E !important;
+  color:#FFF !important;
+}
+.plan-icon {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rate-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.range-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  
+  .label {
+    color: #adb5bd;
+  }
+  
+  .value {
+    font-weight: bold;
+    color: #fff;
+  }
+}
+
+.selected-check {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.touch-hint {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 576px) {
+  .plan-card {
+    margin-bottom: 1rem;
+    
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+  
+  .daily-return {
+    font-size: 2rem !important;
+  }
+  
+  .range-item {
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,307 @@
+<section class="tariff-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                
+                <h2 class="section-title wow fadeInUp" data-wow-delay=".2s">Investment Plans</h2>
+                <p class="section-subtitle wow fadeInUp" data-wow-delay=".4s">Choose the perfect plan for your investment goals</p>
+            </div>
+        </div>
+        
+        <div class="table-responsive wow fadeInUp" data-wow-delay=".6s" *ngIf="investmentPlans.length > 0">
+            <table class="tariff-table">
+                <thead>
+                    <tr>
+                        <th class="duration-col">USDT</th>
+                        <th [class]="plan.name.toLowerCase()" *ngFor="let plan of investmentPlans">
+                            {{plan.name.toUpperCase()}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>30 DAYS</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.thirtyDaysReturn}}</td>
+                    </tr>
+                    <tr>
+                        <td>60 DAYS</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.sixtyDaysReturn}}</td>
+                    </tr>
+                    <tr>
+                        <td>90 DAYS</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.ninetyDaysReturn}}</td>
+                    </tr>
+                   
+                    <tr>
+                        <td>INVESTMENT AMOUNT</td>
+                        <td *ngFor="let plan of investmentPlans">${{plan.min}}-${{plan.max}}</td>
+                    </tr>
+                    <tr>
+                        <td>DAILY PROFIT</td>
+                        <td *ngFor="let plan of investmentPlans">{{plan.dailyProfit}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="tariff-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title wow fadeInUp" data-wow-delay=".2s">Reference Commission Chart</h2>
+                <p class="section-subtitle wow fadeInUp" data-wow-delay=".4s">Earn rewards through our multi-level referral system</p>
+            </div>
+        </div>
+        
+        <div class="table-responsive wow fadeInUp" data-wow-delay=".6s">
+            <table class="tariff-table commission-table">
+                <thead>
+                    <tr class="header-row">
+                        <th>BNBX</th>
+                        <th>LEARNER</th>
+                        <th>ADVANCE</th>
+                        <th>MASTER</th>
+                        <th>SUPERIOR</th>
+                        <th>LEADER</th>
+                        <th>SENIOR LEADER</th>
+                        <th>TOP LEADER</th>
+                        <th>MANAGER</th>
+                        <th>SENIOR MANAGER</th>
+                        <th>TOP MANAGER</th>
+                        <th>DIRECTOR</th>
+                        <th>TOP DIRECTOR</th>
+                        <th>PRIME DIRECTOR</th>
+                    </tr>
+                    <tr class="turnover-row">
+                        <th>TURNOVER</th>
+                        <th>0</th>
+                        <th>25K</th>
+                        <th>50K</th>
+                        <th>100K</th>
+                        <th>250K</th>
+                        <th>500K</th>
+                        <th>1M</th>
+                        <th>2M</th>
+                        <th>5M</th>
+                        <th>10M</th>
+                        <th>15M</th>
+                        <th>25M</th>
+                        <th>50M</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LINE 1</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>9</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>11</td>
+                        <td>11</td>
+                        <td>12</td>
+                        <td>13</td>
+                        <td>14</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>6</td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 3</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 4</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 5</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 6</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 7</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 8</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 9</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 10</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 11</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>LINE 12</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>TOTAL %</td>
+                        <td>13</td>
+                        <td>15</td>
+                        <td>17</td>
+                        <td>18</td>
+                        <td>22</td>
+                        <td>24</td>
+                        <td>25</td>
+                        <td>26</td>
+                        <td>30</td>
+                        <td>32</td>
+                        <td>35</td>
+                        <td>37</td>
+                        <td>41</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

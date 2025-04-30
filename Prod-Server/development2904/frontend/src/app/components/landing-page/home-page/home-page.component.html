@@ -1,0 +1,49 @@
+<!-- Start Header Area -->
+<app-header-nav></app-header-nav>
+
+<!-- Start Hero Area -->
+<section class="hero-area">
+    <div class="hero-background1 d-none d-md-block">
+        <img src="../../../../assets/images/sec2.png" class="w-100"/>
+
+        <!-- Large bnbx_banner.pngscreen background -->
+    </div>
+    <div class="hero-background-small d-md-none">
+        <img src="../../../../assets/images/bnbx_banner_mobile.png"/>
+    </div>
+</section>
+
+<!-- Lazy loaded sections -->
+<section id="about-us">
+    <app-about-us></app-about-us>
+</section>
+
+<section id="team-section">
+    <app-tariff></app-tariff>
+</section>
+
+<!-- <app-history-culture></app-history-culture> -->
+
+<app-vision-mission></app-vision-mission>
+
+<app-what-we-do></app-what-we-do>
+
+<section id="why-choose-section">
+    <app-why-choose></app-why-choose>
+</section>
+
+<section id="team-section">
+    <app-trade></app-trade>
+</section>
+
+<section id="benefits-section">
+    <app-benefits></app-benefits>
+</section>
+
+<section id="contact-section">
+    <app-footer></app-footer>
+</section>
+
+<a href="#" class="scroll-top" [class.active]="showScrollTop" (click)="scrollToTop($event)" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>

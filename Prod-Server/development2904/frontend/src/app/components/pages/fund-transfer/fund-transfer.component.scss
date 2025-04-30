@@ -1,0 +1,52 @@
+.custom-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+    height:47px;
+}
+.form-control{ height: 47px;}
+
+.btn-gradient {
+    background: linear-gradient(90deg, #FF6C28 0%, #FFB694 100%);
+    color: #06051E;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(255, 108, 40, 0.2);
+    }
+
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+}
+
+.btn-outline-gradient {
+    background: transparent;
+    color: #FF6C28;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 2px solid #FF6C28;
+    border-radius: 8px;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:hover {
+        background: rgba(255, 108, 40, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(255, 108, 40, 0.1);
+    }
+}

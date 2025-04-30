@@ -1,0 +1,300 @@
+<div class="wrapper">
+  <div id="content" class="active-content">
+    <div class="container">
+      <!-- Tariff Plans Section -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="card shadow-sm">
+            <div class="card-header bg-dark text-warning">
+              <h3 class="card-title mb-0"><i class="fas fa-chart-line me-2"></i>Select Investment Plan</h3>
+            </div>
+            <div class="card-body bg-dark">
+              <div class="row g-3">
+                <div class="col-12 col-sm-6 col-lg-3" *ngFor="let plan of plansArray">
+                  <div class="card h-100 plan-card" [class.active-plan]="selectedPlan === plan.id"
+                    (click)="selectPlan(plan)">
+                    <div class="card-body text-center position-relative p-3 p-sm-4">
+                      <!-- Plan Icon based on level -->
+                      <div class="plan-icon mb-3">
+                        <i class="fas fa-2x" [ngClass]="{
+                          'fa-seedling text-success': plan.name === 'Basic',
+                          'fa-rocket text-primary': plan.name === 'Advance',
+                          'fa-gem text-info': plan.name === 'Premium',
+                          'fa-crown text-warning': plan.name === 'Expert'
+                        }"></i>
+                      </div>
+
+                      <h4 class="text-warning fw-bold mb-3">{{plan.name}}</h4>
+                      <div class="plan-details">
+                        <div class="return-badge mb-3 p-2">
+                          <div class="rate-container">
+                            <span class="daily-return display-6">{{plan.rate * 100}}%</span>
+                            <small class="text-light opacity-75">Daily Return</small>
+                          </div>
+                        </div>
+                        <div class="investment-range p-3">
+                          <div class="range-item mb-2">
+                            <i class="fas fa-arrow-down text-success me-2"></i>
+                            <span class="label">Min:</span>
+                            <span class="value">${{plan.min}}</span>
+                          </div>
+                          <div class="range-item">
+                            <i class="fas fa-arrow-up text-danger me-2"></i>
+                            <span class="label">Max:</span>
+                            <span class="value">{{plan.max === 9999999999 ? 'Unlimited' : '$' + plan.max}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Selected indicator -->
+                      <div class="selected-check" *ngIf="selectedPlan === plan.id">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                      </div>
+                      <!-- Touch hint for mobile -->
+                      <div class="touch-hint d-sm-none" *ngIf="selectedPlan !== plan.id">
+                        <small class="text-muted">Tap to select</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-dark text-warning">
+              <h3 class="card-title mb-0"><i class="fas fa-wallet me-2"></i>Select Staking Method</h3>
+            </div>
+            <div class="card-body bg-dark">
+              <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div class="card h-100 method-card" [class.active-method]="stakingMethod === 'wallet'" (click)="selectStakingMethod('wallet')">
+                    <div class="card-body text-center p-4">
+                      <i class="fas fa-wallet fa-3x mb-3 text-primary"></i>
+                      <h4 class="text-warning">Wallet Staking</h4>
+                      <p class="text-light opacity-75">Stake directly from your wallet</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-3">
+                  <div class="card h-100 method-card" [class.active-method]="stakingMethod === 'deposit'" (click)="selectStakingMethod('deposit')">
+                    <div class="card-body text-center p-4">
+                      <i class="fas fa-coins fa-3x mb-3 text-success"></i>
+                      <h4 class="text-warning">Deposit Staking</h4>
+                      <p class="text-light opacity-75">Stake from your deposits</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wallet Staking Form -->
+        <div class="col-md-5" *ngIf="stakingMethod === 'wallet'">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title mb-0">Stake USDT from Wallet</h3>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="stakeForm" (ngSubmit)="stake()">
+                <!-- Add Lock Period Selection -->
+                <div class="form-group mb-3">
+                  <label for="lockPeriod">Lock Period (Days)</label>
+                  <select id="lockPeriod" class="form-control" formControlName="lockPeriod" required>
+                    <option value="30">30 Days</option>
+                    <option value="60">60 Days</option>
+                    <option value="90">90 Days</option>
+                    <option value="180">180 Days</option>
+                  </select>
+                </div>
+                <!-- Existing Amount Input -->
+                <div class="form-group mb-3">
+                  <label for="stakeAmount">Amount to Deposit</label>
+                  <div class="input-group">
+                    <input type="number" id="stakeAmount" class="form-control" formControlName="amount"
+                      (input)="calculateDailyReturn(); validateStakeAmount()" 
+                      [max]="getSelectedPlan()?.max || 9999999999" required />
+                    <span class="input-group-text">USDT</span>
+                  </div>
+                  <div class="invalid-feedback d-block" *ngIf="stakeForm.get('amount')?.errors?.['minimumRequired']">
+                    {{stakeForm.get('amount')?.errors?.['minimumRequired']}}
+                  </div>
+
+                  <div class="info-section mt-2">
+                    <div class="investment-info">
+                      <span class="info-label">Investment Range:</span>
+                      <span class="info-value" *ngIf="selectedPlan">${{getSelectedPlan()?.min}} -
+                        {{getSelectedPlan()?.max === 9999999999 ? 'Unlimited' : '$' + getSelectedPlan()?.max}}</span>
+                    </div>
+                    <div class="returns-info" *ngIf="calculateDailyReturn()">
+                      <span class="info-label">Returns:</span>
+                      <span class="info-value">Daily ${{calculateDailyReturn()?.daily}} | Total
+                        ${{calculateDailyReturn()?.total}}</span>
+                    </div>
+                  </div>
+
+                  <!-- Rest of the existing form -->
+                  <div class="form-group mb-3">
+                    <label>Select Network</label>
+                    <div class="network-buttons">
+                      <button type="button" class="btn bep20"
+                        [class.btn-primary]="stakeForm.get('network')?.value === 'BEP20'"
+                        (click)="stakeForm.patchValue({network: 'BEP20'})">BEP20</button>
+                      <button type="button" class="btn trc20"
+                        [class.btn-primary]="stakeForm.get('network')?.value === 'TRC20'"
+                        (click)="stakeForm.patchValue({network: 'TRC20'})">TRC20</button>
+                    </div>
+                  </div>
+                  <button type="submit" class="generate-btn w-100" [disabled]="!isFormValid">
+                    Generate Deposit Address
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deposit Staking Form -->
+        <div class="col-md-5" *ngIf="stakingMethod === 'deposit'">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title mb-0">Stake from Deposits</h3>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="depositStakeForm" (ngSubmit)="stakeFromDeposit()">
+                <!-- Balance Type Selection -->
+                <div class="form-group mb-3">
+                  <label>Select Balance Types</label>
+                  <div class="balance-type-cards row g-2">
+                    <div class="col-4" *ngFor="let type of balanceTypes">
+                      <div class="card balance-card h-100 bg-gradient" 
+                           [class.active]="selectedBalanceTypes.includes(type)" 
+                           (click)="toggleBalanceType(type)" 
+                           [style.background]="type === 'deposits' ? 'rgba(40, 167, 69, 0.15)' : type === 'referrals' ? 'rgba(0, 123, 255, 0.15)' : 'rgba(255, 193, 7, 0.15)'" 
+                           [style.border]="'1px solid ' + (type === 'deposits' ? 'rgba(40, 167, 69, 0.3)' : type === 'referrals' ? 'rgba(0, 123, 255, 0.3)' : 'rgba(255, 193, 7, 0.3)')">
+                        <div class="card-body text-center p-2">
+                          <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div class="form-check">
+                              <input type="checkbox" 
+                                     class="form-check-input" 
+                                     [checked]="selectedBalanceTypes.includes(type)"
+                                     (click)="$event.stopPropagation();"
+                                     (change)="toggleBalanceType(type)">
+                            </div>
+                            <i class="fas fa-lg"
+                               [class.fa-piggy-bank]="type === 'deposits'"
+                               [class.fa-users]="type === 'referrals'"
+                               [class.fa-gift]="type === 'bonus'"
+                               [class.text-success]="type === 'deposits'"
+                               [class.text-primary]="type === 'referrals'"
+                               [class.text-warning]="type === 'bonus'"></i>
+                          </div>
+                          <h6 class="mb-1" 
+                              [class.text-success]="type === 'deposits'"
+                              [class.text-primary]="type === 'referrals'"
+                              [class.text-warning]="type === 'bonus'">
+                            {{type | titlecase}}
+                          </h6>
+                          <div class="balance text-white fw-bold">${{balanceComponents[type]}}</div>
+                          <div class="selected-amount text-muted" *ngIf="selectedBalanceTypes.includes(type)">
+                            Selected: ${{getSelectedAmount(type)}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="total-selected mt-3" *ngIf="selectedBalanceTypes.length > 0">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="text-muted">Total Selected:</span>
+                      <span class="text-white fw-bold">${{getTotalSelectedAmount()}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Lock Period Selection -->
+                <div class="form-group mb-3">
+                  <label for="depositLockPeriod">Lock Period (Days)</label>
+                  <select id="depositLockPeriod" class="form-control" formControlName="lockPeriod" required>
+                    <option value="30">30 Days</option>
+                    <option value="60">60 Days</option>
+                    <option value="90">90 Days</option>
+                    <option value="180">180 Days</option>
+                  </select>
+                </div>
+
+                <!-- Amount Input -->
+                <div class="form-group mb-3">
+                  <label for="depositStakeAmount">Amount to Stake</label>
+                  <div class="input-group">
+                    <input type="number" id="depositStakeAmount" class="form-control" formControlName="amount"
+                      (input)="calculateDepositDailyReturn(); validateDepositStakeAmount()" 
+                      [max]="getSelectedPlan()?.max || 9999999999" required />
+                    <span class="input-group-text">USDT</span>
+                  </div>
+                  <div class="invalid-feedback d-block" *ngIf="depositStakeForm.get('amount')?.errors?.['minimumRequired']">
+                    {{depositStakeForm.get('amount')?.errors?.['minimumRequired']}}
+                  </div>
+
+                  <div class="info-section mt-2">
+                    <div class="investment-info">
+                      <span class="info-label">Investment Range:</span>
+                      <span class="info-value" *ngIf="selectedPlan">${{getSelectedPlan()?.min}} -
+                        {{getSelectedPlan()?.max === 9999999999 ? 'Unlimited' : '$' + getSelectedPlan()?.max}}</span>
+                    </div>
+                    <div class="returns-info" *ngIf="calculateDepositDailyReturn()">
+                      <span class="info-label">Returns:</span>
+                      <span class="info-value">Daily ${{calculateDepositDailyReturn()?.daily}} | Total
+                        ${{calculateDepositDailyReturn()?.total}}</span>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="generate-btn w-100" [disabled]="!isDepositFormValid">
+                    Stake from Deposits
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - QR Code and Verification -->
+        <div class="col-md-7" *ngIf="imageShow && stakingMethod === 'wallet'">
+          <div class="card shadow-sm">
+            <div class="card-header">
+              <h3 class="card-title mb-0">Deposit Address</h3>
+            </div>
+              <div class="card-body text-center">
+                <div class="qr-wrapper">
+                  <img [src]="qrCodeUrl" alt="QR Code" class="qr-code" />
+                </div>
+                <div class="address-wrapper mt-3">
+                  <div class="input-group">
+                    <input type="text" class="form-control" [value]="depositAddress" readonly #addressInput />
+                    <button class="btn" (click)="copyToClipboard(addressInput)">
+                      Copy
+                    </button>
+                  </div>
+                  <div class="alert alert-warning mt-2 py-2">
+                    Only send USDT {{stakeForm.get('network')?.value}} to this address
+                  </div>
+                </div>
+
+                <!-- Verification Section -->
+                <div class="verify-section mt-3">
+                  <p class="timer mb-2">Time remaining: {{ minutes }}:{{ seconds | number: '2.0' }}</p>
+                  <input type="text" [(ngModel)]="transactionHash" class="form-control mb-2"
+                    placeholder="Enter transaction hash" />
+                  <button class="generate-btn w-100" (click)="verifyTransactionHash(transactionHash)">
+                    Verify Transaction
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

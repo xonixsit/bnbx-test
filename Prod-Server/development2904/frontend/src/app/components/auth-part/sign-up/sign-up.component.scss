@@ -1,0 +1,98 @@
+.dark-mode-card {
+    background: linear-gradient(135deg, 
+        rgba(255, 108, 40, 0.1) 0%,
+        rgba(13, 11, 47, 0.95) 100%
+    );
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 108, 40, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: rgba(255, 108, 40, 0.3);
+        box-shadow: 0 15px 40px rgba(255, 108, 40, 0.1);
+    }
+}
+
+.form-control {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 108, 40, 0.2);
+    color: #fff;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 108, 40, 0.4);
+        box-shadow: 0 0 15px rgba(255, 108, 40, 0.1);
+        color: white;
+    }
+}
+
+.success-card {
+    background: linear-gradient(135deg, 
+        rgba(255, 108, 40, 0.15) 0%,
+        rgba(13, 11, 47, 0.98) 100%
+    );
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 108, 40, 0.2);
+    
+    .success-icon {
+        color: #FF6C28;
+    }
+    
+    .welcome-text {
+        color: #FF6C28;
+    }
+    
+    .login-id-container {
+        background: rgba(255, 108, 40, 0.1);
+    }
+
+    
+}
+
+button.btn-signup {
+  background: linear-gradient(90deg, #ff6a00 0%, #ffb100 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 8px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  
+  &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.2)
+      );
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+  }
+  
+  &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 108, 40, 0.3);
+      
+      &::before {
+          transform: translateX(100%);
+      }
+  }
+  
+  &:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 12px rgba(255, 108, 40, 0.2);
+  }
+}

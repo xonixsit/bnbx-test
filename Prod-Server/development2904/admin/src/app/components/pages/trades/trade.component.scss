@@ -1,0 +1,98 @@
+.main-content {
+  min-height: 100vh;
+  padding: 20px;
+  background: #2B3139;
+  margin-top:120px;
+}
+
+.table {
+  color: #FF6C28;
+  background: #2B3139 !important;
+  
+  th {
+    color: #FF6C28;
+    font-weight: 600;
+    background: rgba(43, 49, 57, 0.95) !important;
+    border-color: rgba(240, 185, 11, 0.1);
+  }
+  
+  td {
+    color: #FFF;
+    border-color: rgba(240, 185, 11, 0.1);
+    background: rgba(43, 49, 57, 0.95) !important;
+
+  }
+  td:first-child {
+    div{
+        color: #00ff00;
+    }
+  }
+
+}
+
+// Add these to your existing styles
+
+.card {
+  background: rgba(43, 49, 57, 0.9);
+  border: 1px solid rgba(240, 185, 11, 0.1);
+  
+  .card-title {
+    color: #FF6C28;
+  }
+}
+
+.form-label {
+  color: #FF6C28;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  background: rgba(43, 49, 57, 0.95);
+  border: 1px solid rgba(240, 185, 11, 0.2);
+  color: #fff;
+  
+  &:focus {
+    background: rgba(43, 49, 57, 0.95);
+    border-color: #FF6C28;
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(255, 108, 40, 0.25);
+  }
+}
+
+h5 {
+  color: #FF6C28;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #FF6C28;
+  color: #FF6C28;
+  
+  &:hover {
+    background: rgba(255, 108, 40, 0.1);
+  }
+}
+
+.text-muted {
+  color: rgba(240, 185, 11, 0.7) !important;
+}
+
+.text-warning {
+  color: #FF6C28 !important;
+}
+
+.btn-primary {
+  background: #FF6C28;
+  border-color: #FF6C28;
+  
+  &:hover {
+    background: darken(#FF6C28, 10%);
+    border-color: darken(#FF6C28, 10%);
+  }
+}
+
+.spinner-border {
+  color: #FF6C28 !important;
+}

@@ -1,0 +1,149 @@
+.benefits-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #040333 0%, rgba(10, 7, 55, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
+    position: relative;
+    overflow: hidden;
+
+    .section-title {
+        font-size: 3.5rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        color: #fff;
+        line-height: 1.2;
+
+        span {
+            color: #FF6C28;
+            font-size: 4rem;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #FF6C28, #FFB694);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem;
+            label {
+                background: linear-gradient(90deg, #FF6C28, #FFB694);
+
+            }
+        }
+    
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at top right, rgba(255, 108, 40, 0.2), transparent 40%),
+            linear-gradient(135deg, #06051E 0%, #0D0B2F 100%);
+        pointer-events: none;
+        pointer-events: none;
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, auto);
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+
+        .benefit-card {
+            // background: rgba(13, 11, 47, 0.4);
+            border: 1px solid rgba(255, 108, 40, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            min-height: 300px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(315deg, rgba(6, 5, 30, 0.95), rgba(6, 5, 30, 0.98));
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: 
+                    radial-gradient(circle at top right, rgba(255, 108, 40, 0.15), transparent 70%),
+                    linear-gradient(315deg, transparent, rgba(255, 108, 40, 0.02));
+                pointer-events: none;
+            }
+
+            &:hover {
+                &::before {
+                    background: 
+                        radial-gradient(circle at top right, rgba(255, 108, 40, 0.2), transparent 70%),
+                        linear-gradient(315deg, transparent, rgba(255, 108, 40, 0.05));
+                }
+            }
+
+            .card-title {
+                font-size: 1.75rem;
+                background: linear-gradient(90deg, #FF6C28, #FFB694);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: 500;
+                margin: 0;
+                text-align: left;
+                padding-left: 0.5rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 991px) {
+    .benefits-section {
+        .benefits-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .benefits-section {
+        padding: 60px 0;
+
+        .section-title {
+            font-size: 2.5rem;
+            
+            span {
+                font-size: 3rem;
+            }
+        }
+
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.benefits-grid {
+    .benefit-card {
+        padding: 1.75rem;
+        gap: 1rem;
+
+        .icon-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.75rem 0;
+
+            .glow-icon {
+                width: 45px;
+                height: 45px;
+                filter: drop-shadow(0 0 12px rgba(255, 108, 40, 0.3));
+                object-fit: contain;
+            }
+        }
+    }
+}

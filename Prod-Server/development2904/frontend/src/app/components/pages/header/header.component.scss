@@ -1,0 +1,198 @@
+.navbar {
+    // background: #2B3139;
+    padding: 0.5rem 1rem;
+    box-shadow: linear-gradient(90deg, #FF6C28, #FFB694);
+    z-index: 1000;
+    color: var(--header-color-light); position: fixed; width: 100%; z-index: 1; border-bottom: 2px solid #FF6C28;
+    background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 35%, rgba(6, 5, 30, 0.95) 100%);
+}
+
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+}
+
+.sidebar-toggle:hover {
+    background: rgba(240, 185, 11, 0.1);
+    border-radius: 4px;
+}
+
+.user-section {
+    margin-right: 1rem;
+}
+
+.dropdown-menu {
+    background: #2B3139;
+    border: 1px solid #FF6C28;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    min-width: 200px;
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    color: #FF6C28;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: rgba(240, 185, 11, 0.1);
+    color: #FF6C28;
+}
+
+.dropdown-divider {
+    border-color: rgba(240, 185, 11, 0.2);
+    margin: 0.5rem 0;
+}
+
+.nav-link {
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.nav-link:hover {
+    background: rgba(240, 185, 11, 0.1);
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(90deg, rgba(255, 108, 40, 0.15) 0%, rgba(255, 108, 40, 0.08) 0%, rgba(6, 5, 30, 0.95) 00%);
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+// Add this new class for main content padding
+.main-content {
+    padding-top: 80px; // Adjust this value based on your navbar height
+}
+
+.sidebar-toggle {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+}
+
+.sidebar-toggle:hover {
+    background: rgba(240, 185, 11, 0.1);
+    border-radius: 4px;
+}
+
+.user-section {
+    margin-right: 1rem;
+}
+
+.dropdown-menu {
+    background: #2B3139;
+    border: 1px solid #FF6C28;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    min-width: 200px;
+    padding: 0.5rem;
+}
+.sidebar-toggle {
+    background: #FF6C28;
+    border: none;
+    padding: 0.75rem;
+    margin-right: 1rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+}
+
+.sidebar-toggle:hover {
+    background: #FFB694;
+}
+
+.user-section {
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 991.98px) {
+    .user-section {
+        margin-left: auto;
+        margin-right: 0.5rem;
+    }
+    
+    .nav-link {
+        padding: 0.5rem;
+        margin-right: 0;
+    }
+}
+
+.dropdown-menu {
+    background: #2B3139;
+    border: 1px solid #FF6C28;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    min-width: 200px;
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    color: #FF6C28;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: rgba(240, 185, 11, 0.1);
+    color: #FF6C28;
+}
+
+.dropdown-divider {
+    border-color: rgba(240, 185, 11, 0.2);
+    margin: 0.5rem 0;
+}
+
+.nav-link {
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.nav-link:hover {
+    background: rgba(240, 185, 11, 0.1);
+}
+.dropdown-item {
+    color: #FF6C28;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: rgba(240, 185, 11, 0.1);
+    color: #FF6C28;
+}
+
+.dropdown-divider {
+    border-color: rgba(240, 185, 11, 0.2);
+    margin: 0.5rem 0;
+}
+
+.nav-link {
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.nav-link:hover {
+    background: rgba(240, 185, 11, 0.1);
+}
+@media (max-width: 767px) {
+
+    .dashboard-brand {
+        img {
+            margin-left:50px;
+            width:70px;
+            height:45px;
+        }
+    }
+}

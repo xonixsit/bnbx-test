@@ -1,0 +1,50 @@
+:host {
+  .table {
+    color: #fff;
+    background-color:  rgba(240, 185, 11, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.1);
+    th {
+      color: #FF6C28;
+      font-weight: 600;
+      border-color: rgba(240, 185, 11, 0.1);
+    }
+
+    td {
+      border-color: rgba(255, 255, 255, 0.1);
+      vertical-align: middle;
+    }
+  }
+  .table>:not(caption)>*>* {
+     background-color:  rgba(255, 255, 255, 0.1) !important; 
+  }
+  .editing-row {
+    background: rgba(240, 185, 11, 0.05);
+  }
+
+  .readonly-input {
+    background: transparent !important;
+    border-color: transparent !important;
+    padding: 0.25rem 0;
+    &:disabled {
+      color: #fff !important;
+    }
+  }
+
+  .input-group-text {
+    font-size: 0.875rem;
+  }
+
+  .btn {
+    min-width: 90px;
+    &.btn-warning {
+      color: #000;
+      &:hover {
+        background: #FF6C28;
+        border-color: #FF6C28;
+      }
+    }
+  }
+}
+.container-fluid{
+  margin-top:130px;
+}

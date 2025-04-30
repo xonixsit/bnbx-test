@@ -1,0 +1,103 @@
+.values-section {
+    background: linear-gradient(135deg, #06051E 0%, rgba(13, 11, 47, 0.95) 70%, rgba(255, 108, 40, 0.15) 100%);
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at top right, rgba(255, 108, 40, 0.1), transparent 70%);
+        pointer-events: none;
+    }
+
+    .section-title {
+        font-size: 3.5rem;
+
+        line-height: 1.2;
+        color: #FF6C28;
+        text-align: center;
+        margin-bottom: 4rem;
+        background: linear-gradient(89.33deg, #FF6C28 1.53%, #FCA854 14.84%, #FFFFFF 49.5%, #FCA854 86.21%, #FF6C28 99.42%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .section-title {
+        font-size: 4rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        color: #fff;
+        line-height: 1.2;
+
+        span {
+            background: linear-gradient(90deg, #FF6C28, #FFB694);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 0 1rem;
+
+        .value-card {
+            background: linear-gradient(135deg, rgba(255, 108, 40, 0.1), rgba(13, 11, 47, 0.95));
+            border: 1px solid rgba(255, 108, 40, 0.15);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+                border-color: rgba(255, 108, 40, 0.3);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .number {
+                font-size: 3rem;
+                color: rgba(255, 108, 40, 0.15);
+                font-weight: 700;
+                margin-bottom: 1rem;
+            }
+
+            .title {
+                color: #FF6C28;
+                font-size: 1.75rem;
+                margin-bottom: 1rem;
+                background: linear-gradient(90deg, #FF6C28, #FFB694);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .description {
+                color: rgba(255, 255, 255, 0.8);
+                line-height: 1.6;
+                font-size: 1.1rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .values-section {
+        padding: 60px 0;
+        
+        .values-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+        }
+    }
+}
