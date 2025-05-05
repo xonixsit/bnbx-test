@@ -39,6 +39,7 @@ export class DashboardHomeComponent {
   transactions: any[] = [];
   error: any;
   bonusBalance:number =0;
+  availableReferralBalance: any;
   constructor(private authService: AuthServicesService,
     private toastr: ToastrService, private transactionService: TransactionServicesService) {
   }
@@ -54,6 +55,7 @@ export class DashboardHomeComponent {
     this.authService.getProfile(this.token).subscribe({
       next: (response) => {
         this.userBlance = response.data.BUSDBalance
+        this.availableReferralBalance = response.data.availableReferralBalance
         this.totalStakedBalance = response.data.totalStakedBalance
         this.totalWithdrawalBalance = response.data.totalWithdrawalBalance
         this.totalDirectTeamTurnoverBalance = response.data.totalDirectTeamTurnoverBalance

@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 
 // Add getAllTeamMembers function
 const getAllTeamMembers = async (userId, members = new Set()) => {
-    const directReferrals = await UserModel.find({
-        fromUser: userId,
-        isDeleted: false
+    const directReferrals = await UserModel.find({ 
+        fromUser: userId, 
+        isDeleted: false 
     });
-
+    
     for (const referral of directReferrals) {
         const refId = referral._id.toString();
         if (!members.has(refId)) {
@@ -51,7 +51,6 @@ const calculateUserBalance = async (userId) => {
                     transactionType: "DEPOSIT",
                     status: "COMPLETED",
                     isDeleted: false,
-                    amount: { $gt: 0 } // Only include positive deposits
                 }
             },
             {
@@ -67,11 +66,10 @@ const calculateUserBalance = async (userId) => {
             {
                 $match: {
                     user: userId,
-                    transactionType: "BOND-IN",
+                    transactionType: "DEPOSIT",
                     status: "COMPLETED",
                     isDeleted: false,
-                    balanceType: "DEPOSIT"
-
+                    balanceType: "STAKE"
                 }
             },
             {
@@ -108,11 +106,11 @@ const calculateUserBalance = async (userId) => {
                     status: "COMPLETED",
                     isDeleted: false,
                     $or: [
-                        {
-                            transactionType: {
-                                $in: ["SIGNUP-BONUS", "LEVEL-AIR-DROP", "RANK-UPGRADE-BONUS", "BOND-REWARD"]
+                        { 
+                            transactionType: { 
+                                $in: ["SIGNUP-BONUS", "LEVEL-AIR-DROP", "RANK-UPGRADE-BONUS", "BOND-REWARD"] 
                             },
-                            amount: { $gt: 0 }
+                            amount: { $gt: 0 } 
                         }
                     ]
                 }
@@ -124,49 +122,6 @@ const calculateUserBalance = async (userId) => {
                 }
             }
         ]);
-        //calculate staked signup balance for the user
-        const stakedSignupBonus = await TransactionModel.aggregate([
-            {
-                $match: {
-                    user: userId,
-                    transactionType: "BOND-IN",
-                    status: "COMPLETED",
-                    balanceType: "SIGNUP-BONUS",
-                    isDeleted: false,
-                    amount: { $gt: 0 }
-                }
-            },
-        ])
-        //check if stakedSignupBonus is empty
-        if (stakedSignupBonus.length === 0) {
-            stakedSignupBonus[0] = { amount: 0 };
-        }
-
-
-        //add Referral Income bond in calculation
-        const referralIncomeBond = await TransactionModel.aggregate([
-            {
-                $match: {
-                    user: userId,
-                    transactionType: "BOND-IN",
-                    status: "COMPLETED",
-                    balanceType: "REFER-INCOME",
-                    isDeleted: false,
-                    amount: { $gt: 0 }
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    total: { $sum: "$amount" }
-                }
-            }
-        ])
-        //check if referralIncomeBond is empty
-        if (referralIncomeBond.length === 0) {
-            referralIncomeBond[0] = { total: 0 };
-        }
-        //add referralIncomeBond to totalBonus
 
         // Get staked balance
         const stakedBalance = await TransactionModel.aggregate([
@@ -209,7 +164,7 @@ const calculateUserBalance = async (userId) => {
                 $match: {
                     user: userId,
                     transactionType: "FUND-TRANSFER",
-                    balanceType: "TRADE",
+                    balanceType: "TRADE",        
                     status: "COMPLETED",
                     isDeleted: false
                 }
@@ -265,7 +220,7 @@ const calculateUserBalance = async (userId) => {
                 $match: {
                     user: userId,
                     transactionType: "WITHDRAW",
-                    withdrawalSource: "DEPOSIT",
+                    withdrawalSource: "DEPOSIT", 
                     status: "COMPLETED",
                     isDeleted: false
                 }
@@ -313,6 +268,25 @@ const calculateUserBalance = async (userId) => {
                 }
             }
         ]);
+        // console.log('depositTransactions',depositTransactions);
+        // Calculate totals with precise financial calculations
+        // Update totalDeposits calculation
+        const totalDeposits = Number((
+        (depositTransactions.length > 0 ? depositTransactions[0].total : 0) +
+        (stakingDeductions.length > 0 ? stakingDeductions[0].total : 0)
+        ).toFixed(2));
+        const totalReferral = Number((referralRewards.length > 0 ? referralRewards[0].total : 0).toFixed(2));
+        const totalBonus = Number((bonusBalance.length > 0 ? bonusBalance[0].total : 0).toFixed(2));
+        const totalStaked = Number((stakedBalance.length > 0 ? stakedBalance[0].total : 0).toFixed(2));
+        const totalWithdrawn = Number((withdrawalTransactions.length > 0 ? withdrawalTransactions[0].total : 0).toFixed(2));
+        const mainToTrade = Number((mainToTradeTransactions.length > 0 ? Math.abs(mainToTradeTransactions[0].total) : 0).toFixed(2));
+        const tradeToMain = Number((tradeToMainTransactions.length > 0 ? tradeToMainTransactions[0].total : 0).toFixed(2));
+        
+        // Update total transferred to include both fund transfers and main-to-trade transfers
+        const totalTransferred = Number((
+            (transferTransactions.length > 0 ? transferTransactions[0].total : 0) +
+            mainToTrade
+        ).toFixed(2));
 
         // Get received transfers
         const receivedTransfers = await TransactionModel.aggregate([
@@ -351,29 +325,7 @@ const calculateUserBalance = async (userId) => {
                 }
             }
         ]);
-        // Get total BOND-IN transactions with RETURN-INTEREST balance type
-        const returnInterestBondTransactions = await TransactionModel.aggregate([
-            {
-                $match: {
-                    user: userId,
-                    transactionType: "BOND-IN",
-                    balanceType: "RETURN-INTEREST",
-                    status: "COMPLETED",
-                    isDeleted: false
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    total: { $sum: "$amount" }
-                }
-            }
-        ]);
-        
-        // Set default value if no transactions found
-        const totalReturnInterestBond = Number((returnInterestBondTransactions.length > 0 ? returnInterestBondTransactions[0].total : 0).toFixed(2));
 
-       
         const unlockedStakeTransactions = await TransactionModel.aggregate([
             {
                 $match: {
@@ -390,86 +342,58 @@ const calculateUserBalance = async (userId) => {
                 }
             }
         ]);
-        const totalReturnInterest = Number((returnInterestTransactions.length > 0? returnInterestTransactions[0].total : 0).toFixed(2));
-        const totalDeposits = Number((
-            (depositTransactions.length > 0 ? depositTransactions[0].total : 0) -
-            (stakingDeductions.length > 0 ? stakingDeductions[0].total : 0)
-        ).toFixed(2));
-        // console.log('totalDeposits', totalDeposits);
-        // console.log('DEPOSITS', depositTransactions);
-        // console.log('STAKING DECUTIONS', stakingDeductions);
-        const totalReferral = Number((referralRewards.length > 0 ? referralRewards[0].total : 0).toFixed(2));
-        const totalReferralStaked = Number(referralIncomeBond[0].total || 0);
-        const availableReferralBalance = totalReferral - totalReferralStaked;
-        console.log('totalReferral', totalReferral);
-        console.log('totalReferralStaked', totalReferralStaked);
-        console.log('availableReferralBalance', availableReferralBalance);
-        const totalBonus = Number((bonusBalance.length > 0 ? bonusBalance[0].total : 0).toFixed(2)) - stakedSignupBonus[0].amount;
-        const totalStaked = Number((
-            (stakedBalance.length > 0 ? stakedBalance[0].total : 0) -
-            (unlockedStakeTransactions.length > 0 ? unlockedStakeTransactions[0].total : 0)
-        ).toFixed(2));
-        const totalWithdrawn = Number((withdrawalTransactions.length > 0 ? withdrawalTransactions[0].total : 0).toFixed(2));
-        const mainToTrade = Number((mainToTradeTransactions.length > 0 ? Math.abs(mainToTradeTransactions[0].total) : 0).toFixed(2));
-        const tradeToMain = Number((tradeToMainTransactions.length > 0 ? tradeToMainTransactions[0].total : 0).toFixed(2));
-        // Update total transferred to include both fund transfers and main-to-trade transfers
-        const totalTransferred = Number((
-            (transferTransactions.length > 0 ? transferTransactions[0].total : 0) +
-            mainToTrade
-        ).toFixed(2));
+
+        // console.log('totalDeposits',totalDeposits);
+        console.log('Balance Components:', {
+            totalDeposits,
+            totalReferral,
+            totalBonus,
+            tradeToMain,
+            receivedTransfers: receivedTransfers.length > 0 ? receivedTransfers[0].total : 0,
+            returnInterest: returnInterestTransactions.length > 0 ? returnInterestTransactions[0].total : 0,
+            unlockedStakes: unlockedStakeTransactions.length > 0 ? unlockedStakeTransactions[0].total : 0,
+            mainToTrade,
+            totalWithdrawn
+        });
+
         // Calculate BUSD Balance
         const BUSDBalance = Math.max(0, Number((
-            (totalDeposits > 0 ? totalDeposits : 0) +
-            (totalReferral || 0) +
-            (totalBonus || 0) +
-            (tradeToMain || 0) +
-            (receivedTransfers && receivedTransfers.length > 0 ? receivedTransfers[0].total : 0) +
-            (returnInterestTransactions && returnInterestTransactions.length > 0 ? returnInterestTransactions[0].total : 0) +
-            (unlockedStakeTransactions && unlockedStakeTransactions.length > 0 ? unlockedStakeTransactions[0].total : 0) -
-            (mainToTrade || 0) -
-            (totalWithdrawn || 0) - 
-            (referralIncomeBond && referralIncomeBond[0] ? referralIncomeBond[0].total : 0) - 
-            (totalReturnInterestBond || 0)
-        ).toFixed(2)));
+            totalDeposits + 
+            totalReferral + 
+            totalBonus + 
+            tradeToMain +             
+            (receivedTransfers.length > 0 ? receivedTransfers[0].total : 0) +
+            (returnInterestTransactions.length > 0 ? returnInterestTransactions[0].total : 0) +
+            (unlockedStakeTransactions.length > 0 ? unlockedStakeTransactions[0].total : 0) -
+            mainToTrade - 
+            totalWithdrawn
+        ).toFixed(2))); 
+
         console.log('BUSDBalance', BUSDBalance);
-        console.log('totalDeposits', totalDeposits);
-        console.log('totalReferral', totalReferral);
-        console.log('totalBonus', totalBonus);
-        console.log('totalStaked', totalStaked);
-        console.log('totalWithdrawn', totalWithdrawn);
-        console.log('tradeToMain', tradeToMain);
-        console.log('totalTransferred', totalTransferred);
-        console.log('receivedTransfers', receivedTransfers);
-        console.log('returnInterestTransactions', returnInterestTransactions);
-        console.log('unlockedStakeTransactions', unlockedStakeTransactions);
-     
         const withdrawableAmount = Number((
-            totalDeposits +
-            totalReferral +
-            totalBonus +
+            totalDeposits + 
+            totalReferral + 
+            totalBonus + 
             tradeToMain +
             (unlockedStakeTransactions.length > 0 ? unlockedStakeTransactions[0].total : 0) -  // Add unlocked stakes 
-            totalWithdrawn -
-            totalTransferred - stakedSignupBonus[0].amount - referralIncomeBond[0].amount
+            totalWithdrawn - 
+            totalTransferred
         ).toFixed(2));
 
         return {
             BUSDBalance,
             withdrawableBalance: Math.max(0, withdrawableAmount),
             totalReferralRewardBalance: totalReferral,
-            totalReferralStakedBalance: totalReferralStaked,
-            availableReferralBalance: availableReferralBalance,
             totalBonusBalance: totalBonus,
             totalStakedBalance: totalStaked,
             totalTeamTurnover: Number((teamTurnover.length > 0 ? teamTurnover[0].totalTurnover : 0).toFixed(2)),
             components: {
                 deposits: totalDeposits,
                 staked: totalStaked,
-                referral: availableReferralBalance,
+                referral: totalReferral,
                 bonus: totalBonus,
-                returnInterest: totalReturnInterest,
-                tradeToMain : tradeToMain,
-                mainToTrade : mainToTrade,
+                tradeToMain,
+                mainToTrade,
                 withdrawn: {
                     total: totalWithdrawn,
                     busd: Number((busdWithdrawals.length > 0 ? busdWithdrawals[0].total : 0).toFixed(2)),

@@ -92,14 +92,13 @@ exports.generateQr = async (req, res) => {
 
 //Staking / Deposit
 module.exports.verifyTransaction = async (request, response) => {
-    const { user, amount, transactionHash, planId, planName, dailyRate, lockPeriod, network, fromDeposit, balanceType } = request.body;
+    const { user, amount, transactionHash, planId, planName, dailyRate, lockPeriod, network, fromDeposit, balanceType,isBonusStake } = request.body;
     try {
         // Validate user
         const userData = await StakeService.validateUser(user._id);
-        
+        console.log('transactionHash',transactionHash);
         // Check for existing transaction
         await StakeService.checkExistingTransaction(transactionHash);
-
         // Create stake
         await StakeService.createStake(userData, {
             amount,
@@ -110,7 +109,7 @@ module.exports.verifyTransaction = async (request, response) => {
             network,
             fromDeposit,
             transactionHash,
-            balanceType
+            balanceType,isBonusStake
         });
 
         return response.json({

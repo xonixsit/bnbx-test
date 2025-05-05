@@ -44,11 +44,13 @@ module.exports.verifyTransaction = (request, response, next) => {
     console.log(request.body);
     const rules = Joi.object().keys({
         transactionHash: Joi.string().required(),
+        network: Joi.string().valid('BEP20', 'TRC20').optional(),
+        isBonusStake: Joi.boolean().optional(),
         amount: Joi.number().required(),
         depositAmount: Joi.number().optional(),
         planId: Joi.number().required(),
         planName: Joi.string().required(),
-        balanceType: Joi.string().required(),
+        balanceType: Joi.string().optional(),
         dailyRate: Joi.when('fromDeposit', {
             is: true,
             then: Joi.number().optional(),

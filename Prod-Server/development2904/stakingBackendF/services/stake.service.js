@@ -56,17 +56,18 @@ class StakeService {
 
     static async createStake(userData, depositData) {
         const validatedRate = await this.validatePlanDetails(depositData);
-        const { amount, planId, planName, lockPeriod, transactionHash, network, fromDeposit, balanceType } = depositData;
+        const { amount, planId, planName, lockPeriod, transactionHash, network, fromDeposit, balanceType, isBonusStake } = depositData;
         const totalReturn = Number((amount * validatedRate * lockPeriod).toFixed(4));
-
+        // console.log('transactionHash',transactionHash);
+        // console.log('isBonusStake',isBonusStake);
         // Create signup bonus transaction if applicable
-        if (balanceType === 'SIGNUP-BONUS') {
+        if (isBonusStake) {
             await TransactionModel.create({
                 user: userData._id,
-                amount: amount,
+                amount: 10,
                 transactionType: "BOND-IN",
                 balanceType: "SIGNUP-BONUS",
-                currentBalance: -amount,
+                currentBalance: -10,
                 description: `Signup Bonus Stake - ${planName}`,
                 planDetails: {
                     planId,
@@ -76,36 +77,87 @@ class StakeService {
                     originalLockPeriod: Number(lockPeriod),
                     totalReturn
                 },
-                transactionHash: transactionHash,
+                txHash: `${transactionHash} - ${planName}`,
                 chain: network,
                 status: "PENDING",
                 isStaked: true,
-                fromDeposit
+                fromDeposit: fromDeposit
             });
         }
 
-        // Create staking transaction with remaining amount
-        await TransactionModel.create({
-            user: userData._id,
-            amount: amount,
-            transactionType: "BOND-IN",
-            balanceType: "STAKE",
-            currentBalance: -amount,
-            description: `Staking Plan ${planName}`,
-            planDetails: {
-                planId,
-                planName,
-                dailyRate: validatedRate,
-                lockPeriod: Number(lockPeriod),
-                originalLockPeriod: Number(lockPeriod),
-                totalReturn
-            },
-            transactionHash:transactionHash,
-            chain: network,
-            status: "PENDING",
-            isStaked: true,
-            fromDeposit
-        });
+        //if balanceType is referral create transaction for referral stake
+        if (balanceType === 'referrals') {
+            await TransactionModel.create({
+                user: userData._id,
+                amount: amount,
+                transactionType: "BOND-IN",
+                balanceType: "REFER-INCOME",
+                currentBalance: -amount,
+                description: `Referral Stake - ${planName}`,
+                planDetails: {
+                    planId,
+                    planName,
+                    dailyRate: validatedRate,
+                    lockPeriod: Number(lockPeriod),
+                    originalLockPeriod: Number(lockPeriod),
+                    totalReturn 
+                },
+                txHash: `${transactionHash} - ${planName}`,
+                chain: network,
+                status: "PENDING",
+                isStaked: true,
+                fromDeposit: fromDeposit
+            })
+        }
+
+        //create transaction for bond-in of RETURN-INTEREST
+        if (balanceType === 'returnInterest') {
+            await TransactionModel.create({
+                user: userData._id,
+                amount: amount,
+                transactionType: "BOND-IN",
+                balanceType: "RETURN-INTEREST",
+                currentBalance: -amount,
+                description: `Return Interest Stake - ${planName}`,
+                planDetails: {
+                    planId,
+                    planName,
+                    dailyRate: validatedRate,
+                    lockPeriod: Number(lockPeriod),
+                    originalLockPeriod: Number(lockPeriod),
+                    totalReturn 
+                },
+                txHash: `${transactionHash} - ${planName}`,
+                chain: network,
+                status: "PENDING",
+                isStaked: true,
+                fromDeposit: fromDeposit
+            })
+        }
+        // Create regular staking transaction
+        if (!balanceType || balanceType === 'stake' || balanceType === 'deposits') {
+            await TransactionModel.create({
+                user: userData._id,
+                amount: amount,
+                transactionType: "BOND-IN",
+                balanceType: fromDeposit ? "DEPOSIT" : "STAKE",
+                currentBalance: -amount,
+                description: `Staking Plan ${planName}`,
+                planDetails: {
+                    planId,
+                    planName,
+                    dailyRate: validatedRate,
+                    lockPeriod: Number(lockPeriod),
+                    originalLockPeriod: Number(lockPeriod),
+                    totalReturn
+                },
+                txHash: `${transactionHash} - ${planName}`,
+                chain: network,
+                status: "PENDING",
+                isStaked: true,
+                fromDeposit: fromDeposit
+            });
+        }
     }
 
     static async createDeposit(userData, depositData) {

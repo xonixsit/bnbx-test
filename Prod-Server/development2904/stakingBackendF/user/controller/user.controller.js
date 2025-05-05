@@ -25,16 +25,17 @@ module.exports.userDetails = async (request, response) => {
         // Calculate actual referral rewards from transactions
         const balanceData = await calculateUserBalance(userData._id);
         
-        // Update userDataObj using Object.assign instead of reassignment
-        Object.assign(userDataObj, {
-            BUSDBalance: balanceData.BUSDBalance,
-            withdrawableBalance: balanceData.withdrawableBalance,
-            totalReferralRewardBalance: balanceData.totalReferralRewardBalance,
-            totalBonusBalance: balanceData.totalBonusBalance,
-            totalStakedBalance: balanceData.totalStakedBalance,
-            totalTeamTurnover: balanceData.totalTeamTurnover,
-            balanceComponents: balanceData.components
-        });
+            // Update userDataObj using Object.assign instead of reassignment
+            Object.assign(userDataObj, {
+                BUSDBalance: balanceData.BUSDBalance,
+                availableReferralBalance: balanceData.availableReferralBalance,
+                withdrawableBalance: balanceData.withdrawableBalance,
+                totalReferralRewardBalance: balanceData.totalReferralRewardBalance,
+                totalBonusBalance: balanceData.totalBonusBalance,
+                totalStakedBalance: balanceData.totalStakedBalance,
+                totalTeamTurnover: balanceData.totalTeamTurnover,
+                balanceComponents: balanceData.components
+            });
 
         return response.json({
             status: true,

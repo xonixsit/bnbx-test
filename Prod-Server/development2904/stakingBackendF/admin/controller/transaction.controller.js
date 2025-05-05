@@ -32,7 +32,7 @@ module.exports.transactionList = async (request, response) => {
 
         const options = {
             page,
-            limit: 100,
+            limit: sizePerPage,
             sort: { createdAt: -1 },
             populate: [
                 {
@@ -184,14 +184,7 @@ module.exports.verifyDepositeUSDT = async (request, response, next) => {
             });
         } else {
             transactionData.status = "REJECTED";
-            transactionData.description = "Rejected by admin.";
             await transactionData.save();
-console.log(transactionData)
-            // Refund the amount if deposit is rejected
-            if (transactionData.transactionType === "DEPOSIT") {
-                userData.BUSDBalance += Math.abs(transactionData.amount);
-                await userData.save();
-            }
 
             return response.json({
                 status: true,

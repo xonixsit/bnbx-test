@@ -15,6 +15,7 @@ export class TransactionComponent implements OnInit {
   totalCredited: number = 0;
   totalDebited: number = 0;
   totalTransactions: number = 0; // total transactions for paginator
+  totalItems: number = 0; // total items for mat-paginator
   pageSize: number = 10;
   currentPage: number = 1;
   filteredTransactions: any[] = []; // Store filtered transactions
@@ -55,6 +56,7 @@ export class TransactionComponent implements OnInit {
         this.transactions = response.data.docs;
         this.filteredTransactions = [...this.transactions];
         this.totalTransactions = response.data.totalDocs;
+        this.totalItems = this.totalTransactions; // Update totalItems for mat-paginator
         this.calculateTotals();
         this.transactionService.toggleLoader(false);
       },

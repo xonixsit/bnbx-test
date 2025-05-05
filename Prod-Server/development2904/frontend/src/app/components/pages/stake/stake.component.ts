@@ -31,16 +31,16 @@ export class StakeComponent implements OnInit {
   depositAddress: any;
   imageShow: boolean = false;
   stakingMethod: 'wallet' | 'deposit' = 'wallet';
-  selectedBalanceTypes: ('deposits' | 'referrals' | 'bonus')[] = [];
-  selectedAmounts: { [key: string]: number } = {
-    deposits: 0,
-    referrals: 0,
-    bonus: 0
-  };
+  selectedBalanceTypes: BalanceSelection[] = BALANCE_TYPES.map(type => ({
+    type,
+    selected: false,
+    amount: 0
+  }));
   balanceComponents: { [key: string]: number } = {
     deposits: 0,
     referrals: 0,
-    bonus: 0
+    bonus: 0,
+    returnInterest:0
   };
   // Timer variables
   timer: number = 15 * 60;
@@ -48,7 +48,7 @@ export class StakeComponent implements OnInit {
   buttonEnabled: boolean = true;
   verificationNetwork: string = 'BEP20';
   profileData: any;
-
+  isBonusStake: boolean = false;
   // Add new properties for network-specific data
   bep20QrCode: string | null = null;
   trc20QrCode: string | null = null;
@@ -66,7 +66,8 @@ export class StakeComponent implements OnInit {
     this.stakeForm = this.fb.group({
       amount: [0, [Validators.required]],
       network: ['BEP20', Validators.required],
-      lockPeriod: ['30', Validators.required]
+      lockPeriod: ['30', Validators.required],
+      isBonusStake: [false]
     });
 
     this.depositStakeForm = this.fb.group({
@@ -92,11 +93,21 @@ export class StakeComponent implements OnInit {
     amountControl?.updateValueAndValidity({ emitEvent: true });
     this.calculateDailyReturn();
   }
+
+  selectedBalanceType: BalanceSelection = { type: BALANCE_TYPES[0], selected: false, amount: 0 }; // Initialize with the first balance type
+
+  // Update selection logic to ensure exclusive selection
+  selectBalanceType(type: BalanceType) {
+    this.selectedBalanceType = { type, selected: true, amount: 0 };
+    this.depositStakeForm.patchValue({ balanceType: type });
+    this.selectedBalanceTypes.forEach(balanceType => {
+      balanceType.selected = balanceType.type === type;
+    });
+  }
   
   validateStakeAmount() {
     const amount = this.stakeForm.get('amount')?.value;
     const selectedPlan = this.getSelectedPlan();
-
     if (selectedPlan && amount < selectedPlan.min) {
       this.stakeForm.get('amount')?.setErrors({ 
         minimumRequired: `Minimum amount required for ${selectedPlan.name} plan is ${selectedPlan.min} USDT`
@@ -214,7 +225,7 @@ export class StakeComponent implements OnInit {
           planId: this.selectedPlan,
           planName: selectedPlanDetails.name,
           dailyRate: selectedPlanDetails.rate,
-          lockPeriod: this.stakeForm.get('lockPeriod')?.value,
+          lockPeriod: this.stakeForm.get('lockPeriod')?.value
         };
 
         this.walletService.stake(stakeDataSend, this.token!).subscribe({
@@ -286,14 +297,13 @@ export class StakeComponent implements OnInit {
     }
 
     const verificationData = {
-      transactionHash,
       amount: amount, // Only send the input amount for verification
-      network: this.stakeForm.get('network')?.value,
       planId: this.selectedPlan,
       planName: selectedPlanDetails.name,
       dailyRate: selectedPlanDetails.rate,
       lockPeriod: this.stakeForm.get('lockPeriod')?.value,
-      netwok:this.stakeForm.get('network')?.value,
+      network:this.stakeForm.get('network')?.value,
+      transactionHash: transactionHash,
     };
 
     this.walletService.verifyTransactionHash(verificationData, this.token).subscribe({
@@ -353,67 +363,12 @@ export class StakeComponent implements OnInit {
       this.stakingMethod = method;
       this.imageShow = false;
       if (method === 'deposit') {
-        this.selectedBalanceTypes = [];
-        this.resetSelectedAmounts();
         this.depositStakeForm.get('amount')?.setValue(this.getMinAmount());
         this.calculateDepositDailyReturn();
       } else {
         this.stakeForm.get('amount')?.setValue(this.getMinAmount());
         this.calculateDailyReturn();
       }
-    }
-
-    // Toggle balance type selection
-    toggleBalanceType(type: 'deposits' | 'referrals' | 'bonus') {
-      const index = this.selectedBalanceTypes.indexOf(type);
-      if (index === -1) {
-        this.selectedBalanceTypes.push(type);
-        this.updateSelectedAmount(type);
-      } else {
-        this.selectedBalanceTypes.splice(index, 1);
-        this.selectedAmounts[type] = 0;
-      }
-      this.updateDepositFormAmount();
-    }
-
-    // Update selected amount for a balance type
-    updateSelectedAmount(type: string) {
-      const availableBalance = this.balanceComponents[type];
-      const remainingRequired = this.getRemainingRequiredAmount();
-      this.selectedAmounts[type] = Math.min(availableBalance, remainingRequired);
-    }
-
-    // Get remaining required amount after considering other selections
-    getRemainingRequiredAmount(): number {
-      const totalSelected = this.getTotalSelectedAmount();
-      const requiredAmount = this.depositStakeForm.get('amount')?.value || 0;
-      return Math.max(0, requiredAmount - totalSelected);
-    }
-
-    // Reset all selected amounts
-    resetSelectedAmounts() {
-      this.selectedAmounts = {
-        deposits: 0,
-        referrals: 0,
-        bonus: 0
-      };
-    }
-
-    // Get selected amount for a specific balance type
-    getSelectedAmount(type: string): number {
-      return this.selectedAmounts[type] || 0;
-    }
-
-    // Calculate total selected amount across all balance types
-    getTotalSelectedAmount(): number {
-      return Object.values(this.selectedAmounts).reduce((sum, amount) => sum + amount, 0);
-    }
-
-    // Update deposit form amount when balance selections change
-    updateDepositFormAmount() {
-      const totalSelected = this.getTotalSelectedAmount();
-      this.depositStakeForm.get('amount')?.setValue(totalSelected);
-      this.calculateDepositDailyReturn();
     }
 
     // Validate deposit stake amount
@@ -426,6 +381,19 @@ export class StakeComponent implements OnInit {
           minimumRequired: `Minimum amount required for ${selectedPlan.name} plan is ${selectedPlan.min} USDT`
         });
       }
+
+      if (selectedPlan && amount > selectedPlan.max) {
+        this.depositStakeForm.get('amount')?.setErrors({
+          maximumRequired: `Maximum amount allowed for ${selectedPlan.name} plan is ${selectedPlan.max} USDT`
+        });
+      }
+
+      //amount should not greater than balance
+      if (selectedPlan && amount > this.balanceComponents[this.depositStakeForm.get('balanceType')?.value || 'deposits']) {
+        this.depositStakeForm.get('amount')?.setErrors({
+          maximumRequired: `Maximum amount allowed for ${selectedPlan.name} plan is ${this.balanceComponents[this.depositStakeForm.get('balanceType')?.value || 'deposits']} USDT`
+        })
+      }
     }
 
     getProfileInfo(): void {
@@ -435,8 +403,9 @@ export class StakeComponent implements OnInit {
           this.profileData = response.data;
           this.balanceComponents = {
             deposits: this.profileData.balanceComponents.deposits || 0,
-            referrals: this.profileData.balanceComponents.referrals || 0,
-            bonus: this.profileData.balanceComponents.bonus || 0
+            referrals: this.profileData.balanceComponents.referral || 0,
+            bonus: this.profileData.balanceComponents.bonus || 0,
+            returnInterest: this.profileData.balanceComponents.returnInterest || 0,
           };
           this.authService.toggleLoader(false);
         },
@@ -467,17 +436,18 @@ export class StakeComponent implements OnInit {
     }
 
     // Check if deposit staking form is valid
-    get isDepositFormValid(): any {
+    get isDepositFormValid(): boolean {
       const amount = this.depositStakeForm.get('amount')?.value || 0;
       const lockPeriodControl = this.depositStakeForm.get('lockPeriod');
       const balanceTypeControl = this.depositStakeForm.get('balanceType');
       const selectedPlan = this.getSelectedPlan();
-     
+      const selectedBalanceType = balanceTypeControl?.value;
+      
       // Validate amount against selected balance type
-      const maxBalance = this.balanceComponents[this.selectedBalanceTypes];
+      const maxBalance = selectedBalanceType ? this.balanceComponents[selectedBalanceType] : 0;
       let isAmountValid = false;
       
-      if (selectedPlan) {
+      if (selectedPlan && selectedBalanceType) {
         isAmountValid = amount > 0 && 
                        amount >= selectedPlan.min && 
                        amount <= Math.min(maxBalance, selectedPlan.max || Number.MAX_SAFE_INTEGER);
@@ -485,33 +455,44 @@ export class StakeComponent implements OnInit {
       
       return this.depositStakeForm.valid && 
              this.selectedPlan !== 0 && 
-             lockPeriodControl?.valid &&
-             balanceTypeControl?.valid;
+             (lockPeriodControl?.valid ?? false) &&
+             (balanceTypeControl?.valid ?? false) &&
+             isAmountValid;
     }
 
-    // Select balance type for staking
-    selectBalanceType(type: BalanceType) {
-      this.selectedBalanceType = type;
-      this.depositStakeForm.patchValue({ balanceType: type });
-      
-      // Set max amount based on selected balance type
-      const maxAmount = this.balanceComponents[type];
-      const selectedPlan = this.getSelectedPlan();
-      
-      if (selectedPlan) {
-        const currentAmount = this.depositStakeForm.get('amount')?.value;
-        if (currentAmount > maxAmount) {
-          this.depositStakeForm.patchValue({ amount: maxAmount });
+    // Toggle balance type selection for staking
+    toggleBalanceType(type: BalanceType) {
+      const balanceSelection = this.selectedBalanceTypes.find(b => b.type === type);
+      if (balanceSelection) {
+        balanceSelection.selected = !balanceSelection.selected;
+        
+        // Reset amount when deselecting
+        if (!balanceSelection.selected) {
+          balanceSelection.amount = 0;
         }
         
-        // Update amount validator to include max balance
-        this.depositStakeForm.get('amount')?.setValidators([
-          Validators.required,
-          Validators.min(selectedPlan.min),
-          Validators.max(maxAmount)
-        ]);
-        this.depositStakeForm.get('amount')?.updateValueAndValidity();
+        this.updateTotalStakingAmount();
       }
+    }
+
+    // Update amount for a specific balance type
+    updateBalanceAmount(type: BalanceType, amount: number) {
+      const balanceSelection = this.selectedBalanceTypes.find(b => b.type === type);
+      if (balanceSelection && balanceSelection.selected) {
+        const maxAmount = this.balanceComponents[type];
+        balanceSelection.amount = Math.min(amount, maxAmount);
+        this.updateTotalStakingAmount();
+      }
+    }
+
+    // Calculate and update total staking amount
+    updateTotalStakingAmount() {
+      const totalAmount = this.selectedBalanceTypes
+        .filter(b => b.selected)
+        .reduce((sum, b) => sum + b.amount, 0);
+
+      this.depositStakeForm.patchValue({ amount: totalAmount });
+      this.calculateDepositDailyReturn();
     }
 
     // Handle deposit staking
@@ -527,57 +508,59 @@ export class StakeComponent implements OnInit {
           return;
         }
 
-        if (this.selectedBalanceTypes.length === 0) {
-          this.toastr.error('Please select at least one balance type');
-          return;
-        }
-
-        const totalAmount = this.getTotalSelectedAmount();
-        const requestedAmount = this.depositStakeForm.get('amount')?.value;
-
-        if (totalAmount !== requestedAmount) {
-          this.toastr.error('Selected amounts do not match the required stake amount');
-          return;
-        }
-
-        // Validate each selected balance type
-        for (const type of this.selectedBalanceTypes) {
-          const selectedAmount = this.selectedAmounts[type];
-          if (selectedAmount > this.balanceComponents[type]) {
-            this.toastr.error(`Insufficient ${type} balance`);
-            return;
-          }
-        }
-
         this.walletService.toggleLoader(true);
-        const stakeData = {
-          amount: totalAmount,
+          
+        const stakeDataSend = {
+          amount: this.depositStakeForm.get('amount')?.value,
           planId: this.selectedPlan,
           planName: selectedPlanDetails.name,
           dailyRate: selectedPlanDetails.rate,
           lockPeriod: this.depositStakeForm.get('lockPeriod')?.value,
-          balanceTypes: this.selectedBalanceTypes.map(type => ({
-            type,
-            amount: this.selectedAmounts[type]
-          }))
+          fromDeposit: true,
+          balanceType: this.selectedBalanceType.type,
+          isBonusStake:this.isBonusStake,
+          transactionHash: `Staking from Deposit balance type ${this.selectedBalanceType.type}`
         };
 
-        this.walletService.stakeFromDeposit(stakeData, this.token!).subscribe({
+        this.walletService.verifyTransactionHash(stakeDataSend, this.token!).subscribe({
           next: (response: any) => {
-            this.toastr.success('Stake successful');
+            this.toastr.success('Transaction sent for verification', '', {
+              toastClass: 'toast-custom toast-success',
+              positionClass: 'toast-bottom-center',
+              closeButton: false,
+              timeOut: 3000,
+              progressBar: true
+            });
             this.router.navigate(['/dashboard']);
-            this.walletService.toggleLoader(false);
           },
           error: (err) => {
             this.walletService.toggleLoader(false);
             const errorMessage = err.error?.message || 'Error processing stake';
-            this.toastr.error(errorMessage);
+            this.toastr.error(errorMessage, '', {
+              toastClass: 'toast-custom toast-error',
+              positionClass: 'toast-bottom-center',
+              closeButton: false,
+              timeOut: 3000,
+              progressBar: true
+            });
           }
         });
       }
     }
+    
+// Method to toggle isBonusStake
+onBonusStakeToggle() {
+  this.isBonusStake = !this.isBonusStake;
+  this.stakeForm.patchValue({ isBonusStake: this.isBonusStake });
 }
-type BalanceType = 'deposits' | 'referrals' | 'bonus';
+}
+type BalanceType = 'deposits' | 'referrals' | 'returnInterest';
 
 // Add available balance types array for template iteration
-const BALANCE_TYPES: BalanceType[] = ['deposits', 'referrals', 'bonus'];
+const BALANCE_TYPES: BalanceType[] = ['deposits', 'referrals','returnInterest'];
+
+interface BalanceSelection {
+  type: BalanceType;
+  selected: boolean;
+  amount: number;
+}

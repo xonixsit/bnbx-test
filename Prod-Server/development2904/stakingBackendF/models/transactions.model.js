@@ -23,7 +23,7 @@ const Transaction = new Schema(
         },
         balanceType: {
             type: String,
-            enum: ["BUSD", "TRADE","STAKE","SIGNUP-BONUS"],
+            enum: ["BUSD", "TRADE","STAKE","SIGNUP-BONUS","DEPOSIT","REFER-INCOME","RETURN-INTEREST"],
             default: "BUSD",
         },
         currentBalance: {

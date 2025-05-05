@@ -94,7 +94,7 @@
         </div>
 
         <!-- Wallet Staking Form -->
-        <div class="col-md-5" *ngIf="stakingMethod === 'wallet'">
+        <div class="balance-type-selection col-md-5" *ngIf="stakingMethod === 'wallet'">
           <div class="card shadow-sm">
             <div class="card-header">
               <h3 class="card-title mb-0">Stake USDT from Wallet</h3>
@@ -111,6 +111,7 @@
                     <option value="180">180 Days</option>
                   </select>
                 </div>
+
                 <!-- Existing Amount Input -->
                 <div class="form-group mb-3">
                   <label for="stakeAmount">Amount to Deposit</label>
@@ -159,58 +160,47 @@
         </div>
 
         <!-- Deposit Staking Form -->
-        <div class="col-md-5" *ngIf="stakingMethod === 'deposit'">
+        <div class="col-md-6" *ngIf="stakingMethod === 'deposit'">
           <div class="card shadow-sm">
             <div class="card-header">
               <h3 class="card-title mb-0">Stake from Deposits</h3>
             </div>
-            <div class="card-body">
+            <div class="balance-type-grid card-body">
               <form [formGroup]="depositStakeForm" (ngSubmit)="stakeFromDeposit()">
                 <!-- Balance Type Selection -->
-                <div class="form-group mb-3">
-                  <label>Select Balance Types</label>
-                  <div class="balance-type-cards row g-2">
-                    <div class="col-4" *ngFor="let type of balanceTypes">
-                      <div class="card balance-card h-100 bg-gradient" 
-                           [class.active]="selectedBalanceTypes.includes(type)" 
-                           (click)="toggleBalanceType(type)" 
-                           [style.background]="type === 'deposits' ? 'rgba(40, 167, 69, 0.15)' : type === 'referrals' ? 'rgba(0, 123, 255, 0.15)' : 'rgba(255, 193, 7, 0.15)'" 
-                           [style.border]="'1px solid ' + (type === 'deposits' ? 'rgba(40, 167, 69, 0.3)' : type === 'referrals' ? 'rgba(0, 123, 255, 0.3)' : 'rgba(255, 193, 7, 0.3)')">
-                        <div class="card-body text-center p-2">
-                          <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div class="form-check">
-                              <input type="checkbox" 
-                                     class="form-check-input" 
-                                     [checked]="selectedBalanceTypes.includes(type)"
-                                     (click)="$event.stopPropagation();"
-                                     (change)="toggleBalanceType(type)">
+                <div class="form-group mb-4">
+                  <label class="form-label fw-bold mb-3 d-block">Select Balance Type</label>
+                  <div class="row">
+                    <div class="col-md-4 mb-3" *ngFor="let balanceType of selectedBalanceTypes">
+                      <div class="card balance-type-card" style="height: 180px;" 
+                           [class.active]="balanceType.selected"
+                           [class.selected-balance]="balanceType.selected"
+                           [class.balance-type-item]="true"
+                           [class.balance-checkbox-container]="true"
+                           (click)="selectBalanceType(balanceType.type)">
+                            <div class="selected-indicator" *ngIf="(balanceType.type == selectedBalanceType.type) && selectedBalanceType.selected">
+                              <i class="fas fa-check-circle text-white"></i>
                             </div>
-                            <i class="fas fa-lg"
-                               [class.fa-piggy-bank]="type === 'deposits'"
-                               [class.fa-users]="type === 'referrals'"
-                               [class.fa-gift]="type === 'bonus'"
-                               [class.text-success]="type === 'deposits'"
-                               [class.text-primary]="type === 'referrals'"
-                               [class.text-warning]="type === 'bonus'"></i>
+                        <div class="card-body text-center d-flex flex-column justify-content-center">
+                          <div class="balance-icon mb-3">
+                            <i class="fas fa-2x" 
+                               [class.fa-piggy-bank]="balanceType.type === 'deposits'"
+                               [class.fa-users]="balanceType.type === 'referrals'"
+                               [class.fa-chart-line]="balanceType.type === 'returnInterest'"
+                               [class.text-success]="balanceType.type === 'deposits'"
+                               [class.text-primary]="balanceType.type === 'referrals'"
+                               [class.text-info]="balanceType.type === 'returnInterest'"></i>
                           </div>
-                          <h6 class="mb-1" 
-                              [class.text-success]="type === 'deposits'"
-                              [class.text-primary]="type === 'referrals'"
-                              [class.text-warning]="type === 'bonus'">
-                            {{type | titlecase}}
-                          </h6>
-                          <div class="balance text-white fw-bold">${{balanceComponents[type]}}</div>
-                          <div class="selected-amount text-muted" *ngIf="selectedBalanceTypes.includes(type)">
-                            Selected: ${{getSelectedAmount(type)}}
+                          <h5 class="balance-type-name mb-2"
+                              [class.text-success]="balanceType.type === 'deposits'"
+                              [class.text-primary]="balanceType.type === 'referrals'">
+                            {{balanceType.type | titlecase}}
+                          </h5>
+                          <div class="balance-amount">
+                            <h4 class="mb-0 text-white">${{balanceComponents[balanceType.type]}}</h4>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="total-selected mt-3" *ngIf="selectedBalanceTypes.length > 0">
-                    <div class="d-flex justify-content-between align-items-center">
-                      <span class="text-muted">Total Selected:</span>
-                      <span class="text-white fw-bold">${{getTotalSelectedAmount()}}</span>
                     </div>
                   </div>
                 </div>
@@ -235,8 +225,19 @@
                       [max]="getSelectedPlan()?.max || 9999999999" required />
                     <span class="input-group-text">USDT</span>
                   </div>
+                  /*check bonus is greater than equal to 10*/
+
+                  <div class="form-check mb-3" *ngIf="balanceComponents['bonus'] >= 10">
+                    <input class="form-check-input" type="checkbox" id="isBonusStake" formControlName="isBonusStake" (change)="onBonusStakeToggle()">
+                    <label class="form-check-label" for="isBonusStake">
+                      Add Signup 10$ bonus to stake
+                    </label> 
+                  </div>
                   <div class="invalid-feedback d-block" *ngIf="depositStakeForm.get('amount')?.errors?.['minimumRequired']">
                     {{depositStakeForm.get('amount')?.errors?.['minimumRequired']}}
+                  </div>
+                  <div class="invalid-feedback d-block" *ngIf="depositStakeForm.get('amount')?.errors?.['maximumRequired']">
+                    {{depositStakeForm.get('amount')?.errors?.['maximumRequired']}}
                   </div>
 
                   <div class="info-section mt-2">
