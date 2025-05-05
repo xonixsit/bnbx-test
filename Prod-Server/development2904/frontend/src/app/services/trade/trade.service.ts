@@ -9,14 +9,18 @@ import { environment } from '../../../environments/environment';
 export class TradeService {
   private baseUrl = environment.apiUrl;
   private apiPath = `${this.baseUrl}/admin/trades`;
+  private portfolioUrl = `${this.baseUrl}/admin/portfolio`;
 
   constructor(private http: HttpClient) { }
-
-  private getHeaders(token: string | null): HttpHeaders {
-    return new HttpHeaders().set('Authorization', `${token}`);
-  }
 
   getTradeImage(): Observable<any> {
     return this.http.get(`${this.apiPath}/get`);
   }
+
+  // Portfolio related methods
+  getPortfolio(): Observable<any> {
+    return this.http.get(`${this.portfolioUrl}`, {
+    });
+  }
+
 }

@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/auth-part/login/login.component';
 import { SignUpComponent } from './components/auth-part/sign-up/sign-up.component';
-import { SideBarComponent } from './components/pages/side-bar/side-bar.component';
 import { ProfilePageComponent } from './components/pages/profile-page/profile-page.component';
 import { AuthGuard } from './auth/auth.guard';
 import { HomePageComponent } from './components/landing-page/home-page/home-page.component';
-import { TradeRoomComponent } from './components/pages/trade-room/trade-room.component';
 import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import { DashboardHomeComponent } from './components/pages/dashboard-home/dashboard-home.component';
 import { WalletComponent } from './components/pages/wallet/wallet.component';
@@ -50,14 +48,6 @@ const routes: Routes = [
       // { path: 'bonding', loadChildren: () => import('./components/pages/bonding/bonding.module').then(m => m.BondingModule) },
       // { path: 'support', loadChildren: () => import('./components/pages/support/support.module').then(m => m.SupportModule) },
        { path: 'network-tree', loadChildren: () => import('./components/pages/network-tree/network-tree.module').then(m => m.NetworkTreeModule) },
-      // { path: 'swap-page', loadChildren: () => import('./components/pages/swap-page/swap-page.module').then(m => m.SwapPageModule) },
-
-      // {
-      //   path: 'trade-room',
-      //   component: TradeRoomComponent
-      // },
-
-      // Add other protected routes here
     ]
   },
  

@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Portfolio } from '../models/plan.model';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class TradeService {
   private apiUrl = `${environment.apiUrl}/admin/trades`;
+  private portfolioUrl = `${environment.apiUrl}/admin/portfolio`;
 
   constructor(private http: HttpClient) { }
 
@@ -74,6 +77,25 @@ export class TradeService {
         observer.complete();
       });
       reader.readAsDataURL(image);
+    });
+  }
+
+  // Portfolio related methods
+  getPortfolio(): Observable<any> {
+    return this.http.get(`${this.portfolioUrl}`, {
+      headers: this.getHeaders()
+    });
+  }
+
+  updatePortfolio(portfolio: Portfolio): Observable<any> {
+    return this.http.post(`${this.portfolioUrl}`, portfolio, {
+      headers: this.getHeaders()
+    });
+  }
+
+  getLatestPortfolio(): Observable<any> {
+    return this.http.get(`${this.portfolioUrl}/latest`, {
+      headers: this.getHeaders()
     });
   }
 }

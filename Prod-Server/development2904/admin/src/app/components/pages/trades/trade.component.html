@@ -11,8 +11,8 @@
             <img [src]="imagePreview" alt="Preview" class="img-fluid">
           </div>
 
-          <!-- Upload Form -->
-          <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+          <!-- Image Upload Form -->
+          <form [formGroup]="imageForm" (ngSubmit)="onSubmitImage()">
             <div class="form-group">
               <label for="imageInput" class="form-label">Select Image</label>
               <input 
@@ -23,12 +23,48 @@
                 accept="image/*"
                 formControlName="image">
             </div>
+
             <div class="mt-3">
               <button 
                 type="submit" 
                 class="btn btn-primary"
-                [disabled]="!uploadForm.valid || isUploading">
+                [disabled]="!imageForm.valid || isUploading">
                 {{ isUploading ? 'Uploading...' : 'Upload Image' }}
+              </button>
+            </div>
+          </form>
+          <hr class="my-4">
+          <!-- Portfolio Form -->
+          <form [formGroup]="portfolioForm" (ngSubmit)="onSubmitPortfolio()" class="mt-4">
+            <h4>Portfolio Data</h4>
+            <!-- BNBX Trading Funds -->
+            <div class="form-group mt-3">
+              <label for="tradingFunds" class="form-label">BNBX Trading Funds</label>
+              <input 
+                type="number" 
+                class="form-control" 
+                id="tradingFunds" 
+                formControlName="tradingFunds"
+                placeholder="Enter trading funds amount">
+            </div>
+
+            <!-- BNBX SAFU Funds -->
+            <div class="form-group mt-3">
+              <label for="safuFunds" class="form-label">BNBX SAFU Funds</label>
+              <input 
+                type="number" 
+                class="form-control" 
+                id="safuFunds" 
+                formControlName="safuFunds"
+                placeholder="Enter SAFU funds amount">
+            </div>
+
+            <div class="mt-3">
+              <button 
+                type="submit" 
+                class="btn btn-success"
+                [disabled]="!portfolioForm.valid">
+                Save Portfolio Data
               </button>
             </div>
           </form>

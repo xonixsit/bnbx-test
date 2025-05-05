@@ -13,7 +13,6 @@ import { ProfilePageComponent } from './components/pages/profile-page/profile-pa
 import { TransactionModule } from './components/pages/transaction/transaction.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HomePageComponent } from './components/landing-page/home-page/home-page.component';
-import { TradeRoomComponent } from './components/pages/trade-room/trade-room.component';
 import { SharedModule } from './shared.module';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { HistoryCultureComponent } from './components/history-culture/history-culture.component';
@@ -28,7 +27,7 @@ import { TariffComponent } from './components/tariff/tariff.component';
 import { DashboardHomeModule } from './components/pages/dashboard-home/dashboard-home.module';
 import { Meta, Title } from '@angular/platform-browser';
 import { TradeService } from './services/trade/trade.service';
-
+import { PortfolioComponent } from './components/portfolio/portfolio.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +35,6 @@ import { TradeService } from './services/trade/trade.service';
     SignUpComponent,
     ProfilePageComponent,
     HomePageComponent,
-    TradeRoomComponent,
     AboutUsComponent,
     HistoryCultureComponent,
     VisionMissionComponent,
@@ -46,26 +44,26 @@ import { TradeService } from './services/trade/trade.service';
     FooterComponent,
     HeaderNavComponent,
     TariffComponent,
-    TradeComponent
+    TradeComponent,
+    PortfolioComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     MatPaginatorModule,
     DashboardHomeModule,
+    TransactionModule,
+    SharedModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-center',
       preventDuplicates: true,
       progressBar: true,
-    }),     
-    TransactionModule, 
-    SharedModule,
-    BrowserAnimationsModule
-    // Remove NgxLazyElModule from here
+    })
   ],
   providers: [
     Meta,

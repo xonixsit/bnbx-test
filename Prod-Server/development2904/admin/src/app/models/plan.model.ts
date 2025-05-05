@@ -7,3 +7,9 @@ export interface Plan {
   duration: number;
   isActive: boolean;
 }
+
+export interface Portfolio {
+  tradingFunds: number;
+  safuFunds: number;
+  timestamp: Date;
+}

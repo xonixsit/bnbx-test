@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { TradeService } from '../../../services/trade.service';
 import { environment } from '../../../../environments/environment';
+import { Portfolio } from '../../../models/plan.model';
 
 @Component({
   selector: 'app-trade',
@@ -11,23 +12,35 @@ import { environment } from '../../../../environments/environment';
 })
 export class TradeComponent implements OnInit {
   environment = environment;
-  uploadForm: FormGroup;
+  imageForm: FormGroup;
+  portfolioForm: FormGroup;
   imagePreview: string | null = null;
   isUploading: boolean = false;
   uploadedImages: any;
+  portfolio: Portfolio = {
+    tradingFunds: 0,
+    safuFunds: 0,
+    timestamp: new Date()
+  };
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private tradeService: TradeService  // Add this
   ) {
-    this.uploadForm = this.fb.group({
+    this.imageForm = this.fb.group({
       image: ['', Validators.required]
+    });
+
+    this.portfolioForm = this.fb.group({
+      tradingFunds: ['', [Validators.required, Validators.min(0)]],
+      safuFunds: ['', [Validators.required, Validators.min(0)]]
     });
   }
 
   ngOnInit() {
     this.loadImages();
+    this.getPortfolio();
   }
 
   onFileSelect(event: any) {
@@ -42,11 +55,12 @@ export class TradeComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    if (this.uploadForm.valid) {
+  onSubmitImage() {
+    if (this.imageForm.valid) {
       this.isUploading = true;
       const formData = new FormData();
       const fileInput = document.querySelector('#imageInput') as HTMLInputElement;
+
       if (fileInput && fileInput.files && fileInput.files.length > 0) {
         formData.append('image', fileInput.files[0]);
         
@@ -54,7 +68,7 @@ export class TradeComponent implements OnInit {
           next: (response) => {
             this.toastr.success('Image uploaded successfully');
             this.loadImages();
-            this.resetForm();
+            this.resetImageForm();
           },
           error: (error) => {
             this.toastr.error('Failed to upload image');
@@ -96,8 +110,51 @@ export class TradeComponent implements OnInit {
     });
   }
 
-  private resetForm() {
-    this.uploadForm.reset();
+  private resetImageForm() {
+    this.imageForm.reset();
     this.imagePreview = null;
+  }
+
+  private resetPortfolioForm() {
+    this.portfolioForm.reset();
+  }
+
+  
+  onSubmitPortfolio() {
+    if (this.portfolioForm.valid) {
+      const portfolioData = {
+        tradingFunds: this.portfolioForm.get('tradingFunds')?.value,
+        safuFunds: this.portfolioForm.get('safuFunds')?.value,
+        timestamp: new Date()
+      };
+
+      this.tradeService.updatePortfolio(portfolioData).subscribe({
+        next: (response) => {
+          this.toastr.success('Portfolio data saved successfully');
+          this.resetPortfolioForm();
+          this.getPortfolio();
+        },
+        error: (error) => {
+          this.toastr.error('Failed to save portfolio data');
+        }
+      });
+    }
+  }
+  //implement get portfolio
+  getPortfolio() {
+    this.tradeService.getPortfolio().subscribe({
+      next: (response) => {
+        if (response) {
+          console.log(response);
+          this.portfolioForm.patchValue({
+            tradingFunds: response.tradingFunds,
+            safuFunds: response.safuFunds
+          });
+        }
+      },
+      error: (error) => {
+        this.toastr.error('Failed to load portfolio data');
+      }
+    });
   }
 }

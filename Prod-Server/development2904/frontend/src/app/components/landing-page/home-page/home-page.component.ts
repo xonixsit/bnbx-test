@@ -29,7 +29,7 @@ import { HostListener } from '@angular/core';
         animate('2s ease-in-out')
       ])
     ])
-  ]
+  ],
 })
 export class HomePageComponent implements OnInit {
   isDarkMode: boolean = true;
