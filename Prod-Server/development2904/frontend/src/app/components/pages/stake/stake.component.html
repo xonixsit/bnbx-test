@@ -188,16 +188,18 @@
                                [class.fa-users]="balanceType.type === 'referrals'"
                                [class.fa-chart-line]="balanceType.type === 'returnInterest'"
                                [class.text-success]="balanceType.type === 'deposits'"
-                               [class.text-primary]="balanceType.type === 'referrals'"
-                               [class.text-info]="balanceType.type === 'returnInterest'"></i>
+                               [class.text-warning]="balanceType.type === 'returnInterest'"
+                               [class.text-primary]="balanceType.type === 'referrals'"></i>
                           </div>
                           <h5 class="balance-type-name mb-2"
                               [class.text-success]="balanceType.type === 'deposits'"
-                              [class.text-primary]="balanceType.type === 'referrals'">
-                            {{balanceType.type | titlecase}}
+                              [class.text-primary]="balanceType.type === 'referrals'"
+                              [class.text-warning]="balanceType.type === 'returnInterest'">
+                            {{balanceType.type === 'returnInterest' ? 'Interest' : (balanceType.type | titlecase)}}
                           </h5>
                           <div class="balance-amount">
                             <h4 class="mb-0 text-white">${{balanceComponents[balanceType.type]}}</h4>
+                            <!-- <small class="text-muted">Available Balance</small> -->
                           </div>
                         </div>
                       </div>
