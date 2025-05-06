@@ -633,7 +633,7 @@ module.exports.withdrawUsdt = async (request, response) => {
 
 module.exports.createTransactionPassword = async (request, response) => {
     try {
-        const { user, password, cnfPassword } = request.body;
+        const { user, password, cnfTxnPassword } = request.body;
 
         const userData = await UserModel.findOne({
             _id: user._id,
@@ -649,7 +649,7 @@ module.exports.createTransactionPassword = async (request, response) => {
             throw CustomErrorHandler.alreadyExist("Already Created Transaction Password!");
         }; 
 
-        if (password !== cnfPassword) {
+        if (password !== cnfTxnPassword) {
             throw CustomErrorHandler.wrongCredentials("Confirm Password Not Match!");
         };
 
@@ -673,7 +673,7 @@ module.exports.createTransactionPassword = async (request, response) => {
 
 module.exports.changeTransactionPassword = async (request, response) => {
     try {
-        const { user, prevPassword, newPassword, cnfPassword } = request.body;
+        const { user, oldPassword, newPassword, confirmPassword } = request.body;
 
         const userData = await UserModel.findOne({
             _id: user._id,
@@ -682,13 +682,16 @@ module.exports.changeTransactionPassword = async (request, response) => {
         if (!userData) throw CustomErrorHandler.unAuthorized("Access Denied!");
 
         const checkPassword = await bcrypt.compare(
-            prevPassword,
+            oldPassword,
             userData.trxPassword
         );
         if (!checkPassword) throw CustomErrorHandler.wrongCredentials("Wrong Previous Password!");
 
-        if (newPassword !== cnfPassword) {
+        if (newPassword !== confirmPassword) {
             throw CustomErrorHandler.wrongCredentials("Confirm Password Not Match!");
+        };
+        if (newPassword === oldPassword) {
+            throw CustomErrorHandler.wrongCredentials("Old and New Password SHould not be same!");
         };
 
         const passwordSalt = await bcrypt.genSalt(config.SALT_ROUND);

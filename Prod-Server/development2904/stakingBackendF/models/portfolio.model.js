@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const portfolioSchema = new mongoose.Schema({
     tradingFunds: {
-        type: Number,
+        type: String,
         required: true
     },
     safuFunds: {
-        type: Number,
+        type: String,
         required: true
     },
     timestamp: {

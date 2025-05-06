@@ -12,40 +12,92 @@ import { AuthServicesService } from 'src/app/services/auth/auth-services.service
 export class SettingComponent implements OnInit {
   updateWalletAddressForm: FormGroup;
   createTransactionPasswordForm: FormGroup;
-  changeTransactionPasswordForm: FormGroup;
+  changeLoginPasswordData: FormGroup;
   loading = false;
   token: any;
-  showCreateTransactionPassword: any; // Flag for creating password form
+  showCreateTransactionPassword: boolean = false; // Flag for creating password form
   showUpdateWalletAddress: any; // Flag for updating wallet address form
   showPassword = false;
   showConfirmPassword = false;
   showPrevPassword = false;
   showNewPassword = false;
   showConfirmNewPassword = false;
+  showUpdateTransactionPassword = false;
+  showOldPassword = false;
+  showNewTrxPassword = false;
+  showConfirmTrxPassword = false;
+  updateTransactionPasswordForm: FormGroup;
+  showCreateTransactionPasswordForm: boolean = false;
   constructor(
     private settingServicesService: SettingServicesService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private authService: AuthServicesService,
   ) {
+    this.showCreateTransactionPasswordForm = true;
     this.createTransactionPasswordForm = this.fb.group({
       password: ['', Validators.required],
-      cnfPassword: ['', Validators.required]
+      cnfTxnPassword: ['', Validators.required]
     });
-    this.changeTransactionPasswordForm = this.fb.group({
+    this.changeLoginPasswordData = this.fb.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
       cnfPassword: ['', Validators.required]
     });
-
+    this.updateTransactionPasswordForm = this.fb.group({
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    });
     // Add validators after form initialization
-    this.changeTransactionPasswordForm.valueChanges.subscribe(() => {
+    this.changeLoginPasswordData.valueChanges.subscribe(() => {
       this.validatePasswords();
     });
 
     this.updateWalletAddressForm = this.fb.group({
       address: ['', Validators.required]
     });
+    
+  }
+
+  toggleTransactionPasswordForm(): void {
+    if(this.showCreateTransactionPassword){
+      this.showUpdateTransactionPassword = true;
+      this.showCreateTransactionPasswordForm = false;
+    }
+  }
+
+  updateTransactionPassword(): void {
+    if (this.updateTransactionPasswordForm.valid) {
+      const updatePasswordData = this.updateTransactionPasswordForm.value;
+      this.settingServicesService.updateTransactionPassword(updatePasswordData, this.token).subscribe({
+        next: (response) => {
+          this.toastr.success('Transaction password updated successfully', 'Success', {
+            toastClass: 'toast-custom toast-success',
+            positionClass: 'toast-bottom-center',
+            closeButton: false,
+            progressAnimation: 'increasing',
+            timeOut: 3000,
+            progressBar: true,
+            enableHtml: true
+          });
+          this.updateTransactionPasswordForm.reset();
+        },
+        error: (err) => {
+          const errorMessage = err.error?.message || 'Error updating transaction password';
+          window.scrollTo(0, 0);
+          this.toastr.error(errorMessage, '', {
+            toastClass: 'toast-custom toast-error',
+            positionClass: 'toast-bottom-center',
+            progressAnimation: 'increasing',
+            closeButton: false,
+            timeOut: 3000,
+            progressBar: true,
+            enableHtml: true
+          });
+        }
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -57,8 +109,9 @@ export class SettingComponent implements OnInit {
     this.authService.toggleLoader(true);
     this.authService.getProfile(this.token).subscribe({
       next: (response) => {
-        this.showCreateTransactionPassword = response.data?.isTrxPassCreated === false;
+        this.showCreateTransactionPassword = response.data?.isTrxPassCreated;
         this.showUpdateWalletAddress = response.data?.isWalletAdded === false;
+        this.toggleTransactionPasswordForm()
         this.authService.toggleLoader(false);
       },
       error: (error) => {
@@ -73,8 +126,13 @@ export class SettingComponent implements OnInit {
       const createTransactionPassword = this.createTransactionPasswordForm.value;
       this.settingServicesService.createTransactionPasswordData(createTransactionPassword, this.token).subscribe({
         next: (response) => {
+          // if(response?.data.isTrxPassCreated){
+            this.showUpdateTransactionPassword = true;
+            this.showCreateTransactionPasswordForm = false;
+      
+          // }
           const successMessage = response.body.message || 'Transaction password created successfully';
-          this.toastr.success('Transaction password created successfully', 'Success', {
+          this.toastr.success(successMessage, 'Success', {
             toastClass: 'toast-custom toast-success',
             positionClass: 'toast-bottom-center',
             closeButton: false,
@@ -102,12 +160,12 @@ export class SettingComponent implements OnInit {
 
   // Updated validation method
   validatePasswords() {
-    const oldPassword = this.changeTransactionPasswordForm.get('oldPassword')?.value;
-    const newPassword = this.changeTransactionPasswordForm.get('newPassword')?.value;
-    const cnfPassword = this.changeTransactionPasswordForm.get('cnfPassword')?.value;
+    const oldPassword = this.changeLoginPasswordData.get('oldPassword')?.value;
+    const newPassword = this.changeLoginPasswordData.get('newPassword')?.value;
+    const cnfPassword = this.changeLoginPasswordData.get('cnfPassword')?.value;
 
     if (oldPassword && newPassword && oldPassword === newPassword) {
-      this.changeTransactionPasswordForm.get('newPassword')?.setErrors({ sameAsOld: true });
+      this.changeLoginPasswordData.get('newPassword')?.setErrors({ sameAsOld: true });
       this.toastr.error('New password cannot be same as previous password', '', {
         toastClass: 'toast-custom toast-error',
         positionClass: 'toast-bottom-center',
@@ -118,7 +176,7 @@ export class SettingComponent implements OnInit {
     }
 
     if (newPassword && cnfPassword && newPassword !== cnfPassword) {
-      this.changeTransactionPasswordForm.get('cnfPassword')?.setErrors({ mismatch: true });
+      this.changeLoginPasswordData.get('cnfPassword')?.setErrors({ mismatch: true });
       this.toastr.error('New password and confirm password do not match', '', {
         toastClass: 'toast-custom toast-error',
         positionClass: 'toast-bottom-center',
@@ -129,10 +187,10 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  changeTransactionPassword() {
-    if (this.changeTransactionPasswordForm.valid) {
-      const changeTransactionPassword = this.changeTransactionPasswordForm.value;
-      this.settingServicesService.changeTransactionPasswordData(changeTransactionPassword, this.token).subscribe({
+  changeLoginPassword() {
+    if (this.changeLoginPasswordData.valid) {
+      const changeTransactionPassword = this.changeLoginPasswordData.value;
+      this.settingServicesService.changeLoginPasswordData(changeTransactionPassword, this.token).subscribe({
         next: (response) => {
           this.toastr.success(response.message || 'Password changed successfully', 'Success', {
             toastClass: 'toast-custom toast-success',
@@ -144,9 +202,9 @@ export class SettingComponent implements OnInit {
             enableHtml: true
           });
           // Reset form after successful submission
-          this.changeTransactionPasswordForm.reset();
-          Object.keys(this.changeTransactionPasswordForm.controls).forEach(key => {
-            this.changeTransactionPasswordForm.get(key)?.setErrors(null);
+          this.changeLoginPasswordData.reset();
+          Object.keys(this.changeLoginPasswordData.controls).forEach(key => {
+            this.changeLoginPasswordData.get(key)?.setErrors(null);
           });
         },
         error: (err) => {
@@ -164,7 +222,7 @@ export class SettingComponent implements OnInit {
       });
     } else {
       // Show validation errors
-      if (this.changeTransactionPasswordForm.hasError('sameAsOld')) {
+      if (this.changeLoginPasswordData.hasError('sameAsOld')) {
         this.toastr.error('New password cannot be same as old password', 'Error', {
           timeOut: 3000,
           progressBar: true
@@ -200,5 +258,4 @@ export class SettingComponent implements OnInit {
       });
     }
   }
-  
 }

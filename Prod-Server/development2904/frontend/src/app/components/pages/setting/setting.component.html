@@ -1,9 +1,9 @@
 <div class="wrapper">
     <div id="content" class="active-content py-4">
         <div class="container">
-            <div class="row justify-content-center g-4">
+            <div class="row justify-content-center g-4" >
                 <!-- Create Transaction Password -->
-                <div class="col-12 col-lg-6">
+                <div class="col-12 col-lg-6" *ngIf="showCreateTransactionPasswordForm">
                     <div class="card bg-dark border-0 shadow-lg">
                         <div class="card-header bg-gradient-dark border-0 py-3">
                             <h2 class="card-title section-title text-center mb-0">
@@ -27,12 +27,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-4">
-                                    <label for="cnfPassword" class="text-light mb-2">Confirm Password:</label>
+                                    <label for="cnfTxnPassword" class="text-light mb-2">Confirm Password:</label>
                                     <div class="input-group">
                                         <input [type]="showConfirmPassword ? 'text' : 'password'"
-                                               id="cnfPassword"
+                                               id="cnfTxnPassword"
                                                class="form-control bg-dark text-light border-end-0"
-                                               formControlName="cnfPassword"
+                                               formControlName="cnfTxnPassword"
                                                placeholder="Confirm password"
                                                required />
                                         <button type="button" class="btn btn-dark border-start-0 border-secondary" (click)="showConfirmPassword = !showConfirmPassword">
@@ -42,6 +42,67 @@
                                 </div>
                                 <button type="submit" class="btn btn-warning btn-lg w-100" [disabled]="createTransactionPasswordForm.invalid">
                                     <i class="fas fa-check-circle me-2"></i>Create Password
+                                </button>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Transaction Password Form -->
+                <div class="col-12 col-lg-6" *ngIf="showUpdateTransactionPassword">
+                    <div class="card bg-dark border-0 shadow-lg">
+                        <div class="card-header bg-gradient-dark border-0 py-3">
+                            <h2 class="card-title section-title text-center mb-0">
+                                <i class="fas fa-key me-2"></i>Update Transaction Password
+                            </h2>
+                        </div>
+                        <div class="card-body p-4">
+                            <form [formGroup]="updateTransactionPasswordForm" (ngSubmit)="updateTransactionPassword()">
+                                <div class="form-group mb-4">
+                                    <label for="oldPassword" class="text-light mb-2">Current Password:</label>
+                                    <div class="input-group">
+                                        <input [type]="showOldPassword ? 'text' : 'password'"
+                                               id="oldPassword"
+                                               class="form-control bg-dark text-light border-end-0"
+                                               formControlName="oldPassword"
+                                               placeholder="Enter current password"
+                                               required />
+                                        <button type="button" class="btn btn-dark border-start-0 border-secondary" (click)="showOldPassword = !showOldPassword">
+                                            <i [class]="showOldPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="newTrxPassword" class="text-light mb-2">New Password:</label>
+                                    <div class="input-group">
+                                        <input [type]="showNewTrxPassword ? 'text' : 'password'"
+                                               id="newTrxPassword"
+                                               class="form-control bg-dark text-light border-end-0"
+                                               formControlName="newPassword"
+                                               placeholder="Enter new password"
+                                               required />
+                                        <button type="button" class="btn btn-dark border-start-0 border-secondary" (click)="showNewTrxPassword = !showNewTrxPassword">
+                                            <i [class]="showNewTrxPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="confirmTrxPassword" class="text-light mb-2">Confirm New Password:</label>
+                                    <div class="input-group">
+                                        <input [type]="showConfirmTrxPassword ? 'text' : 'password'"
+                                               id="confirmTrxPassword"
+                                               class="form-control bg-dark text-light border-end-0"
+                                               formControlName="confirmPassword"
+                                               placeholder="Confirm new password"
+                                               required />
+                                        <button type="button" class="btn btn-dark border-start-0 border-secondary" (click)="showConfirmTrxPassword = !showConfirmTrxPassword">
+                                            <i [class]="showConfirmTrxPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-lg w-100" [disabled]="updateTransactionPasswordForm.invalid">
+                                    <i class="fas fa-sync-alt me-2"></i>Update Password
                                 </button>
                             </form>
                         </div>
@@ -57,7 +118,7 @@
                             </h2>
                         </div>
                         <div class="card-body p-4">
-                            <form [formGroup]="changeTransactionPasswordForm" (ngSubmit)="changeTransactionPassword()">
+                            <form [formGroup]="changeLoginPasswordData" (ngSubmit)="changeLoginPassword()">
                                 <!-- Previous Password -->
                                 <div class="form-group mb-4">
                                     <label for="prevPassword" class="text-light mb-2">Previous Password:</label>
@@ -106,7 +167,7 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-warning btn-lg w-100" [disabled]="changeTransactionPasswordForm.invalid">
+                                <button type="submit" class="btn btn-warning btn-lg w-100" [disabled]="changeLoginPasswordData.invalid">
                                     <i class="fas fa-sync-alt me-2"></i>Update Password
                                 </button>
                             </form>

@@ -17,15 +17,21 @@ export class SettingServicesService {
         catchError(this.handleError) // Handle error gracefully
       );
   }
-
-  changeTransactionPasswordData(body: any, token: string): Observable<any> {
+//updateTransactionPassword
+  updateTransactionPassword(body: any, token: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', token);
+    return this.http.put(`${this.baseUrl}/user/wallet/change/transaction/password`, body, { headers, observe:'response' })
+     .pipe(
+        catchError(this.handleError) // Handle error gracefully
+      );
+  }
+  changeLoginPasswordData(body: any, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', token);
     return this.http.put(`${this.baseUrl}/user/auth/change/password`, body, { headers, observe: 'response' })
       .pipe(
         catchError(this.handleError) // Handle error gracefully
       );
   }
-
   updateWalletAddressData(body: any, token: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', token);
     return this.http.put(`${this.baseUrl}/user/wallet/update/address`, body, { headers, observe: 'response' })

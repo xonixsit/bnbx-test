@@ -180,7 +180,7 @@ module.exports.createTransactionPassword = (request, response, next) => {
         //     .required(),
         // cnfPassword: Joi.string().valid(Joi.ref('password')).required(),
         password: Joi.string().required(),
-        cnfPassword: Joi.string().required(),
+        cnfTxnPassword: Joi.string().required(),
     });
     const { error } = rules.validate(request.body);
     if (error) {
@@ -200,9 +200,9 @@ module.exports.changeTransactionPassword = (request, response, next) => {
         //     .required(),
         // newPassword: Joi.string().valid(Joi.ref('prevPassword')).required(),
         // cnfPassword: Joi.string().valid(Joi.ref('prevPassword')).required(),
-        prevPassword: Joi.string().required(),
+        oldPassword: Joi.string().required(),
         newPassword: Joi.string().required(),
-        cnfPassword: Joi.string().required(),
+        confirmPassword: Joi.string().required(),
     });
     const { error } = rules.validate(request.body);
     if (error) {

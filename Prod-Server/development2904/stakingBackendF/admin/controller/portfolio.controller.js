@@ -5,8 +5,8 @@ const Joi = require('joi');
 exports.createPortfolio = async (req, res) => {
     try {
         const bodySchema = Joi.object({
-            tradingFunds: Joi.number().min(0).required(),
-            safuFunds: Joi.number().min(0).required()
+            tradingFunds: Joi.required(),
+            safuFunds: Joi.required()
         }).unknown(true);
 
         await bodySchema.validateAsync(req.body);
@@ -28,7 +28,7 @@ exports.createPortfolio = async (req, res) => {
 
 // Get latest portfolio entry
 exports.getLatestPortfolio = async (req, res) => {
-    console.log('getLatestPortfolio');
+    // console.log('getLatestPortfolio');
     try {
         const latestPortfolio = await Portfolio.findOne().sort({ timestamp: -1 });
         if (!latestPortfolio) {
