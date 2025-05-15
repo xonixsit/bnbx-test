@@ -203,24 +203,6 @@ const calculateUserBalance = async (userId) => {
             }
         ]);
 
-        // Get transfers
-        const transferTransactions = await TransactionModel.aggregate([
-            {
-                $match: {
-                    user: userId,
-                    transactionType: "FUND-TRANSFER",
-                    balanceType: "TRADE",
-                    status: "COMPLETED",
-                    isDeleted: false
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    total: { $sum: { $abs: "$amount" } }
-                }
-            }
-        ]);
 
         // Get main to trade transactions
         const mainToTradeTransactions = await TransactionModel.aggregate([
@@ -321,6 +303,25 @@ const calculateUserBalance = async (userId) => {
             }
         ]);
 
+        // Get transfers
+        const transferTransactions = await TransactionModel.aggregate([
+            {
+                $match: {
+                    user: userId,
+                    transactionType: "FUND-TRANSFER",
+                    balanceType: "TRADE",
+                    status: "COMPLETED",
+                    isDeleted: false
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    total: { $sum: { $abs: "$amount" } }
+                }
+            }
+        ]);
+
         // Get received transfers
         const receivedTransfers = await TransactionModel.aggregate([
             {
@@ -330,14 +331,13 @@ const calculateUserBalance = async (userId) => {
                     balanceType: "TRADE",
                     status: "COMPLETED",
                     isDeleted: false,
-                    fromUser: { $exists: true }  // Ensure there's a sender
+                    fromUser: { $exists: true, $ne: userId } // Ensure 'fromUser' is not the same as 'userId'
                 }
             },
             {
                 $group: {
                     _id: null,
-                    total: { $sum: "$amount" }
-                }
+                    total: { $sum: { $abs: "$amount" } }                }
             }
         ]);
 
@@ -399,19 +399,7 @@ const calculateUserBalance = async (userId) => {
             }
         ]);
 
-        //calculate trade wallet balance
-        const tradeWalletBalance = await TransactionModel.aggregate([
-            {
-                $match: {
-                    user: userId,
-                    transactionType: "TRADE-TO-MAIN",
-                    balanceType: "TRADE",
-                    status: "COMPLETED",
-                    isDeleted: false
-                }
-            },
-        ])
-
+        
         // console.log('unlockedStakeTransactions', unlockedStakeTransactions);
         const totalReturnInterest = Number((returnInterestTransactions.length > 0? returnInterestTransactions[0].total : 0).toFixed(2));
         const totalDeposits = Number((
@@ -435,16 +423,19 @@ const calculateUserBalance = async (userId) => {
         const tradeToMain = Number(Math.abs((tradeToMainTransactions.length > 0 ? tradeToMainTransactions[0].total : 0).toFixed(2)));
         // Update total transferred to include both fund transfers and main-to-trade transfers
         const totalTransferred = Number((
-            (transferTransactions.length > 0 ? transferTransactions[0].total : 0) +
-            mainToTrade
-        ).toFixed(2));
+            (transferTransactions.length > 0 ? transferTransactions[0].total : 0)).toFixed(2));
+
+        //calculate trade wallet balance
+        const tradeWalletBalance = (mainToTradeTransactions.length > 0? mainToTradeTransactions[0].total : 0) -
+        (tradeToMainTransactions.length > 0 ? tradeToMainTransactions[0].total : 0) - totalTransferred;
+
         // Calculate BUSD Balance
         // Ensure non-negative balance display
         const BUSDBalance = Math.max(0, Number((
             (totalDeposits > 0 ? totalDeposits : 0) +
-            (totalReferral || 0) +
-            (totalBonus || 0) +
-            (tradeToMain || 0) +
+             (totalReferral || 0) +
+             (totalBonus || 0) +
+             (tradeToMain || 0) +
             (receivedTransfers && receivedTransfers.length > 0 ? receivedTransfers[0].total : 0) +
             (returnInterestTransactions && returnInterestTransactions.length > 0 ? returnInterestTransactions[0].total : 0) -
             (mainToTrade || 0) -

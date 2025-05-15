@@ -17,6 +17,10 @@ const Transaction = new Schema(
             type: Schema.Types.ObjectId,
             ref: "User",
         },
+        toUser: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
         chain: {
             type: String,
             default: "BEP20",

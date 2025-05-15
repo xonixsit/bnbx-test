@@ -278,10 +278,6 @@ module.exports.internalTransafer = async (request, response) => {
             throw CustomErrorHandler.wrongCredentials("Recepient Must be a Different User!");
         };
 
-        if (userData.TRADEBalance < amount) {
-            throw CustomErrorHandler.lowBalance("Low TRADE Balance!");
-        };
-
         const checkPassword = await bcrypt.compare(password, userData.trxPassword);
         if (!checkPassword) throw CustomErrorHandler.wrongCredentials("Wrong Transaction Password!");
 
@@ -304,17 +300,24 @@ module.exports.internalTransafer = async (request, response) => {
         ]);
 
         const tradeBalance = currentTradeBalance.length > 0 ? currentTradeBalance[0].balance : 0;
+        
+        if (tradeBalance < amount) {
+             throw CustomErrorHandler.lowBalance("Low TRADE Balance!");
+        };
 
         const transferData = await TransactionModel.create({
             amount: -amount,
             user: userData._id,
-            fromUser: recepientUser._id,
+            toUser: recepientUser._id,
             transactionType: "FUND-TRANSFER",
             balanceType: "TRADE",
             currentBalance: tradeBalance - amount,
             description: `${amount} USDT Send to user ${recepientUser.loginId}`
         });
 
+        console.log(transferData.description);
+
+        console.log('transferData',transferData);
         // Get recipient's current TRADE balance
         const recipientTradeBalance = await TransactionModel.aggregate([
             {
@@ -344,6 +347,9 @@ module.exports.internalTransafer = async (request, response) => {
             currentBalance: recipientBalance + Number(amount),
             description: `${amount} USDT received from user ${userData.loginId}`
         });
+
+        console.log(`${amount} USDT received from user ${userData.loginId}`);
+
 
         userData.TRADEBalance -= amount;
         await userData.save();
