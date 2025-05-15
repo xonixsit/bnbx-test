@@ -228,7 +228,7 @@ const calculateUserBalance = async (userId) => {
                 $match: {
                     user: userId,
                     transactionType: "MAIN-TO-TRADE",
-                    balanceType: "BUSD",  // Only count the BUSD (debit) entries
+                    balanceType: "TRADE",  // Only count the BUSD (debit) entries
                     status: "COMPLETED",
                     isDeleted: false
                 }
@@ -259,6 +259,13 @@ const calculateUserBalance = async (userId) => {
                 }
             }
         ]);
+
+        
+
+
+
+
+
         // Get withdrawals by source
         const busdWithdrawals = await TransactionModel.aggregate([
             {
@@ -320,7 +327,7 @@ const calculateUserBalance = async (userId) => {
                 $match: {
                     user: userId,  // User is the recipient
                     transactionType: "FUND-TRANSFER",
-                    balanceType: "BUSD",
+                    balanceType: "TRADE",
                     status: "COMPLETED",
                     isDeleted: false,
                     fromUser: { $exists: true }  // Ensure there's a sender
@@ -378,7 +385,7 @@ const calculateUserBalance = async (userId) => {
         const unlockedStakeTransactions = await TransactionModel.aggregate([
             {
                 $match: {
-                    user: new mongoose.Types.ObjectId('67ec0fdbd7cd8d7c5184776f'),
+                    user: userId,
                     transactionType: "STAKE-UNLOCKED",
                     status: "COMPLETED",
                     isDeleted: false
@@ -392,7 +399,20 @@ const calculateUserBalance = async (userId) => {
             }
         ]);
 
-        console.log('unlockedStakeTransactions', unlockedStakeTransactions);
+        //calculate trade wallet balance
+        const tradeWalletBalance = await TransactionModel.aggregate([
+            {
+                $match: {
+                    user: userId,
+                    transactionType: "TRADE-TO-MAIN",
+                    balanceType: "TRADE",
+                    status: "COMPLETED",
+                    isDeleted: false
+                }
+            },
+        ])
+
+        // console.log('unlockedStakeTransactions', unlockedStakeTransactions);
         const totalReturnInterest = Number((returnInterestTransactions.length > 0? returnInterestTransactions[0].total : 0).toFixed(2));
         const totalDeposits = Number((
             (depositTransactions.length > 0 ? depositTransactions[0].total : 0) -
@@ -404,46 +424,46 @@ const calculateUserBalance = async (userId) => {
         const totalReferralStaked = Number((referralIncomeBond[0].total || 0).toFixed(2));
         const availableReferralBalance = Number(totalReferral - totalReferralStaked).toFixed(2);
 
-        // console.log('totalReferral', totalReferral);
-        // console.log('totalReferralStaked', totalReferralStaked);
-        //  console.log('availableReferralBalance', availableReferralBalance);
         const totalBonus = Number((bonusBalance.length > 0 ? bonusBalance[0].total : 0).toFixed(2)) - stakedSignupBonus[0].amount;
+        
         const totalStaked = Number((
             (stakedBalance.length > 0 ? stakedBalance[0].total : 0) -
             (unlockedStakeTransactions.length > 0 ? unlockedStakeTransactions[0].total : 0)
         ).toFixed(2));
         const totalWithdrawn = Number((withdrawalTransactions.length > 0 ? withdrawalTransactions[0].total : 0).toFixed(2));
         const mainToTrade = Number((mainToTradeTransactions.length > 0 ? Math.abs(mainToTradeTransactions[0].total) : 0).toFixed(2));
-        const tradeToMain = Number((tradeToMainTransactions.length > 0 ? tradeToMainTransactions[0].total : 0).toFixed(2));
+        const tradeToMain = Number(Math.abs((tradeToMainTransactions.length > 0 ? tradeToMainTransactions[0].total : 0).toFixed(2)));
         // Update total transferred to include both fund transfers and main-to-trade transfers
         const totalTransferred = Number((
             (transferTransactions.length > 0 ? transferTransactions[0].total : 0) +
             mainToTrade
         ).toFixed(2));
         // Calculate BUSD Balance
+        // Ensure non-negative balance display
         const BUSDBalance = Math.max(0, Number((
             (totalDeposits > 0 ? totalDeposits : 0) +
             (totalReferral || 0) +
             (totalBonus || 0) +
             (tradeToMain || 0) +
             (receivedTransfers && receivedTransfers.length > 0 ? receivedTransfers[0].total : 0) +
-            (returnInterestTransactions && returnInterestTransactions.length > 0 ? returnInterestTransactions[0].total : 0) +
+            (returnInterestTransactions && returnInterestTransactions.length > 0 ? returnInterestTransactions[0].total : 0) -
             (mainToTrade || 0) -
             (totalWithdrawn || 0) - 
             (referralIncomeBond && referralIncomeBond[0] ? referralIncomeBond[0].total : 0) - 
             (totalReturnInterestBond || 0)
         ).toFixed(2)));
-        // console.log('BUSDBalance', BUSDBalance);
-        // console.log('totalDeposits', totalDeposits);
-        // console.log('totalReferral', totalReferral);
-        // console.log('totalBonus', totalBonus);
-        // console.log('totalStaked', totalStaked);
-        // console.log('totalWithdrawn', totalWithdrawn);
-        // console.log('tradeToMain', tradeToMain);
-        // console.log('totalTransferred', totalTransferred);
-        // console.log('receivedTransfers', receivedTransfers);
-        // console.log('returnInterestTransactions', returnInterestTransactions);
-        // console.log('unlockedStakeTransactions', unlockedStakeTransactions);
+
+         console.log('totalDeposits', totalDeposits);
+         console.log('totalReferral', totalReferral);
+         console.log('totalBonus', totalBonus);
+         console.log('BUSDBalance', BUSDBalance);
+         console.log('totalStaked', totalStaked);
+         console.log('totalWithdrawn', totalWithdrawn);
+         console.log('tradeToMain', tradeToMain);
+         console.log('totalTransferred', totalTransferred);
+         console.log('receivedTransfers', receivedTransfers);
+         console.log('returnInterestTransactions', returnInterestTransactions);
+         console.log('unlockedStakeTransactions', unlockedStakeTransactions);
      
         const withdrawableAmount = Number((
             totalDeposits +
@@ -454,7 +474,8 @@ const calculateUserBalance = async (userId) => {
             totalWithdrawn -
             totalTransferred - stakedSignupBonus[0].amount - referralIncomeBond[0].amount
         ).toFixed(2));
-
+        console.log('totalReturnInterestBond',totalReturnInterestBond);
+        console.log('totalReturnInterest',totalReturnInterest);
         return {
             BUSDBalance,
             withdrawableBalance: Math.max(0, withdrawableAmount),
@@ -469,7 +490,7 @@ const calculateUserBalance = async (userId) => {
                 staked: totalStaked,
                 referral: availableReferralBalance,
                 bonus: totalBonus,
-                returnInterest: totalReturnInterest,
+                returnInterest: totalReturnInterest - totalReturnInterestBond,
                 tradeToMain : tradeToMain,
                 mainToTrade : mainToTrade,
                 withdrawn: {

@@ -53,6 +53,7 @@ export class UserUpdateComponent {
   isSubmitting = true;
   isAdminProfile: boolean = true;
   totalTransactions: number = 0; // total transactions for paginator
+  totalPages: number = 1; // total number of pages for pagination
   constructor(
     private fb: FormBuilder,
     private authService: UserServicesService,
@@ -411,6 +412,7 @@ export class UserUpdateComponent {
       next: (response: any) => {
         this.transactions = response.data.docs;
         this.totalTransactions = response.data.totalDocs;
+        this.totalPages = Math.ceil(this.totalTransactions / this.pageSize);
         this.calculateTotals(); // Calculate totals when transactions are fetched
 
       },
@@ -447,6 +449,11 @@ export class UserUpdateComponent {
     this.currentPage = event.pageIndex + 1; // MatPaginator pageIndex starts from 0
     this.pageSize = event.pageSize;
     this.fetchTransactions(this.currentPage , this.pageSize);
+  }
+
+  onPageSizeChange(): void {
+    this.currentPage = 1; // Reset to first page when changing page size
+    this.fetchTransactions(this.currentPage, this.pageSize);
   }
 
 deleteUser(): void {

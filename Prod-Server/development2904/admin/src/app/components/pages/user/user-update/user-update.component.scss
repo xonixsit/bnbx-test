@@ -9,6 +9,31 @@ $colors: (
   white: #fff
 );
 
+.pagination {
+  .page-item {
+    border: 1px solid rgba(map-get($colors, primary), .2);
+    // color: map-get($colors, white);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    // transition: background-color 0.3s ease;
+    background: #1E2329;
+    i{
+      color:#1E2329 !important;
+    }
+    .page-link{
+      color:#1E2329 !important;
+    }
+
+    &:hover {
+      background-color: rgba(map-get($colors, primary), .2);
+    }
+
+    &.active {
+      background-color: map-get($colors, primary);
+      color: map-get($colors, bg-dark);
+    }
+  }
+}
 // Base mixins
 @mixin base-card {
   background: map-get($colors, bg-dark);

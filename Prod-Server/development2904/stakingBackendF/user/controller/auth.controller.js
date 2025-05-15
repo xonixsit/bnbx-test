@@ -85,7 +85,7 @@ module.exports.signUp = async (request, response) => {
 
         const referralCode = await getUniqueUserReferralCode();
         const loginId = await createLoginId();
-        const bonusBalance = 10;
+        const bonusBalance = 0;
         // Fix the BUSD balance assignment
         const BUSDBalance = bonusBalance; // Changed from const BUSDBalance = bonusBalance = 10;
         
@@ -107,15 +107,15 @@ module.exports.signUp = async (request, response) => {
             fromUser: checkReferral && checkReferral._id ? checkReferral._id : null,
         });
 
-        await TransactionModel.create({
-            amount: 10,
-            user: newUser._id,
-            transactionType: "SIGNUP-BONUS",
-            stakingTime: new Date().getTime(),
-            currentBalance: 0,
-            description: "Early Bird Signup Bonus",
-            approvedBy: newUser._id, // Adding the required approvedBy field
-        });
+        // await TransactionModel.create({
+        //     amount: 0,
+        //     user: newUser._id,
+        //     transactionType: "SIGNUP-BONUS",
+        //     stakingTime: new Date().getTime(),
+        //     currentBalance: 0,
+        //     description: "Early Bird Signup Bonus",
+        //     approvedBy: newUser._id, // Adding the required approvedBy field
+        // });
 
         delete newUser.password;
         const sendData = { userData: newUser };

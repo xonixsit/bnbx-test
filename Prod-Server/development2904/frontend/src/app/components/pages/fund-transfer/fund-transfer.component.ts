@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { AuthServicesService } from 'src/app/services/auth/auth-services.service';
 import { WalletServiceService } from 'src/app/services/wallet/wallet-service.service';
-import { ActivePlan, BalanceBreakdown, LockStatus } from 'src/app/models/balance.model';
+import { ActivePlan } from 'src/app/models/balance.model';
 
 @Component({
   selector: 'app-fund-transfer',

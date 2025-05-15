@@ -264,37 +264,14 @@ module.exports.verifyWithdrawalUSDT = async (request, response) => {
         if (!transaction) {
             throw CustomErrorHandler.notFound("Transaction Not Found!");
         }
-        console.log('transaction id',transactionId);
-        console.log('status id',status);
-            // const contract = new web3.eth.Contract(config.ABI, config.USDT_CONTRACT_ADDRESS);
-            // const amountInWei = web3.utils.toWei((Math.abs(transaction.amount)*95/100).toString(), 'ether');
-            
-            // const transfer = contract.methods.transfer(transaction.withdrawAddress, amountInWei);
-            // const gasPrice = await web3.eth.getGasPrice();
-            
-            // const tx = {
-            //     from: config.SENDER_ADDRESS,
-            //     gasPrice: web3.utils.toHex(gasPrice),
-            //     gasLimit: web3.utils.toHex(60000),
-            //     to: config.USDT_CONTRACT_ADDRESS,
-            //     data: transfer.encodeABI(),
-            // };
-
-        //     // const signTran = await web3.eth.accounts.signTransaction(tx, config.PRIVATE_KEY);
-        //     // const sendTran = await web3.eth.sendSignedTransaction(signTran.rawTransaction);
-
-        //     transaction.status = status;
-        //     transaction.txHash = sendTran.transactionHash;
-        //     transaction.blockNumber = sendTran.blockNumber;
-        //     await transaction.save();
-        // } else {
+         
         if (status === "COMPLETED") {
             transaction.status = status;
             await transaction.save();
         }
         // Refund the amount if rejected
         else {
-            transaction.status = "REJECTED";  // Add this line to update transaction status
+            transaction.status = status;  // Add this line to update transaction status
             await transaction.save();         // Save the transaction status update
             
             const user = await UserModel.findById(transaction.user._id);

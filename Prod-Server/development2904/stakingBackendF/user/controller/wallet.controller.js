@@ -206,8 +206,8 @@ const checkWithdrawalLockConditions = async (userId, amount) => {
     ]);
 
     const totalDepositAmount = totalDeposits.length > 0 ? totalDeposits[0].total : 0;
-    if (totalDepositAmount < 100) {
-        throw CustomErrorHandler.unAuthorized("Minimum deposit of $100 required to make transfers/withdrawals");
+    if (totalDepositAmount < 50) {
+        throw CustomErrorHandler.unAuthorized("Minimum deposit of $50 required to make transfers/withdrawals");
     }
 
     // Check lock status for deposits

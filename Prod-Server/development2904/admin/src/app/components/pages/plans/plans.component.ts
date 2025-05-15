@@ -25,11 +25,9 @@ export class PlansComponent implements OnInit {
 
   loadPlans(): void {
     this.token = localStorage.getItem('authToken');
-
     this.plansService.getPlans(this.token).subscribe({
       next: (response) => {
         this.authServices.toggleLoader(false);
-
         this.plans = response.data.map((plan: Plan) => ({
           ...plan,
           isEditing: false
@@ -55,6 +53,7 @@ export class PlansComponent implements OnInit {
 
   savePlan(plan: any): void {
     const updateData = {
+      name: plan.name,
       rate: plan.rate,
       min: plan.min,
       max: plan.max,

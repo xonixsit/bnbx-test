@@ -29,7 +29,7 @@ module.exports.updatePlan = async (request, response) => {
     try {
         const { user } = request.body;
         const { id } = request.params;
-        const { rate, min, max } = request.body;
+        const { rate, min, max,name } = request.body;
 
         const adminData = await UserModel.findOne({ 
             _id: user._id,
@@ -45,6 +45,7 @@ module.exports.updatePlan = async (request, response) => {
             { id: parseInt(id) },
             {
                 $set: {
+                    name: name || plan.name,
                     rate: rate || plan.rate,
                     min: min || plan.min,
                     max: max || plan.max,

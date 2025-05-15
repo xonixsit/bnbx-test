@@ -51,22 +51,7 @@
                                             <small class="text-muted1">{{ transaction.mobile }}</small>
                                         </div>
                                     </td>
-                                    <!-- <td>
-                                        <div class="d-flex flex-column">
-                                            <div class="balance-item">
-                                                <span class="balance-label">Bonus:</span>
-                                                <span class="balance-value">{{ transaction.bonusBalance }}</span>
-                                            </div>
-                                            <div class="balance-item">
-                                                <span class="balance-label">Staked:</span>
-                                                <span class="balance-value">{{ transaction.totalStakedBalance }}</span>
-                                            </div>
-                                            <div class="balance-item">
-                                                <span class="balance-label">Withdrawal:</span>
-                                                <span class="balance-value">{{ transaction.totalWithdrawalBalance }}</span>
-                                            </div>
-                                        </div>
-                                    </td> -->
+                                     
                                     <td>{{ transaction.createdAt | date: 'MMM d, y' }}</td>
                                     <td>
                                         <button class="btn btn-icon" (click)="updateUser(transaction._id)">
