@@ -245,10 +245,10 @@ module.exports.getUserById = async (request, response) => {
         if(!userData) throw CustomErrorHandler.notFound("User Not Found!");
         // Get detailed balance information
         const balanceInfo = await calculateUserBalance(userData._id);
-        console.log('balanceInfo',balanceInfo);
+        // console.log('balanceInfo',balanceInfo);
         return response.json({
             status: true,
-            message: "User Data",
+            message: "User Data By Id",
             data: {
                 ...userData.toObject(),
                 balanceDetails: {
@@ -256,9 +256,10 @@ module.exports.getUserById = async (request, response) => {
                     withdrawableBalance: balanceInfo.withdrawableBalance,
                     components: balanceInfo.components,
                     totalReferralRewardBalance: balanceInfo.totalReferralRewardBalance,
-                    totalBonusBalance: balanceInfo.components.bonus,
-                    totalStakedBalance: balanceInfo.components.staked,
-                    totalTeamTurnover: balanceInfo.totalTeamTurnover
+                    totalBonusBalance: balanceInfo.totalBonusBalance,
+                    totalStakedBalance: balanceInfo.totalStakedBalance,
+                    totalTeamTurnover: balanceInfo.totalTeamTurnover,
+                    tradeWalletBalance: balanceInfo.tradeWalletBalance,
                 }
             }
         });
@@ -327,62 +328,6 @@ module.exports.changeUserLoginPass = async (request, response) => {
     }
 };
 
-module.exports.updateUserKyc = async (request, response) => {
-    try {
-        const { user, userId, status, isAdharVerify, isEsign, isKyc } = request.body;
-
-        const adminData = await UserModel.findOne({
-            _id: user._id,
-            role: "ADMIN",
-            isDeleted: false,
-        });
-        if(!adminData) throw CustomErrorHandler.unAuthorized("Access Denied!");
-
-        const isVerified = status === "COMPLETED";
-
-        let updateFields = {};
-
-        if(isKyc == "true"){
-            updateFields = {
-                "kyc.isKycVerified": isVerified,
-                "kyc.status": status,
-                "kyc.approvedBy": user._id,
-            }
-        };
-
-        if (isAdharVerify) {
-            updateFields["kyc.adhar.isAdharVerified"] = isAdharVerify;
-        };
-
-        if (isEsign == "true") {
-            updateFields["eSign.isESignVerified"] = isVerified;
-            updateFields["eSign.status"] = status;
-            updateFields["eSign.verfiedBy"] = user._id;
-        };
-
-        const userData = await UserModel.findByIdAndUpdate(
-            {
-                _id: userId,
-                isDeleted: false,
-            },
-            {
-                $set: updateFields,
-            },
-            {
-                new: true,
-            },
-        );
-        if (!userData) throw CustomErrorHandler.notFound("Failed To Update!");
-
-        return response.status(200).json({
-            status: true,
-            message: "Update Kyc/Esign Successfully.",
-            data: userData,
-        });
-    } catch (e) {
-        handleErrorResponse(e, response);
-    }
-};
  
 module.exports.getUserReferralAllList = async (request, response) => {
     try {

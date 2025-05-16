@@ -168,11 +168,8 @@ export class UserUpdateComponent {
           totalTeamTurnoverBalance: response.data.balanceDetails?.totalTeamTurnover || 0,
           totalReferralRewardBalance: response.data.balanceDetails.totalReferralRewardBalance || 0,
           totalRewardBalance: response.data.balanceDetails.totalBonusBalance,
-          TRADEBalance: (response.data.balanceDetails?.components?.mainToTrade || 0) - 
-          (response.data.balanceDetails?.components?.tradeToMain || 0),
-
+          TRADEBalance: response.data.balanceDetails.tradeWalletBalance,
           isTrxPassCreated: response.data.isTrxPassCreated,
-
         });
 
         // Update password form fields

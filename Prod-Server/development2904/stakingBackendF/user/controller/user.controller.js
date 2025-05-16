@@ -21,9 +21,9 @@ module.exports.userDetails = async (request, response) => {
         if(!userData) throw CustomErrorHandler.unAuthorized("Access Denied!");
 
         const userDataObj = userData.toObject();
-        
+        console.log('userDataObj', userDataObj)
         // Calculate actual referral rewards from transactions
-        const balanceData = await calculateUserBalance(userData._id);
+        const balanceData = await calculateUserBalance(userDataObj._id);
         
             // Update userDataObj using Object.assign instead of reassignment
             Object.assign(userDataObj, {
@@ -34,12 +34,13 @@ module.exports.userDetails = async (request, response) => {
                 totalBonusBalance: balanceData.totalBonusBalance,
                 totalStakedBalance: balanceData.totalStakedBalance,
                 totalTeamTurnover: balanceData.totalTeamTurnover,
+                tradeWalletBalance: balanceData.tradeWalletBalance,
                 balanceComponents: balanceData.components
             });
 
         return response.json({
             status: true,
-            message: "User Data get successfully.",
+            message: "User Data get successfully Dashboard.",
             data: userDataObj,
         });
     } catch (e) {

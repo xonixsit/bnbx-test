@@ -161,13 +161,14 @@ export class WithdrawComponent {
     this.walletService.getWithdrawalLockStatus(this.token).subscribe({
       next: (response: any) => {
         // Keep existing balance assignments
+        console.log(response)
         if (response.balanceBreakdown) {
           this.balanceBreakdown = response.balanceBreakdown;
           this.withdrawableBalance = response.withdrawableBalance || 0;
           this.stakedAmount = response.balanceBreakdown.totalStakedBalance || 0;
           // Add new balance assignments
           this.BUSDBalance = response.balanceBreakdown.totalBalance || 0;
-          this.totalReferralRewardBalance = response.balances.referral || 0;
+          this.totalReferralRewardBalance = response.balanceBreakdown.referralIncome || 0;
           this.totalBonusBalance = response.balances.bonus || 0;
           this.availableBalances = {
             referral: response.components?.balances?.referral || 0,
